@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>科技升级</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; height: 60px"><dc-import name="KTop" hint-size="390px,60px"></dc-import></div>
+
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 0 14px">
+    <h1 style="margin: 0; font-family: 'ZCOOL XiaoWei', serif; font-weight: 400; font-size: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #000000">王国科技</h1>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <span style="height: 34px; padding: 0 10px 0 6px; border-radius: 17px; background: #1E120A; border: 2px solid #A8741A; display: flex; align-items: center; gap: 4px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 15px; color: #FFE7A3">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#E9B949" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path></svg>{{stars}}
+      </span>
+      <button onClick="{{reset}}" style="height: 36px; padding: 0 12px; border-radius: 10px; background: #5C3A21; border: 2px solid #A8741A; box-sizing: border-box; font-size: 12px; font-weight: 900; color: #F3E4C0">重置</button>
+    </div>
+  </div>
+
+  <!-- 科技树 -->
+  <div style="flex-grow: 1; min-height: 0; margin: 10px 12px 0 12px; border-radius: 14px; background: #F3E4C0; border: 4px solid #1E120A; box-shadow: inset 0 0 0 3px #E2CB98; padding: 10px 6px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px">
+    <sc-for list="{{cols}}" as="c" hint-placeholder-count="6">
+      <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px">
+        <div style="position: absolute; left: 50%; top: 60px; bottom: 30px; width: 4px; margin-left: -2px; background: #C9A96A; border-radius: 2px"></div>
+        <div style="{{c.fill}}"></div>
+        <span style="{{c.head}}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{c.d}}"></path></svg>
+        </span>
+        <span style="position: relative; font-size: 11px; font-weight: 900; white-space: nowrap">{{c.name}}</span>
+        <sc-for list="{{c.nodes}}" as="n" hint-placeholder-count="5">
+          <button aria-label="{{n.aria}}" onClick="{{n.pick}}" style="{{n.btn}}">
+            <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 15px; color: {{n.ink}}">{{n.roman}}</span>
+            <span style="{{n.cost}}">{{n.costText}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- 详情 -->
+  <div style="flex-shrink: 0; margin: 10px 12px 12px 12px; border-radius: 14px; background: #5C3A21; border: 3px solid #A8741A; padding: 10px 10px 10px 12px; display: flex; align-items: center; gap: 10px; color: #F3E4C0">
+    <span style="{{sel.disc}}">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{sel.d}}"></path></svg>
+    </span>
+    <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 15px; font-weight: 900; color: #FFE7A3">{{sel.name}}</span>
+      <span style="font-size: 12px; font-weight: 600; line-height: 17px">{{sel.desc}}</span>
+      <span style="font-size: 11px; font-weight: 600; color: #C9A96A">{{sel.status}}</span>
+    </div>
+    <button onClick="{{buy}}" style="{{sel.btn}}">
+      <span style="font-size: 14px; font-weight: 900">{{sel.btnLabel}}</span>
+      <span style="display: flex; align-items: center; gap: 2px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 12px">
+        <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#2A1A0E"></path></svg>{{sel.price}}
+      </span>
+    </button>
+  </div>
+
+  <div style="flex-shrink: 0; height: 80px"><dc-import name="KNav" active="tech" hint-size="390px,80px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { owned: [3, 2, 2, 1, 2, 1], stars: 12, sel: [2, 2] };
+  }
+  renderVals() {
+    var self = this;
+    var COST = [1, 1, 2, 2, 3];
+    var ROMAN = ['I', 'II', 'III', 'IV', 'V'];
+    var COLS = [
+      { name: '弓箭塔', color: '#8A5A32', d: 'M4 20 L20 4 M20 4 H14 M20 4 V10 M4 20 L7 14 M4 20 L10 17', ups: [['精准射击', '弓箭塔射程 +10%'], ['锋利箭头', '弓箭塔伤害 +10%'], ['鹰眼', '射程再 +15%，可攻击隐身单位'], ['穿甲箭', '攻击无视 30% 护甲'], ['连珠箭', '攻击速度 +20%']] },
+      { name: '兵营', color: '#2F6FB0', d: 'M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z', ups: [['坚韧士兵', '士兵生命 +10%'], ['盾墙', '士兵护甲 +20%'], ['快速训练', '士兵复活时间 -20%'], ['老兵', '士兵伤害 +15%'], ['战术集结', '集结范围 +30%，士兵数 +1']] },
+      { name: '法师塔', color: '#7A4BB0', d: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z', ups: [['奥术精通', '法术伤害 +10%'], ['法力汇聚', '攻击速度 +10%'], ['魔力穿透', '降低目标 20% 魔抗'], ['秘法加速', '射程 +15%'], ['大法师之力', '每 5 次攻击触发一次奥术爆发']] },
+      { name: '炮台', color: '#6B5A45', d: 'M12 4 A8 8 0 1 0 12.01 4 Z M16 8 L20 4', ups: [['高爆火药', '爆炸范围 +15%'], ['快速装填', '装填时间 -15%'], ['大口径', '伤害 +20%'], ['燃烧弹', '爆炸处留下 3 秒火焰'], ['震荡波', '爆炸有 20% 几率眩晕']] },
+      { name: '援军', color: '#4E8A3A', d: 'M8 8 A3 3 0 1 0 8.01 8 M16 8 A3 3 0 1 0 16.01 8 M3 20 C3 15 13 15 13 20 M11 20 C11 15 21 15 21 20', ups: [['民兵训练', '援军生命 +20%'], ['更多援军', '每次召唤 +1 名士兵'], ['骑士援军', '援军升级为骑士'], ['弓手援军', '额外召唤 1 名弓手'], ['精锐卫队', '援军持续时间 +50%']] },
+      { name: '火雨', color: '#C4552A', d: 'M14 10 A5 5 0 1 0 14.01 10 M10 6 L3 3 M9 11 L2 12 M12 14 L6 20', ups: [['更多陨石', '陨石数量 +2'], ['灼烧大地', '落点燃烧 4 秒'], ['快速冷却', '冷却时间 -15 秒'], ['巨型陨石', '陨石伤害 +40%'], ['末日火雨', '持续 3 秒的陨石雨']] }
+    ];
+    var st = this.state;
+    var cols = COLS.map(function (c, ci) {
+      var own = st.owned[ci];
+      var nodes = c.ups.map(function (u, ri) {
+        var done = ri < own;
+        var next = ri === own;
+        var on = st.sel[0] === ci && st.sel[1] === ri;
+        var bg = done ? c.color : (next ? '#F3E4C0' : '#E2CB98');
+        var border = on ? '#E9B949' : '#2A1A0E';
+        return {
+          roman: ROMAN[ri], ink: done ? '#FFF3D6' : (next ? '#2A1A0E' : '#A89070'),
+          costText: done ? '✓' : String(COST[ri]),
+          aria: c.name + ' ' + u[0] + (done ? '，已研究' : next ? '，可研究，需要 ' + COST[ri] + ' 星' : '，未解锁'),
+          btn: 'position: relative; width: 48px; height: 48px; border-radius: 50%; background: ' + bg + '; border: 3px solid ' + border + '; box-sizing: border-box; display: flex; align-items: center; justify-content: center;' + (on ? ' box-shadow: 0 0 0 3px #2A1A0E, 0 0 12px #E9B949;' : (next ? ' box-shadow: 0 3px 0 #2A1A0E;' : '')),
+          cost: 'position: absolute; right: -6px; bottom: -4px; min-width: 16px; height: 16px; padding: 0 3px; box-sizing: border-box; border-radius: 8px; background: ' + (done ? '#4E8A3A' : '#E9B949') + '; border: 1.5px solid #2A1A0E; font-family: Cinzel, serif; font-weight: 900; font-size: 9px; line-height: 13px; text-align: center; color: ' + (done ? '#FFFFFF' : '#2A1A0E') + ';',
+          pick: function () { self.setState({ sel: [ci, ri] }); }
+        };
+      });
+      return {
+        name: c.name, d: c.d, nodes: nodes,
+        head: 'position: relative; width: 44px; height: 44px; border-radius: 10px; background: ' + c.color + '; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;',
+        fill: 'position: absolute; left: 50%; top: 60px; width: 4px; margin-left: -2px; background: ' + c.color + '; border-radius: 2px; height: ' + Math.max(0, own * 56) + 'px;'
+      };
+    });
+    var sc = st.sel[0], sr = st.sel[1];
+    var C = COLS[sc];
+    var up = C.ups[sr];
+    var own = st.owned[sc];
+    var done = sr < own, next = sr === own;
+    var can = next && st.stars >= COST[sr];
+    var sel = {
+      name: C.name + ' · ' + up[0], desc: up[1], d: C.d, price: COST[sr],
+      status: done ? '已研究' : (next ? (can ? '可以研究' : '星星不足，去关卡中获取更多星星') : '需先研究上一级'),
+      btnLabel: done ? '已拥有' : '研究',
+      disc: 'width: 48px; height: 48px; flex-shrink: 0; border-radius: 10px; background: ' + C.color + '; border: 2px solid #E9B949; box-sizing: border-box; display: flex; align-items: center; justify-content: center;',
+      btn: 'width: 72px; height: 52px; flex-shrink: 0; border-radius: 10px; border: 3px solid #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; ' + (can ? 'background: #E9B949; color: #2A1A0E; box-shadow: 0 3px 0 #1E120A;' : 'background: #8A7A62; color: #3A2A1A;')
+    };
+    return {
+      cols: cols, sel: sel, stars: st.stars,
+      buy: function () {
+        if (!can) return;
+        var o = self.state.owned.slice(); o[sc] = o[sc] + 1;
+        self.setState({ owned: o, stars: self.state.stars - COST[sr], sel: [sc, Math.min(4, sr + 1)] });
+      },
+      reset: function () {
+        var refund = 0;
+        self.state.owned.forEach(function (n) { for (var i = 0; i < n; i++) refund += COST[i]; });
+        self.setState({ owned: [0, 0, 0, 0, 0, 0], stars: self.state.stars + refund, sel: [0, 0] });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

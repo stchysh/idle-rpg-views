@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>塔防战斗</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1E120A; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+
+  <!-- 顶部 HUD -->
+  <div style="flex-shrink: 0; height: 60px; box-sizing: border-box; padding: 8px 10px; background: #3A2414; border-bottom: 3px solid #A8741A; display: flex; align-items: center; gap: 6px; color: #F3E4C0">
+    <div style="height: 36px; padding: 0 10px 0 6px; border-radius: 18px; background: #1E120A; border: 2px solid #8A5A32; display: flex; align-items: center; gap: 4px">
+      <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 20 L4 12 A4.5 4.5 0 0 1 12 6 A4.5 4.5 0 0 1 20 12 Z" fill="#D8402F" stroke="#2A1A0E" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+      <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 16px">{{lives}}</span>
+    </div>
+    <div style="height: 36px; padding: 0 10px 0 6px; border-radius: 18px; background: #1E120A; border: 2px solid #8A5A32; display: flex; align-items: center; gap: 4px">
+      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#E9B949" stroke="#2A1A0E" stroke-width="1.8"></circle><path d="M12 7 V17 M9.5 9 H14 M9.5 15 H14" stroke="#A8741A" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 16px; color: #FFE7A3">{{gold}}</span>
+    </div>
+    <div style="flex-grow: 1; height: 36px; border-radius: 18px; background: #1E120A; border: 2px solid #8A5A32; display: flex; align-items: center; justify-content: center; gap: 4px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3E4C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 A7 7 0 0 1 19 11 V15 H16 V19 H8 V15 H5 Z"></path></svg>
+      <span style="font-size: 12px; font-weight: 900">波次</span>
+      <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 15px">{{wave}}/15</span>
+    </div>
+    <button aria-label="切换速度" onClick="{{toggleSpeed}}" style="width: 44px; height: 44px; border-radius: 10px; background: #5C3A21; border: 2px solid #A8741A; box-sizing: border-box; font-family: 'Cinzel', serif; font-weight: 900; font-size: 15px; color: #FFE7A3">{{speed}}</button>
+    <button aria-label="暂停" onClick="{{pause}}" style="width: 44px; height: 44px; border-radius: 10px; background: #5C3A21; border: 2px solid #A8741A; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#F3E4C0"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg>
+    </button>
+  </div>
+
+  <!-- 战场 -->
+  <div style="position: relative; flex-grow: 1; overflow: hidden; background: #6E9A45">
+    <svg width="390" height="664" viewBox="0 0 390 664" style="position: absolute; left: 0; top: 0">
+      <rect width="390" height="664" fill="#6E9A45"></rect>
+      <g fill="#7BA84E">
+        <ellipse cx="320" cy="90" rx="80" ry="40"></ellipse>
+        <ellipse cx="90" cy="420" rx="90" ry="50"></ellipse>
+        <ellipse cx="300" cy="600" rx="100" ry="40"></ellipse>
+      </g>
+      <!-- 道路 -->
+      <path d="M200 -20 C200 60 70 70 70 160 C70 250 310 230 310 330 C310 430 80 410 80 500 C80 580 200 590 200 690" fill="none" stroke="#8A5A32" stroke-width="54" stroke-linecap="round"></path>
+      <path d="M200 -20 C200 60 70 70 70 160 C70 250 310 230 310 330 C310 430 80 410 80 500 C80 580 200 590 200 690" fill="none" stroke="#D9B98A" stroke-width="44" stroke-linecap="round"></path>
+      <path d="M200 -20 C200 60 70 70 70 160 C70 250 310 230 310 330 C310 430 80 410 80 500 C80 580 200 590 200 690" fill="none" stroke="#C9A36E" stroke-width="2" stroke-dasharray="4 14"></path>
+      <!-- 树木与石头 -->
+      <g stroke="#2A1A0E" stroke-width="2">
+        <circle cx="30" cy="40" r="16" fill="#3E6B2E"></circle>
+        <circle cx="50" cy="62" r="12" fill="#2F5423"></circle>
+        <circle cx="370" cy="400" r="16" fill="#3E6B2E"></circle>
+        <circle cx="352" cy="424" r="12" fill="#2F5423"></circle>
+        <circle cx="160" cy="430" r="12" fill="#3E6B2E"></circle>
+        <circle cx="360" cy="140" r="11" fill="#2F5423"></circle>
+        <ellipse cx="130" cy="600" rx="12" ry="8" fill="#8C8F96"></ellipse>
+        <ellipse cx="340" cy="530" rx="10" ry="7" fill="#8C8F96"></ellipse>
+      </g>
+      <!-- 城门出口 -->
+      <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M150 664 V630 H160 V638 H172 V630 H184 V638 H196 V630 H208 V638 H220 V630 H232 V638 H244 V630 H250 V664 Z" fill="#B8B2A6"></path>
+        <path d="M180 664 V648 A20 14 0 0 1 220 648 V664 Z" fill="#5C3A21"></path>
+      </g>
+      <!-- 兵营士兵 -->
+      <g stroke="#2A1A0E" stroke-width="2">
+        <circle cx="140" cy="232" r="8" fill="#2F6FB0"></circle>
+        <circle cx="158" cy="244" r="8" fill="#2F6FB0"></circle>
+        <circle cx="124" cy="246" r="8" fill="#2F6FB0"></circle>
+      </g>
+      <!-- 英雄 -->
+      <circle cx="210" cy="420" r="22" fill="none" stroke="#E9B949" stroke-width="2.5" stroke-dasharray="5 5"></circle>
+      <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M198 432 Q199 410 210 410 Q221 410 222 432 Z" fill="#A8322A"></path>
+        <circle cx="210" cy="402" r="9" fill="#F0C9A0"></circle>
+        <path d="M200 400 Q210 386 220 400 L220 396 Q210 384 200 396 Z" fill="#B8B2A6"></path>
+        <path d="M224 424 L236 398" stroke-width="3.5"></path>
+      </g>
+      <!-- 弹道 -->
+      <path d="M250 96 L162 116" stroke="#FFF3D6" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="10 6"></path>
+      <path d="M170 300 Q215 260 262 266" fill="none" stroke="#B98AF0" stroke-width="4" stroke-linecap="round"></path>
+      <circle cx="262" cy="266" r="7" fill="#D9B8FF" stroke="#7A4BB0" stroke-width="2"></circle>
+      <path d="M300 440 Q320 360 300 330" fill="none" stroke="#2A1A0E" stroke-width="2" stroke-dasharray="3 5"></path>
+      <circle cx="300" cy="330" r="12" fill="#FFB347" opacity="0.8"></circle>
+    </svg>
+
+    <!-- 敌人 -->
+    <sc-for list="{{enemies}}" as="e" hint-placeholder-count="8">
+      <div aria-hidden="true" style="{{e.box}}">
+        <span style="{{e.bar}}"><span style="{{e.fillBar}}"></span></span>
+        <svg width="{{e.d}}" height="{{e.d}}" viewBox="0 0 24 24" style="display: block">
+          <circle cx="12" cy="12" r="10.5" fill="{{e.fill}}" stroke="#2A1A0E" stroke-width="2.2"></circle>
+          <circle cx="8.5" cy="10.5" r="1.8" fill="#2A1A0E"></circle>
+          <circle cx="15.5" cy="10.5" r="1.8" fill="#2A1A0E"></circle>
+          <path d="M8 16 H16" stroke="#2A1A0E" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </sc-for>
+
+    <!-- 下一波 -->
+    <button aria-label="提前召唤下一波，奖励金币" onClick="{{callWave}}" style="position: absolute; left: 172px; top: 6px; width: 56px; height: 56px; border-radius: 50%; background: #A8322A; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 3">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 A7 7 0 0 1 19 11 V15 H16 V19 H8 V15 H5 Z M9 11 H9.5 M14.5 11 H15"></path></svg>
+      <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 10px; color: #FFE7A3; line-height: 11px">+{{waveBonus}}</span>
+    </button>
+
+    <!-- 塔位 -->
+    <sc-for list="{{plots}}" as="p" hint-placeholder-count="7">
+      <button aria-label="{{p.aria}}" onClick="{{p.pick}}" style="{{p.pos}}">
+        <sc-if value="{{p.empty}}" hint-placeholder-val="{{true}}">
+          <svg width="56" height="64" viewBox="0 0 56 64">
+            <ellipse cx="28" cy="48" rx="24" ry="12" fill="#8A5A32" stroke="#2A1A0E" stroke-width="2.5"></ellipse>
+            <ellipse cx="28" cy="46" rx="18" ry="8" fill="#6B4226"></ellipse>
+            <path d="M26 46 V26 M26 27 H38 V35 H26" fill="#F3E4C0" stroke="#2A1A0E" stroke-width="2" stroke-linejoin="round"></path>
+          </svg>
+        </sc-if>
+        <sc-if value="{{p.built}}" hint-placeholder-val="{{false}}">
+          <svg width="56" height="64" viewBox="0 0 56 64">
+            <ellipse cx="28" cy="56" rx="24" ry="7" fill="#2A1A0E" opacity="0.3"></ellipse>
+            <path d="M8 56 V50 H48 V56 Z" fill="#8C8F96" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+            <path d="{{p.body}}" fill="{{p.bodyFill}}" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+            <path d="{{p.roof}}" fill="{{p.roofFill}}" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+            <path d="{{p.detail}}" fill="none" stroke="#2A1A0E" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <span style="position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); padding: 0 5px; border-radius: 5px; background: #2A1A0E; font-family: 'Cinzel', serif; font-weight: 900; font-size: 10px; line-height: 14px; color: #FFE7A3; white-space: nowrap">{{p.lvText}}</span>
+        </sc-if>
+      </button>
+    </sc-for>
+
+    <!-- 建造 / 升级 环形菜单 -->
+    <sc-if value="{{menu.open}}" hint-placeholder-val="{{false}}">
+      <div style="{{menu.ring}}"></div>
+      <div style="{{menu.label}}">{{menu.title}}</div>
+      <sc-for list="{{menu.opts}}" as="o" hint-placeholder-count="4">
+        <button aria-label="{{o.aria}}" onClick="{{o.pick}}" style="{{o.pos}}">
+          <span style="{{o.disc}}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{o.d}}"></path></svg>
+          </span>
+          <span style="{{o.tag}}">{{o.cost}}</span>
+        </button>
+      </sc-for>
+    </sc-if>
+  </div>
+
+  <!-- 底部技能栏 -->
+  <div style="flex-shrink: 0; height: 120px; box-sizing: border-box; padding: 10px 8px 14px 8px; background: #3A2414; border-top: 3px solid #A8741A; display: flex; align-items: center; gap: 6px">
+    <a href="Heroes.dc.html" aria-label="英雄 阿尔特，等级 12" style="position: relative; width: 58px; height: 72px; flex-shrink: 0; border-radius: 10px; background: #2F6FB0; border: 3px solid #E9B949; box-sizing: border-box; overflow: hidden; text-decoration: none">
+      <svg width="52" height="52" viewBox="0 0 52 52" style="display: block; margin: 2px auto 0 auto">
+        <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+          <path d="M8 52 Q10 34 26 34 Q42 34 44 52 Z" fill="#A8322A"></path>
+          <circle cx="26" cy="22" r="12" fill="#F0C9A0"></circle>
+          <path d="M13 20 Q26 2 39 20 L39 14 Q26 0 13 14 Z" fill="#B8B2A6"></path>
+        </g>
+      </svg>
+      <span style="position: absolute; left: 3px; right: 3px; bottom: 3px; height: 6px; border-radius: 3px; background: #1E120A; overflow: hidden"><span style="display: block; width: 76%; height: 100%; background: #4E8A3A"></span></span>
+      <span style="position: absolute; left: 2px; top: 1px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 10px; color: #FFE7A3; text-shadow: 0 1px 0 #2A1A0E">12</span>
+    </a>
+    <sc-for list="{{skills}}" as="s" hint-placeholder-count="6">
+      <button aria-label="{{s.aria}}" onClick="{{s.use}}" style="{{s.btn}}">
+        <svg width="{{s.icon}}" height="{{s.icon}}" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.d}}"></path></svg>
+        <sc-if value="{{s.cooling}}" hint-placeholder-val="{{false}}">
+          <span style="{{s.cdMask}}"></span>
+          <span style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-weight: 900; font-size: 14px; color: #FFFFFF; text-shadow: 0 1px 0 #2A1A0E">{{s.cd}}</span>
+        </sc-if>
+        <span style="position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%); white-space: nowrap; font-size: 10px; font-weight: 900; color: #F3E4C0">{{s.label}}</span>
+        <sc-if value="{{s.hasQty}}" hint-placeholder-val="{{false}}">
+          <span style="position: absolute; right: -4px; top: -4px; min-width: 18px; height: 18px; border-radius: 9px; background: #E9B949; border: 2px solid #2A1A0E; box-sizing: border-box; font-family: 'Cinzel', serif; font-weight: 900; font-size: 10px; line-height: 14px; text-align: center">{{s.qty}}</span>
+        </sc-if>
+      </button>
+    </sc-for>
+  </div>
+
+  <!-- 暂停 -->
+  <sc-if value="{{paused}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(30, 18, 10, 0.75); display: flex; align-items: center; justify-content: center; z-index: 10">
+      <div role="dialog" aria-label="暂停" style="width: 300px; box-sizing: border-box; border-radius: 14px; background: #F3E4C0; border: 4px solid #2A1A0E; box-shadow: 0 6px 0 #2A1A0E; padding: 0 18px 18px 18px; display: flex; flex-direction: column; gap: 10px">
+        <div style="align-self: center; margin-top: -22px; padding: 6px 30px; background: #A8322A; border: 3px solid #2A1A0E; border-radius: 6px; font-family: 'ZCOOL XiaoWei', serif; font-size: 24px; color: #FFE7A3; text-shadow: 0 2px 0 #2A1A0E">暂停</div>
+        <span style="text-align: center; font-size: 12px; font-weight: 600; color: #6B4226">第 8 关 · 迷雾沼泽 · 老兵难度</span>
+        <button onClick="{{resume}}" style="height: 50px; border-radius: 10px; background: #4E8A3A; color: #FFF3D6; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; font-size: 17px; font-weight: 900">继续战斗</button>
+        <button onClick="{{restart}}" style="height: 50px; border-radius: 10px; background: #2F6FB0; color: #FFF3D6; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; font-size: 17px; font-weight: 900">重新开始</button>
+        <a href="Result.dc.html" style="height: 50px; border-radius: 10px; background: #E9B949; color: #2A1A0E; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">跳到结算（演示）</a>
+        <a href="Main.dc.html" style="height: 50px; border-radius: 10px; background: #A8322A; color: #FFF3D6; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">退出到地图</a>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = this.initial();
+  }
+  initial() {
+    return {
+      gold: 420, wave: 3, lives: 18, speed: 1, paused: false, sel: null,
+      plots: [
+        { id: 'A', x: 250, y: 110, t: 'archer', lv: 2 },
+        { id: 'G', x: 330, y: 220, t: null, lv: 0 },
+        { id: 'B', x: 160, y: 320, t: 'mage', lv: 1 },
+        { id: 'C', x: 60, y: 300, t: 'barracks', lv: 1 },
+        { id: 'D', x: 300, y: 460, t: 'artillery', lv: 1 },
+        { id: 'E', x: 230, y: 560, t: null, lv: 0 },
+        { id: 'F', x: 60, y: 600, t: null, lv: 0 }
+      ],
+      used: {}
+    };
+  }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var TOWERS = {
+      archer: { name: '弓箭塔', cost: 70, body: 'M16 50 L20 22 H36 L40 50 Z', roof: 'M13 24 L28 5 L43 24 Z', detail: 'M24 32 H32 M24 40 H32', bodyFill: '#8A5A32', roofFill: '#A8322A', icon: 'M4 20 L20 4 M20 4 H14 M20 4 V10 M4 20 L7 14 M4 20 L10 17', color: '#8A5A32' },
+      barracks: { name: '兵营', cost: 70, body: 'M8 50 V28 H48 V50 Z', roof: 'M4 30 L28 12 L52 30 Z', detail: 'M24 50 V40 A4 4 0 0 1 32 40 V50', bodyFill: '#B8B2A6', roofFill: '#2F6FB0', icon: 'M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z', color: '#2F6FB0' },
+      mage: { name: '法师塔', cost: 100, body: 'M18 50 L21 24 H35 L38 50 Z', roof: 'M15 26 L28 2 L41 26 Z', detail: 'M28 34 A3 3 0 1 0 28.01 34', bodyFill: '#7A4BB0', roofFill: '#3A2A6A', icon: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z', color: '#7A4BB0' },
+      artillery: { name: '炮台', cost: 125, body: 'M10 50 V34 H46 V50 Z', roof: 'M18 34 L40 18 L45 25 L25 38 Z', detail: 'M16 42 H40', bodyFill: '#6B5A45', roofFill: '#2A1A0E', icon: 'M12 4 A8 8 0 1 0 12.01 4 Z M16 8 L20 4', color: '#6B5A45' }
+    };
+    var ORDER = ['archer', 'barracks', 'mage', 'artillery'];
+    var selPlot = null;
+    var plots = st.plots.map(function (p) {
+      var T = p.t ? TOWERS[p.t] : null;
+      if (st.sel === p.id) selPlot = p;
+      return {
+        empty: !T, built: !!T,
+        aria: T ? T.name + ' 等级 ' + p.lv + '，点击升级或出售' : '空塔位，点击建造',
+        body: T ? T.body : '', roof: T ? T.roof : '', detail: T ? T.detail : '', bodyFill: T ? T.bodyFill : '', roofFill: T ? T.roofFill : '',
+        lvText: T ? (p.lv >= 4 ? 'MAX' : 'Lv' + p.lv) : '',
+        pos: 'position: absolute; left: ' + (p.x - 28) + 'px; top: ' + (p.y - 44) + 'px; width: 56px; height: 64px; z-index: 2;' + (st.sel === p.id ? ' filter: drop-shadow(0 0 6px #FFE7A3);' : ''),
+        pick: function () { self.setState({ sel: self.state.sel === p.id ? null : p.id }); }
+      };
+    });
+    var setPlot = function (id, patch, goldDelta) {
+      var next = self.state.plots.map(function (q) { return q.id === id ? Object.assign({}, q, patch) : q; });
+      self.setState({ plots: next, gold: self.state.gold + goldDelta, sel: null });
+    };
+    var menu = { open: false, opts: [] };
+    if (selPlot) {
+      var cx = Math.max(80, Math.min(310, selPlot.x));
+      var cy = Math.max(80, Math.min(580, selPlot.y - 12));
+      var offs = [[-50, -50], [50, -50], [-50, 50], [50, 50]];
+      var mk = function (i, d, cost, color, ok, aria, fn, isSell) {
+        return {
+          d: d, cost: cost, aria: aria,
+          pos: 'position: absolute; left: ' + (cx + offs[i][0] - 24) + 'px; top: ' + (cy + offs[i][1] - 24) + 'px; width: 48px; height: 60px; z-index: 6; display: flex; flex-direction: column; align-items: center;' + (ok ? '' : ' opacity: 0.55;'),
+          disc: 'width: 48px; height: 48px; border-radius: 50%; background: ' + color + '; border: 3px solid ' + (ok ? '#E9B949' : '#6B5A45') + '; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;',
+          tag: 'margin-top: -6px; padding: 0 5px; border-radius: 5px; background: ' + (isSell ? '#4E8A3A' : '#2A1A0E') + '; font-family: Cinzel, serif; font-weight: 900; font-size: 11px; line-height: 15px; color: #FFE7A3;',
+          pick: function () { if (ok) fn(); }
+        };
+      };
+      var opts = [];
+      var title;
+      if (!selPlot.t) {
+        title = '建造防御塔';
+        ORDER.forEach(function (k, i) {
+          var T = TOWERS[k];
+          var ok = st.gold >= T.cost;
+          opts.push(mk(i, T.icon, String(T.cost), T.color, ok, '建造' + T.name + '，花费 ' + T.cost + ' 金币', function () { setPlot(selPlot.id, { t: k, lv: 1 }, -T.cost); }));
+        });
+      } else {
+        var T = TOWERS[selPlot.t];
+        var upCost = 60 + selPlot.lv * 50;
+        var maxed = selPlot.lv >= 4;
+        var refund = Math.round((T.cost + (selPlot.lv - 1) * 80) * 0.6);
+        title = T.name + ' Lv' + selPlot.lv;
+        opts.push(mk(0, 'M12 20 V6 M6 12 L12 6 L18 12', maxed ? '满级' : String(upCost), '#4E8A3A', !maxed && st.gold >= upCost, '升级，花费 ' + upCost + ' 金币', function () { setPlot(selPlot.id, { lv: selPlot.lv + 1 }, -upCost); }));
+        opts.push(mk(1, 'M12 2 A10 10 0 1 0 12.01 2 Z M12 8 V12 L15 14', '信息', '#2F6FB0', true, '查看塔的属性', function () { self.setState({ sel: null }); }));
+        opts.push(mk(2, 'M4 12 H20 M4 12 L9 7 M4 12 L9 17', '关闭', '#6B5A45', true, '关闭菜单', function () { self.setState({ sel: null }); }));
+        opts.push(mk(3, 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V17 M9.5 9 H14 M9.5 15 H14', '+' + refund, '#A8741A', true, '出售，返还 ' + refund + ' 金币', function () { setPlot(selPlot.id, { t: null, lv: 0 }, refund); }, true));
+      }
+      menu = {
+        open: true, title: title, opts: opts,
+        ring: 'position: absolute; left: ' + (cx - 80) + 'px; top: ' + (cy - 80) + 'px; width: 160px; height: 160px; border-radius: 50%; border: 3px dashed #FFE7A3; background: rgba(30, 18, 10, 0.35); box-sizing: border-box; z-index: 5; pointer-events: none;',
+        label: 'position: absolute; left: ' + (cx - 60) + 'px; top: ' + (cy - 10) + 'px; width: 120px; text-align: center; font-size: 12px; font-weight: 900; color: #FFF3D6; text-shadow: 0 1px 0 #2A1A0E, 0 -1px 0 #2A1A0E, 1px 0 0 #2A1A0E, -1px 0 0 #2A1A0E; z-index: 5; pointer-events: none;'
+      };
+    }
+    var enemyDefs = [
+      [196, 30, 11, '#7BBF4A', 1], [150, 70, 10, '#7BBF4A', 0.8], [96, 120, 14, '#4E7A3A', 0.6],
+      [80, 190, 10, '#7BBF4A', 1], [150, 230, 13, '#8C8F96', 0.9], [250, 262, 15, '#4E7A3A', 0.4],
+      [296, 300, 11, '#7BBF4A', 0.7], [300, 360, 18, '#6B4A7A', 0.85]
+    ];
+    var enemies = enemyDefs.map(function (e) {
+      var d = e[2] * 2;
+      return {
+        d: d, fill: e[3],
+        box: 'position: absolute; left: ' + (e[0] - e[2]) + 'px; top: ' + (e[1] - e[2] - 9) + 'px; width: ' + d + 'px; display: flex; flex-direction: column; align-items: center; gap: 3px; z-index: 1; pointer-events: none;',
+        bar: 'display: block; width: 24px; height: 6px; border-radius: 3px; background: #2A1A0E; padding: 1px; box-sizing: border-box;',
+        fillBar: 'display: block; height: 100%; border-radius: 2px; background: #D8402F; width: ' + Math.round(e[4] * 100) + '%;'
+      };
+    });
+    var used = st.used;
+    var sk = function (key, label, d, color, size, cdPct, cdText, qty) {
+      var cooling = !!used[key] || cdPct > 0;
+      var pct = used[key] ? 100 : cdPct;
+      return {
+        label: label, d: d, icon: size > 46 ? 26 : 22, aria: label + (cooling ? '，冷却中' : '，可使用') + (qty != null ? '，剩余 ' + qty : ''),
+        cooling: cooling, cd: used[key] ? '30s' : cdText, hasQty: qty != null, qty: qty,
+        btn: 'position: relative; width: ' + size + 'px; height: ' + size + 'px; flex-shrink: 0; border-radius: ' + (qty != null ? '10px' : '50%') + '; background: ' + color + '; border: 3px solid #E9B949; box-shadow: 0 3px 0 #1E120A; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: visible;',
+        cdMask: 'position: absolute; left: 0; bottom: 0; width: 100%; height: ' + pct + '%; background: rgba(30, 18, 10, 0.65); border-radius: inherit;',
+        use: function () { if (!cooling) { var u = Object.assign({}, self.state.used); u[key] = true; self.setState({ used: u }); } }
+      };
+    };
+    var skills = [
+      sk('slash', '圣光斩', 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20', '#A8322A', 46, 0, '', null),
+      sk('shield', '守护', 'M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z', '#2F6FB0', 46, 60, '8s', null),
+      sk('reinf', '援军', 'M8 8 A3 3 0 1 0 8.01 8 M16 8 A3 3 0 1 0 16.01 8 M3 20 C3 15 13 15 13 20 M11 20 C11 15 21 15 21 20', '#4E8A3A', 50, 0, '', null),
+      sk('meteor', '火雨', 'M14 10 A5 5 0 1 0 14.01 10 M10 6 L3 3 M9 11 L2 12 M12 14 L6 20', '#C4552A', 50, 40, '24s', null),
+      sk('freeze', '冰冻', 'M12 2 V22 M3 7 L21 17 M21 7 L3 17', '#3E8FB8', 42, 0, '', 3),
+      sk('bomb', '炸药', 'M11 21 A7 7 0 1 0 11.01 7 Z M14 8 L17 5 M17 5 L20 4', '#6B5A45', 42, 0, '', 2)
+    ];
+    return {
+      gold: st.gold, wave: st.wave, lives: st.lives, speed: st.speed === 1 ? '1x' : '2x', paused: st.paused,
+      waveBonus: 18, plots: plots, menu: menu, enemies: enemies, skills: skills,
+      callWave: function () { if (self.state.wave < 15) self.setState({ wave: self.state.wave + 1, gold: self.state.gold + 18 }); },
+      toggleSpeed: function () { self.setState({ speed: self.state.speed === 1 ? 2 : 1 }); },
+      pause: function () { self.setState({ paused: true, sel: null }); },
+      resume: function () { self.setState({ paused: false }); },
+      restart: function () { self.setState(self.initial()); }
+    };
+  }
+}
+</script>
+</body>
+</html>

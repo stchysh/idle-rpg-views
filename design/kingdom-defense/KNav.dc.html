@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>底部导航</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<nav aria-label="主导航" style="width: 390px; height: 80px; box-sizing: border-box; padding: 0 6px 8px 6px; background: #3A2414; border-top: 3px solid #A8741A; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; align-items: end; font-family: 'Noto Serif SC', serif">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+    <a href="{{t.href}}" aria-label="{{t.label}}" style="{{t.style}}">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.d}}"></path></svg>
+      <span style="font-size: 12px; font-weight: 900; color: {{t.ink}}">{{t.label}}</span>
+      <sc-if value="{{t.dot}}" hint-placeholder-val="{{false}}">
+        <span style="position: absolute; top: 4px; right: 12px; width: 11px; height: 11px; border-radius: 50%; background: #D8402F; border: 2px solid #2A1A0E"></span>
+      </sc-if>
+    </a>
+  </sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["map","heroes","tech","shop","codex"],"default":"map"},"$preview":{"width":390,"height":80}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var active = this.props.active ?? 'map';
+    var defs = [
+      { id: 'map', label: '地图', href: 'Main.dc.html', d: 'M3 6 L9 4 L15 6 L21 4 V18 L15 20 L9 18 L3 20 Z M9 4 V18 M15 6 V20' },
+      { id: 'heroes', label: '英雄', href: 'Heroes.dc.html', d: 'M5 20 V11 A7 7 0 0 1 19 11 V20 H14 V14 H10 V20 Z M12 4 V2 M8 11 H16', dot: true },
+      { id: 'tech', label: '科技', href: 'Tech.dc.html', d: 'M14 4 L20 10 L17 13 L11 7 Z M12.5 8.5 L4 17 L7 20 L15.5 11.5', dot: true },
+      { id: 'shop', label: '商店', href: 'Shop.dc.html', d: 'M8 4 H16 L14 8 C19 10 20 14 20 16 C20 20 16 21 12 21 C8 21 4 20 4 16 C4 14 5 10 10 8 Z M9 8 H15' },
+      { id: 'codex', label: '图鉴', href: 'Codex.dc.html', d: 'M4 4 H10 A2 2 0 0 1 12 6 V20 A2 2 0 0 0 10 18 H4 Z M20 4 H14 A2 2 0 0 0 12 6 V20 A2 2 0 0 1 14 18 H20 Z' }
+    ];
+    return {
+      tabs: defs.map(function (t) {
+        var on = t.id === active;
+        var base = 'position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; box-sizing: border-box; text-decoration: none; border-radius: 12px 12px 8px 8px;';
+        return {
+          href: t.href, label: t.label, d: t.d, dot: !!t.dot && !on,
+          ink: on ? '#2A1A0E' : '#C9A96A',
+          style: on
+            ? base + ' height: 74px; transform: translateY(-6px); background: #F3E4C0; border: 3px solid #E9B949; box-shadow: 0 0 0 2px #2A1A0E, 0 4px 0 #2A1A0E;'
+            : base + ' height: 60px; border: 3px solid transparent;'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

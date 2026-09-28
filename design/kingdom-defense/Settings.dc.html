@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>设置</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+input,select{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 12px 14px 0 14px">
+    <a href="Main.dc.html" aria-label="返回地图" style="width: 44px; height: 44px; border-radius: 10px; background: #5C3A21; border: 2px solid #A8741A; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3E4C0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+    </a>
+    <h1 style="margin: 0; flex-grow: 1; font-family: 'ZCOOL XiaoWei', serif; font-weight: 400; font-size: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #000000">设置</h1>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 12px 24px 12px; display: flex; flex-direction: column; gap: 12px">
+    <!-- 领主 -->
+    <div style="flex-shrink: 0; border-radius: 12px; background: #5C3A21; border: 3px solid #A8741A; padding: 12px; display: flex; align-items: center; gap: 12px; color: #F3E4C0">
+      <svg width="56" height="56" viewBox="0 0 44 44"><path d="M4 4 H40 V22 C40 33 31 40 22 42 C13 40 4 33 4 22 Z" fill="#2F6FB0" stroke="#E9B949" stroke-width="3" stroke-linejoin="round"></path><path d="M22 10 L25 18 H33 L27 23 L29 31 L22 26 L15 31 L17 23 L11 18 H19 Z" fill="#E9B949" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 16px; font-weight: 900; color: #FFE7A3">领主 · 铁壁守望者</span>
+        <span style="font-size: 12px; font-weight: 600">ID 20394817 · 等级 18</span>
+      </div>
+      <button style="height: 40px; padding: 0 12px; border-radius: 8px; background: #E9B949; color: #2A1A0E; border: 2px solid #2A1A0E; box-sizing: border-box; font-size: 13px; font-weight: 900">改名</button>
+    </div>
+
+    <!-- 声音与操作 -->
+    <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 4px 14px; display: flex; flex-direction: column">
+      <sc-for list="{{toggles}}" as="t" hint-placeholder-count="4">
+        <div style="min-height: 52px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed #C9A96A">
+          <span style="font-size: 14px; font-weight: 900">{{t.label}}</span>
+          <button role="switch" aria-checked="{{t.checked}}" aria-label="{{t.label}}" onClick="{{t.flip}}" style="{{t.track}}">
+            <span style="{{t.knob}}"></span>
+          </button>
+        </div>
+      </sc-for>
+      <div style="min-height: 56px; display: flex; align-items: center; gap: 12px">
+        <label for="vol" style="font-size: 14px; font-weight: 900; white-space: nowrap">音量</label>
+        <input id="vol" type="range" min="0" max="100" value="{{volume}}" onChange="{{setVolume}}" style="flex-grow: 1; accent-color: #A8741A; height: 24px">
+        <span style="width: 32px; text-align: right; font-family: 'Cinzel', serif; font-weight: 900; font-size: 13px">{{volume}}</span>
+      </div>
+    </div>
+
+    <!-- 画面与语言 -->
+    <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 14px; font-weight: 900">画质</span>
+      <div role="radiogroup" aria-label="画质" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+        <sc-for list="{{quality}}" as="q" hint-placeholder-count="3">
+          <button role="radio" aria-checked="{{q.on}}" onClick="{{q.pick}}" style="{{q.style}}">{{q.label}}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px">
+        <label for="lang" style="font-size: 14px; font-weight: 900">语言</label>
+        <select id="lang" style="flex-grow: 1; height: 44px; border-radius: 8px; border: 2px solid #2A1A0E; background: #FFF8E6; padding: 0 10px; font-size: 14px; font-weight: 600; color: #2A1A0E">
+          <option>简体中文</option>
+          <option>繁體中文</option>
+          <option>English</option>
+          <option>日本語</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 兑换码 -->
+    <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+      <label for="code" style="font-size: 14px; font-weight: 900">兑换码</label>
+      <div style="display: flex; gap: 8px">
+        <input id="code" type="text" placeholder="输入礼包兑换码" value="{{code}}" onChange="{{setCode}}" style="flex-grow: 1; min-width: 0; height: 44px; box-sizing: border-box; border-radius: 8px; border: 2px solid #2A1A0E; background: #FFF8E6; padding: 0 10px; font-size: 14px; color: #2A1A0E">
+        <button onClick="{{redeem}}" style="height: 44px; padding: 0 16px; border-radius: 8px; background: #4E8A3A; color: #FFF3D6; border: 2px solid #2A1A0E; box-shadow: 0 2px 0 #2A1A0E; box-sizing: border-box; font-size: 14px; font-weight: 900">兑换</button>
+      </div>
+      <sc-if value="{{hasMsg}}" hint-placeholder-val="{{false}}">
+        <span style="font-size: 12px; font-weight: 600; color: {{msgInk}}">{{msg}}</span>
+      </sc-if>
+    </div>
+
+    <!-- 其他 -->
+    <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 4px 14px; display: flex; flex-direction: column">
+      <sc-for list="{{links}}" as="l" hint-placeholder-count="4">
+        <button style="min-height: 50px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed #C9A96A; font-size: 14px; font-weight: 900; text-align: left">
+          <span>{{l.label}}</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #6B4226">{{l.note}}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B4226" stroke-width="3" stroke-linecap="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <button style="flex-shrink: 0; height: 50px; border-radius: 10px; background: #A8322A; color: #FFF3D6; border: 3px solid #1E120A; box-shadow: 0 3px 0 #000000; box-sizing: border-box; font-size: 15px; font-weight: 900">退出登录</button>
+    <span style="flex-shrink: 0; text-align: center; font-size: 11px; font-weight: 600; color: #8A7A62">版本 1.0.0</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { on: { music: true, sfx: true, vibrate: false, battery: false }, volume: 70, quality: 1, code: '', msg: '' };
+  }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var toggles = [['music', '背景音乐'], ['sfx', '音效'], ['vibrate', '震动反馈'], ['battery', '省电模式']].map(function (t) {
+      var on = !!st.on[t[0]];
+      return {
+        label: t[1], checked: on ? 'true' : 'false',
+        track: 'position: relative; width: 56px; height: 32px; border-radius: 16px; border: 2px solid #2A1A0E; box-sizing: border-box; background: ' + (on ? '#4E8A3A' : '#C9B89A') + ';',
+        knob: 'position: absolute; top: 2px; left: ' + (on ? 26 : 2) + 'px; width: 24px; height: 24px; border-radius: 50%; background: #FFF8E6; border: 2px solid #2A1A0E; box-sizing: border-box;',
+        flip: function () { var o = Object.assign({}, self.state.on); o[t[0]] = !o[t[0]]; self.setState({ on: o }); }
+      };
+    });
+    var quality = ['流畅', '标准', '高清'].map(function (q, i) {
+      var on = i === st.quality;
+      return {
+        label: q, on: on ? 'true' : 'false',
+        pick: function () { self.setState({ quality: i }); },
+        style: 'height: 44px; border-radius: 8px; border: 2px solid #2A1A0E; box-sizing: border-box; font-size: 14px; font-weight: 900; ' + (on ? 'background: #2A1A0E; color: #FFE7A3;' : 'background: #FFF8E6; color: #4A2E18;')
+      };
+    });
+    var links = [
+      { label: '账号绑定', note: '未绑定' },
+      { label: '联系客服', note: '' },
+      { label: '用户协议', note: '' },
+      { label: '隐私政策', note: '' }
+    ];
+    return {
+      toggles: toggles, quality: quality, links: links, volume: st.volume, code: st.code,
+      hasMsg: !!st.msg, msg: st.msg, msgInk: st.msg.indexOf('成功') >= 0 ? '#4E8A3A' : '#A8322A',
+      setVolume: function (e) { self.setState({ volume: Number(e.target.value) }); },
+      setCode: function (e) { self.setState({ code: e.target.value }); },
+      redeem: function () {
+        var c = (self.state.code || '').trim();
+        self.setState({ msg: c ? '兑换成功，奖励已发送至邮箱' : '请输入兑换码' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

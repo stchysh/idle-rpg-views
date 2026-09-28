@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>世界地图</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1E120A; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; height: 60px"><dc-import name="KTop" hint-size="390px,60px"></dc-import></div>
+
+  <!-- 地图 -->
+  <div style="position: relative; flex-grow: 1; overflow: hidden">
+    <svg width="390" height="704" viewBox="0 0 390 704" style="position: absolute; left: 0; top: 0">
+      <rect width="390" height="704" fill="{{th.ground}}"></rect>
+      <ellipse cx="90" cy="520" rx="110" ry="60" fill="{{th.patch}}"></ellipse>
+      <ellipse cx="320" cy="360" rx="100" ry="70" fill="{{th.patch}}"></ellipse>
+      <ellipse cx="200" cy="190" rx="130" ry="50" fill="{{th.patch}}"></ellipse>
+      <!-- 河流 -->
+      <path d="M-10 250 C60 270 110 330 190 350 S330 330 400 400" fill="none" stroke="{{th.riverEdge}}" stroke-width="26" stroke-linecap="round"></path>
+      <path d="M-10 250 C60 270 110 330 190 350 S330 330 400 400" fill="none" stroke="{{th.river}}" stroke-width="18" stroke-linecap="round"></path>
+      <rect x="176" y="336" width="34" height="28" rx="3" fill="#8A5A32" stroke="#2A1A0E" stroke-width="2.5"></rect>
+      <path d="M180 342 V358 M188 342 V358 M196 342 V358 M204 342 V358" stroke="#5C3A21" stroke-width="2"></path>
+      <!-- 山脉 -->
+      <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M0 110 L40 40 L80 110 Z" fill="{{th.mtn}}"></path>
+        <path d="M50 110 L100 20 L150 110 Z" fill="{{th.mtn}}"></path>
+        <path d="M300 120 L345 45 L390 120 Z" fill="{{th.mtn}}"></path>
+      </g>
+      <path d="M88 42 L100 20 L112 42 L104 38 L100 44 L95 38 Z M34 50 L40 40 L46 50 L40 47 Z M337 58 L345 45 L353 58 L345 54 Z" fill="#F4F7FA"></path>
+      <!-- 森林 -->
+      <g stroke="#2A1A0E" stroke-width="2">
+        <circle cx="330" cy="560" r="16" fill="{{th.tree}}"></circle>
+        <circle cx="352" cy="578" r="14" fill="{{th.treeDark}}"></circle>
+        <circle cx="312" cy="584" r="13" fill="{{th.tree}}"></circle>
+        <circle cx="30" cy="400" r="15" fill="{{th.tree}}"></circle>
+        <circle cx="52" cy="418" r="12" fill="{{th.treeDark}}"></circle>
+        <circle cx="350" cy="220" r="15" fill="{{th.tree}}"></circle>
+        <circle cx="370" cy="244" r="12" fill="{{th.treeDark}}"></circle>
+        <circle cx="150" cy="460" r="12" fill="{{th.treeDark}}"></circle>
+        <circle cx="30" cy="180" r="13" fill="{{th.tree}}"></circle>
+      </g>
+      <!-- 行军路线 -->
+      <path d="M40 690 C60 650 70 640 80 620 S140 575 170 580 S260 615 270 600 S330 540 320 510 S260 455 230 450 S140 440 120 420 S60 360 80 330 S150 290 180 280 S280 270 290 250 S270 170 250 150" fill="none" stroke="{{th.roadEdge}}" stroke-width="12" stroke-linecap="round"></path>
+      <path d="M40 690 C60 650 70 640 80 620 S140 575 170 580 S260 615 270 600 S330 540 320 510 S260 455 230 450 S140 440 120 420 S60 360 80 330 S150 290 180 280 S280 270 290 250 S270 170 250 150" fill="none" stroke="{{th.road}}" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 10"></path>
+      <!-- 王城 -->
+      <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M6 704 V660 H16 V668 H26 V660 H36 V668 H46 V660 H56 V704 Z" fill="#B8B2A6"></path>
+        <path d="M22 704 V688 A9 9 0 0 1 40 688 V704 Z" fill="#5C3A21"></path>
+        <path d="M31 660 V640 L44 646 L31 652" fill="#2F6FB0"></path>
+      </g>
+      <!-- 敌方堡垒 -->
+      <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M218 150 V100 L232 86 L246 100 L260 86 L274 100 L288 86 V150 Z" fill="#4A3A48"></path>
+        <path d="M244 150 V130 A9 9 0 0 1 262 130 V150 Z" fill="#1E120A"></path>
+        <path d="M253 86 V60 L270 66 L253 72" fill="#A8322A"></path>
+      </g>
+    </svg>
+
+    <!-- 章节切换 -->
+    <div style="position: absolute; left: 0; top: 10px; width: 390px; display: flex; align-items: center; justify-content: center; gap: 8px; z-index: 2">
+      <button aria-label="上一章" onClick="{{prev}}" style="width: 44px; height: 44px; border-radius: 50%; background: #5C3A21; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: {{prevOp}}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3E4C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+      </button>
+      <div style="position: relative; height: 48px; min-width: 206px; box-sizing: border-box; padding: 0 22px; background: #A8322A; border: 3px solid #2A1A0E; border-radius: 6px; box-shadow: 0 3px 0 #2A1A0E; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <span style="font-size: 11px; font-weight: 600; color: #F3E4C0; letter-spacing: 2px">{{th.no}}</span>
+        <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 20px; line-height: 22px; color: #FFE7A3; text-shadow: 0 2px 0 #2A1A0E">{{th.name}}</span>
+      </div>
+      <button aria-label="下一章" onClick="{{next}}" style="width: 44px; height: 44px; border-radius: 50%; background: #5C3A21; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: {{nextOp}}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3E4C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+      </button>
+    </div>
+
+    <!-- 关卡节点 -->
+    <sc-for list="{{nodes}}" as="n" hint-placeholder-count="10">
+      <a href="{{n.href}}" aria-label="{{n.aria}}" style="{{n.pos}}">
+        <span style="{{n.disc}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{n.ink}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{n.icon}}"></path></svg>
+        </span>
+        <span style="{{n.label}}">{{n.no}}</span>
+        <span style="display: flex; gap: 1px; height: 12px">
+          <sc-for list="{{n.stars}}" as="s" hint-placeholder-count="3">
+            <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="{{s}}" stroke="#2A1A0E" stroke-width="2"></path></svg>
+          </sc-for>
+        </span>
+      </a>
+    </sc-for>
+
+    <!-- 未解锁遮罩 -->
+    <sc-if value="{{th.locked}}" hint-placeholder-val="{{false}}">
+      <div style="position: absolute; left: 0; top: 0; width: 390px; height: 100%; background: rgba(30, 18, 10, 0.55); display: flex; align-items: center; justify-content: center">
+        <div style="padding: 14px 20px; border-radius: 12px; background: #F3E4C0; border: 3px solid #2A1A0E; box-shadow: 0 4px 0 #2A1A0E; display: flex; align-items: center; gap: 10px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11 V8 A4 4 0 0 1 16 8 V11"></path></svg>
+          <span style="font-size: 15px; font-weight: 900">{{th.lockText}}</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- 右侧入口 -->
+    <div style="position: absolute; right: 8px; top: 74px; display: flex; flex-direction: column; gap: 10px; z-index: 2">
+      <a href="Summon.dc.html" aria-label="招募英雄" style="position: relative; width: 56px; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none">
+        <span style="width: 50px; height: 50px; border-radius: 50%; background: #7A4BB0; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z"></path></svg>
+        </span>
+        <span style="padding: 0 6px; border-radius: 6px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #FFE7A3">招募</span>
+        <span style="position: absolute; top: -2px; right: 2px; width: 12px; height: 12px; border-radius: 50%; background: #D8402F; border: 2px solid #2A1A0E"></span>
+      </a>
+      <a href="Quests.dc.html" aria-label="每日任务" style="position: relative; width: 56px; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none">
+        <span style="width: 50px; height: 50px; border-radius: 50%; background: #4E8A3A; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3 H17 A2 2 0 0 1 17 7 H16 V19 A2 2 0 0 1 14 21 H5 A2 2 0 0 1 5 17 H6 Z M9 10 L11 12 L14 9"></path></svg>
+        </span>
+        <span style="padding: 0 6px; border-radius: 6px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #FFE7A3">任务</span>
+      </a>
+      <a href="Shop.dc.html" aria-label="限时礼包" style="position: relative; width: 56px; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none">
+        <span style="width: 50px; height: 50px; border-radius: 50%; background: #A8322A; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 H21 V13 H3 Z M5 13 V21 H19 V13 M12 9 V21 M12 9 C9 3 5 5 7.5 9 M12 9 C15 3 19 5 16.5 9"></path></svg>
+        </span>
+        <span style="padding: 0 6px; border-radius: 6px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #FFE7A3">礼包</span>
+      </a>
+    </div>
+
+    <!-- 章节星数 -->
+    <div style="position: absolute; left: 12px; bottom: 12px; right: 12px; height: 56px; box-sizing: border-box; border-radius: 12px; background: #F3E4C0; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; padding: 0 6px 0 12px; display: flex; align-items: center; gap: 10px; z-index: 2">
+      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="#E9B949" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 12px; font-weight: 900">本章星数 <span style="font-family: 'Cinzel', serif">{{th.got}}/30</span></span>
+        <div style="height: 8px; border-radius: 4px; background: #C9A96A; overflow: hidden">
+          <div style="width: {{th.pct}}%; height: 100%; background: #A8741A"></div>
+        </div>
+      </div>
+      <button style="height: 44px; padding: 0 12px; border-radius: 10px; background: #E9B949; border: 2px solid #2A1A0E; box-shadow: 0 2px 0 #2A1A0E; box-sizing: border-box; font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 4px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="2.2" stroke-linejoin="round"><path d="M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 M10 10 H14 V14 H10 Z"></path></svg>
+        星级宝箱
+      </button>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; height: 80px"><dc-import name="KNav" active="map" hint-size="390px,80px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { ch: 0 };
+  }
+  renderVals() {
+    var self = this;
+    var THEMES = [
+      { no: '第一章', name: '翠绿林地', ground: '#7BA84E', patch: '#6A9A42', tree: '#3E6B2E', treeDark: '#2F5423', mtn: '#8C8F96', river: '#4E8FC9', riverEdge: '#2F5F8F', road: '#F3E4C0', roadEdge: '#8A5A32', done: 7, locked: false },
+      { no: '第二章', name: '冰霜山脉', ground: '#DCE7EE', patch: '#C6D6E2', tree: '#3E6B5E', treeDark: '#2F4F48', mtn: '#7E8AA0', river: '#7FB6DE', riverEdge: '#4F7EA6', road: '#FFFFFF', roadEdge: '#7E8AA0', done: 0, locked: true, lockText: '通关第一章后解锁' },
+      { no: '第三章', name: '灼热荒漠', ground: '#D9B26A', patch: '#C99D55', tree: '#6E7F34', treeDark: '#4F5E22', mtn: '#A8744A', river: '#4E9FC9', riverEdge: '#2F6F8F', road: '#F3E4C0', roadEdge: '#8A5A32', done: 0, locked: true, lockText: '通关第二章后解锁' }
+    ];
+    var idx = this.state.ch;
+    var th = THEMES[idx];
+    var pts = [[80, 620], [170, 580], [270, 600], [320, 510], [230, 450], [120, 420], [80, 330], [180, 280], [290, 250], [250, 150]];
+    var starPat = [3, 3, 2, 3, 1, 3, 2, 0, 0, 0];
+    var FLAG = 'M6 21 V4 M6 5 H17 L14 9 L17 13 H6';
+    var SKULL = 'M5 11 A7 7 0 0 1 19 11 V15 H16 V19 H8 V15 H5 Z M9 11 H9.5 M14.5 11 H15';
+    var LOCK = 'M5 11 H19 V21 H5 Z M8 11 V8 A4 4 0 0 1 16 8 V11';
+    var got = 0;
+    var nodes = pts.map(function (p, i) {
+      var done = i < th.done;
+      var cur = !th.locked && i === th.done;
+      var boss = i === pts.length - 1;
+      var st = done ? starPat[i] : 0;
+      got += st;
+      var stars = [];
+      for (var k = 0; k < 3; k++) stars.push(k < st ? '#E9B949' : (done || cur ? '#6B5A45' : 'transparent'));
+      var bg = done ? '#A8322A' : (cur ? '#E9B949' : '#8C8F96');
+      var ring = cur ? ' box-shadow: 0 0 0 4px #FFE7A3, 0 0 0 7px #2A1A0E, 0 4px 0 7px #2A1A0E;' : ' box-shadow: 0 3px 0 #2A1A0E;';
+      var size = boss ? 52 : 44;
+      return {
+        no: boss ? 'BOSS' : String(i + 1),
+        href: done || cur ? 'StageInfo.dc.html' : '#',
+        aria: '第 ' + (i + 1) + ' 关' + (done ? '，已获得 ' + st + ' 星' : cur ? '，当前关卡' : '，未解锁'),
+        icon: boss ? SKULL : (done || cur ? FLAG : LOCK),
+        ink: cur ? '#2A1A0E' : '#FFF3D6',
+        stars: stars,
+        pos: 'position: absolute; left: ' + (p[0] - 30) + 'px; top: ' + (p[1] - size / 2) + 'px; width: 60px; display: flex; flex-direction: column; align-items: center; gap: 1px; text-decoration: none; z-index: 1;',
+        disc: 'width: ' + size + 'px; height: ' + size + 'px; border-radius: 50%; background: ' + bg + '; border: 3px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;' + ring,
+        label: 'margin-top: -6px; padding: 0 5px; border-radius: 5px; background: #2A1A0E; font-family: Cinzel, serif; font-weight: 900; font-size: 10px; line-height: 14px; color: ' + (cur ? '#FFE7A3' : '#F3E4C0') + ';'
+      };
+    });
+    th = Object.assign({}, th, { got: got, pct: Math.round(got / 30 * 100) });
+    return {
+      th: th, nodes: nodes,
+      prevOp: idx === 0 ? 0.4 : 1, nextOp: idx === THEMES.length - 1 ? 0.4 : 1,
+      prev: function () { if (self.state.ch > 0) self.setState({ ch: self.state.ch - 1 }); },
+      next: function () { if (self.state.ch < THEMES.length - 1) self.setState({ ch: self.state.ch + 1 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

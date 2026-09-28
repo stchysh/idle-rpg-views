@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>英雄</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; height: 60px"><dc-import name="KTop" hint-size="390px,60px"></dc-import></div>
+
+  <!-- 英雄详情 -->
+  <div style="flex-shrink: 0; margin: 12px 12px 0 12px; border-radius: 14px; background: #F3E4C0; border: 4px solid #1E120A; box-shadow: inset 0 0 0 3px #E2CB98; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; gap: 12px">
+      <div style="{{h.portrait}}">
+        <svg width="120" height="130" viewBox="0 0 52 56" style="display: block">
+          <ellipse cx="26" cy="54" rx="18" ry="3" fill="#1E120A" opacity="0.35"></ellipse>
+          <g stroke="#2A1A0E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M6 54 Q8 34 26 34 Q44 34 46 54 Z" fill="{{h.armor}}"></path>
+            <path d="M18 36 H34 V50 H18 Z" fill="{{h.trim}}"></path>
+            <circle cx="26" cy="22" r="11" fill="#F0C9A0"></circle>
+            <path d="{{h.head}}" fill="{{h.headFill}}"></path>
+            <path d="{{h.weapon}}" fill="none" stroke="{{h.weaponInk}}" stroke-width="3"></path>
+          </g>
+          <circle cx="22" cy="23" r="1.4" fill="#2A1A0E"></circle>
+          <circle cx="30" cy="23" r="1.4" fill="#2A1A0E"></circle>
+        </svg>
+        <span style="position: absolute; left: 6px; top: 6px; padding: 0 6px; border-radius: 5px; background: rgba(30, 18, 10, 0.8); font-size: 10px; font-weight: 900; color: #FFE7A3">{{h.role}}</span>
+      </div>
+      <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 12px; font-weight: 600; color: #6B4226">{{h.title}}</span>
+        <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 28px; line-height: 30px">{{h.name}}</span>
+        <div style="display: flex; align-items: center; gap: 6px">
+          <span style="padding: 0 6px; border-radius: 5px; background: #2A1A0E; font-family: 'Cinzel', serif; font-weight: 900; font-size: 12px; color: #FFE7A3">LV {{h.lv}}</span>
+          <div style="flex-grow: 1; height: 8px; border-radius: 4px; background: #C9A96A; overflow: hidden"><div style="width: {{h.xp}}%; height: 100%; background: #4E8A3A"></div></div>
+        </div>
+        <sc-for list="{{h.stats}}" as="s" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 6px">
+            <span style="width: 30px; font-size: 11px; font-weight: 900">{{s.k}}</span>
+            <div style="flex-grow: 1; height: 10px; border-radius: 5px; background: #E2CB98; border: 1.5px solid #2A1A0E; overflow: hidden"><div style="{{s.bar}}"></div></div>
+            <span style="width: 30px; text-align: right; font-family: 'Cinzel', serif; font-weight: 900; font-size: 12px">{{s.v}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <span style="font-size: 13px; font-weight: 900">技能</span>
+      <span style="font-size: 11px; font-weight: 600; color: #6B4226">可用技能点 <span style="font-family: 'Cinzel', serif; font-weight: 900; color: #A8322A">3</span></span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{h.skills}}" as="k" hint-placeholder-count="4">
+        <button aria-label="{{k.aria}}" style="height: 70px; border-radius: 10px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px">
+          <span style="{{k.disc}}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{k.d}}"></path></svg>
+          </span>
+          <span style="font-size: 10px; font-weight: 900">{{k.name}}</span>
+          <span style="display: flex; gap: 2px">
+            <sc-for list="{{k.pips}}" as="p" hint-placeholder-count="3">
+              <span style="{{p}}"></span>
+            </sc-for>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+    <sc-if value="{{h.owned}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex; gap: 8px">
+        <button onClick="{{levelUp}}" style="flex-grow: 1; flex-basis: 0; height: 48px; border-radius: 10px; background: #4E8A3A; color: #FFF3D6; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15">
+          <span style="font-size: 15px; font-weight: 900">升级</span>
+          <span style="font-size: 10px; font-weight: 600; color: #DDEFC8">经验书 ×{{h.cost}}</span>
+        </button>
+        <button onClick="{{deploy}}" style="{{deployBtn}}">{{deployLabel}}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{h.locked}}" hint-placeholder-val="{{false}}">
+      <a href="{{h.unlockHref}}" style="height: 48px; border-radius: 10px; background: #E9B949; color: #2A1A0E; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 900; text-decoration: none">{{h.unlockText}}</a>
+    </sc-if>
+  </div>
+
+  <!-- 英雄列表 -->
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 0 14px">
+    <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 20px; color: #FFE7A3">英雄殿堂 <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 14px; color: #C9A96A">{{ownedCount}}/12</span></span>
+    <a href="Summon.dc.html" style="height: 36px; padding: 0 12px; border-radius: 10px; background: #7A4BB0; border: 2px solid #E9B949; box-sizing: border-box; display: flex; align-items: center; font-size: 13px; font-weight: 900; color: #FFF3D6; text-decoration: none">招募英雄</a>
+  </div>
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 10px 12px 14px 12px">
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{roster}}" as="r" hint-placeholder-count="12">
+        <button aria-label="{{r.aria}}" onClick="{{r.pick}}" style="{{r.card}}">
+          <svg width="56" height="60" viewBox="0 0 52 56" style="display: block">
+            <g stroke="#2A1A0E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M6 56 Q8 36 26 36 Q44 36 46 56 Z" fill="{{r.armor}}"></path>
+              <circle cx="26" cy="24" r="11" fill="{{r.skin}}"></circle>
+              <path d="{{r.head}}" fill="{{r.headFill}}"></path>
+            </g>
+          </svg>
+          <span style="width: 100%; padding: 2px 0; background: rgba(30, 18, 10, 0.8); font-size: 11px; font-weight: 900; color: #FFF3D6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.name}}</span>
+          <span style="{{r.tag}}">{{r.tagText}}</span>
+          <sc-if value="{{r.deployed}}" hint-placeholder-val="{{false}}">
+            <span style="position: absolute; right: -4px; top: -4px; padding: 0 4px; border-radius: 5px; background: #D8402F; border: 2px solid #2A1A0E; font-size: 9px; font-weight: 900; color: #FFFFFF">出战</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; height: 80px"><dc-import name="KNav" active="heroes" hint-size="390px,80px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 0, deployed: 0, lv: {} };
+  }
+  renderVals() {
+    var self = this;
+    var HEAD = {
+      helm: 'M13 22 Q26 2 39 22 L39 15 Q26 1 13 15 Z',
+      hood: 'M11 28 Q26 -6 41 28 L37 20 Q26 6 15 20 Z',
+      hat: 'M10 16 H42 L26 -4 Z',
+      horns: 'M14 14 L8 2 L18 11 M38 14 L44 2 L34 11 M15 16 Q26 6 37 16',
+      hair: 'M14 24 Q13 9 26 9 Q39 9 38 24 L34 16 Q26 12 18 16 Z',
+      crown: 'M15 14 L17 6 L21 11 L26 4 L31 11 L35 6 L37 14 Z'
+    };
+    var WEAPON = {
+      sword: 'M40 48 L50 22 M37 42 L45 45',
+      bow: 'M44 18 Q54 34 44 50 M44 18 V50',
+      staff: 'M44 54 V16 M44 12 A3 3 0 1 0 44.01 12',
+      axe: 'M42 54 L48 22 M44 22 Q54 24 50 34 Z'
+    };
+    var SK = {
+      slash: 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20',
+      shield: 'M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z',
+      heal: 'M12 5 V19 M5 12 H19',
+      arrow: 'M4 20 L20 4 M20 4 H14 M20 4 V10',
+      fire: 'M12 21 C6 21 5 15 8 11 C9 14 11 14 11 12 C11 8 13 5 15 3 C15 8 19 10 19 15 C19 19 16 21 12 21 Z',
+      bolt: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z',
+      star: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z',
+      roar: 'M4 12 H8 M6 6 L9 9 M6 18 L9 15 M12 6 A6 6 0 0 1 12 18'
+    };
+    var HEROES = [
+      { name: '阿尔特', title: '王国圣骑士', role: '近战 · 坦克', bg: '#2F6FB0', armor: '#B8B2A6', trim: '#A8322A', head: 'helm', headFill: '#8C8F96', weapon: 'sword', wInk: '#E2E6EA', lv: 12, stats: [62, 88, 80, 40], skills: [['圣光斩', 'slash', 3], ['守护', 'shield', 2], ['治愈', 'heal', 1], ['嘲讽', 'roar', 0]] },
+      { name: '希尔薇', title: '精灵游侠', role: '远程 · 输出', bg: '#4E8A3A', armor: '#3E6B2E', trim: '#C9A96A', head: 'hood', headFill: '#2F5423', weapon: 'bow', wInk: '#8A5A32', lv: 10, stats: [78, 50, 36, 86], skills: [['多重箭', 'arrow', 3], ['疾风', 'bolt', 1], ['荆棘', 'star', 1], ['鹰眼', 'arrow', 0]] },
+      { name: '墨林', title: '奥术大法师', role: '法术 · 群伤', bg: '#7A4BB0', armor: '#3A2A6A', trim: '#E9B949', head: 'hat', headFill: '#3A2A6A', weapon: 'staff', wInk: '#8A5A32', lv: 9, stats: [92, 42, 30, 50], skills: [['奥术弹', 'star', 2], ['时间静止', 'bolt', 1], ['传送', 'star', 1], ['陨石', 'fire', 0]] },
+      { name: '格罗姆', title: '兽人战将', role: '近战 · 控制', bg: '#A8744A', armor: '#6B4226', trim: '#4E7A3A', head: 'horns', headFill: '#8C8F96', weapon: 'axe', wInk: '#6B5A45', lv: 8, stats: [80, 76, 60, 44], skills: [['旋风斧', 'slash', 2], ['战吼', 'roar', 2], ['冲锋', 'bolt', 0], ['嗜血', 'fire', 0]] },
+      { name: '伊莎', title: '烈焰女巫', role: '法术 · 持续', bg: '#C4552A', armor: '#7A2A1A', trim: '#E9B949', head: 'hair', headFill: '#A8322A', weapon: 'staff', wInk: '#2A1A0E', lv: 7, stats: [86, 40, 28, 58], skills: [['火球', 'fire', 2], ['烈焰地', 'fire', 1], ['爆燃', 'star', 0], ['凤凰', 'fire', 0]] },
+      { name: '托林', title: '矮人工匠', role: '远程 · 建造', bg: '#8A5A32', armor: '#5C3A21', trim: '#E9B949', head: 'helm', headFill: '#A8741A', weapon: 'axe', wInk: '#8C8F96', lv: 6, stats: [64, 70, 72, 34], skills: [['炮台', 'star', 1], ['地雷', 'fire', 1], ['修理', 'heal', 0], ['钢铁意志', 'shield', 0]] },
+      { name: '露娜', title: '月之祭司', role: '辅助 · 治疗', bg: '#3E8FB8', armor: '#DCE7EE', trim: '#7A4BB0', head: 'hair', headFill: '#DCE7EE', weapon: 'staff', wInk: '#E9B949', lv: 5, stats: [48, 60, 40, 62], skills: [['月光', 'star', 2], ['治愈', 'heal', 2], ['净化', 'heal', 0], ['星陨', 'fire', 0]] },
+      { name: '萨卡', title: '暗影刺客', role: '近战 · 爆发', bg: '#3A2A3A', armor: '#1E120A', trim: '#6B4A7A', head: 'hood', headFill: '#1E120A', weapon: 'sword', wInk: '#B8B2A6', lock: '钻石 480 解锁', href: 'Shop.dc.html', stats: [90, 46, 34, 92], skills: [['背刺', 'slash', 0], ['隐身', 'star', 0], ['毒刃', 'fire', 0], ['影分身', 'star', 0]] },
+      { name: '奥瑞恩', title: '远古巨龙', role: '飞行 · 群伤', bg: '#A8322A', armor: '#6E2A1A', trim: '#E9B949', head: 'horns', headFill: '#E9B949', weapon: 'staff', wInk: '#E9B949', lock: '钻石 980 解锁', href: 'Shop.dc.html', stats: [98, 90, 70, 70], skills: [['龙息', 'fire', 0], ['俯冲', 'bolt', 0], ['龙鳞', 'shield', 0], ['龙威', 'roar', 0]] },
+      { name: '索尔', title: '雷霆之子', role: '近战 · 群伤', bg: '#2F4F8F', armor: '#8C8F96', trim: '#E9B949', head: 'helm', headFill: '#E9B949', weapon: 'axe', wInk: '#E9B949', lock: '钻石 680 解锁', href: 'Shop.dc.html', stats: [88, 72, 58, 50], skills: [['雷击', 'bolt', 0], ['雷锤', 'slash', 0], ['雷盾', 'shield', 0], ['风暴', 'bolt', 0]] },
+      { name: '骸骨王', title: '亡者之主', role: '召唤 · 控制', bg: '#4A3A48', armor: '#2E2A30', trim: '#8C8F96', head: 'crown', headFill: '#E9B949', weapon: 'staff', wInk: '#B8B2A6', lock: '万圣活动获得', href: 'Quests.dc.html', stats: [70, 64, 50, 40], skills: [['骷髅兵', 'star', 0], ['恐惧', 'roar', 0], ['吸魂', 'heal', 0], ['亡灵潮', 'star', 0]] },
+      { name: '塞拉', title: '圣光女神', role: '辅助 · 全体', bg: '#E9B949', armor: '#F3E4C0', trim: '#E9B949', head: 'crown', headFill: '#FFF3D6', weapon: 'staff', wInk: '#FFF3D6', lock: '招募获得', href: 'Summon.dc.html', stats: [60, 80, 50, 60], skills: [['圣光', 'star', 0], ['祝福', 'heal', 0], ['审判', 'bolt', 0], ['复活', 'heal', 0]] }
+    ];
+    var st = this.state;
+    var lvOf = function (i) { return st.lv[i] != null ? st.lv[i] : HEROES[i].lv; };
+    var hd = HEROES[st.sel];
+    var owned = !hd.lock;
+    var h = {
+      name: hd.name, title: hd.title, role: hd.role, armor: hd.armor, trim: hd.trim, head: HEAD[hd.head], headFill: hd.headFill,
+      weapon: WEAPON[hd.weapon], weaponInk: hd.wInk, owned: owned, locked: !owned,
+      lv: owned ? lvOf(st.sel) : 1, xp: owned ? 35 + (lvOf(st.sel) * 7) % 60 : 0, cost: owned ? lvOf(st.sel) * 2 : 0,
+      unlockText: hd.lock || '', unlockHref: hd.href || '#',
+      portrait: 'position: relative; width: 120px; height: 150px; flex-shrink: 0; border-radius: 10px; background: ' + hd.bg + '; border: 3px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: flex-end; justify-content: center; overflow: hidden;' + (owned ? '' : ' filter: grayscale(0.7);'),
+      stats: ['攻击', '生命', '护甲', '速度'].map(function (k, i) {
+        var v = hd.stats[i];
+        var c = ['#A8322A', '#4E8A3A', '#6B5A45', '#2F6FB0'][i];
+        return { k: k, v: v, bar: 'width: ' + v + '%; height: 100%; background: ' + c + ';' };
+      }),
+      skills: hd.skills.map(function (s) {
+        var pips = [];
+        for (var i = 0; i < 3; i++) pips.push('display: block; width: 8px; height: 8px; transform: rotate(45deg); border: 1.5px solid #2A1A0E; background: ' + (i < s[2] ? '#E9B949' : '#F3E4C0') + ';');
+        return {
+          name: s[0], d: SK[s[1]], pips: pips, aria: s[0] + '，等级 ' + s[2] + ' / 3',
+          disc: 'width: 32px; height: 32px; border-radius: 50%; background: ' + (s[2] > 0 ? hd.bg : '#8C8F96') + '; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;'
+        };
+      })
+    };
+    var isDeployed = st.deployed === st.sel;
+    var roster = HEROES.map(function (r, i) {
+      var on = i === st.sel;
+      var own = !r.lock;
+      return {
+        name: r.name, armor: own ? r.armor : '#5A5560', skin: own ? '#F0C9A0' : '#8C8F96', head: HEAD[r.head], headFill: own ? r.headFill : '#5A5560',
+        deployed: i === st.deployed,
+        aria: r.name + (own ? '，等级 ' + lvOf(i) : '，未解锁') + (i === st.deployed ? '，出战中' : ''),
+        tagText: own ? 'Lv ' + lvOf(i) : '未解锁',
+        tag: 'position: absolute; left: 3px; top: 3px; padding: 0 4px; border-radius: 4px; background: rgba(30, 18, 10, 0.8); font-family: Cinzel, serif; font-weight: 900; font-size: 9px; color: ' + (own ? '#FFE7A3' : '#C9A96A') + ';',
+        card: 'position: relative; height: 92px; border-radius: 10px; background: ' + (own ? r.bg : '#3A3438') + '; border: 3px solid ' + (on ? '#E9B949' : '#1E120A') + '; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; overflow: visible;' + (on ? ' box-shadow: 0 0 0 2px #1E120A, 0 0 12px #E9B949;' : ''),
+        pick: function () { self.setState({ sel: i }); }
+      };
+    });
+    return {
+      h: h, roster: roster, ownedCount: HEROES.filter(function (x) { return !x.lock; }).length,
+      deployLabel: isDeployed ? '出战中' : '设为出战',
+      deployBtn: 'flex-grow: 1; flex-basis: 0; height: 48px; border-radius: 10px; border: 3px solid #2A1A0E; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (isDeployed ? 'background: #C9A96A; color: #4A2E18;' : 'background: #E9B949; color: #2A1A0E; box-shadow: 0 3px 0 #2A1A0E;'),
+      levelUp: function () { var l = Object.assign({}, self.state.lv); l[self.state.sel] = Math.min(20, lvOf(self.state.sel) + 1); self.setState({ lv: l }); },
+      deploy: function () { self.setState({ deployed: self.state.sel }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

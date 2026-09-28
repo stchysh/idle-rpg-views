@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>图鉴</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; height: 60px"><dc-import name="KTop" hint-size="390px,60px"></dc-import></div>
+
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 0 14px">
+    <h1 style="margin: 0; font-family: 'ZCOOL XiaoWei', serif; font-weight: 400; font-size: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #000000">王国图鉴</h1>
+    <span style="font-size: 12px; font-weight: 600; color: #C9A96A">已收录 <span style="font-family: 'Cinzel', serif; font-weight: 900; color: #FFE7A3">{{found}}/16</span></span>
+  </div>
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 10px 12px 0 12px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <!-- 详情 -->
+  <div style="flex-shrink: 0; margin: 10px 12px 0 12px; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 12px; display: flex; gap: 12px">
+    <div style="{{d.art}}">
+      <sc-if value="{{d.isFoe}}" hint-placeholder-val="{{true}}">
+        <svg width="80" height="80" viewBox="0 0 24 24"><circle cx="12" cy="13" r="9" fill="{{d.fill}}" stroke="#2A1A0E" stroke-width="1.5"></circle><circle cx="9" cy="12" r="1.3" fill="#2A1A0E"></circle><circle cx="15" cy="12" r="1.3" fill="#2A1A0E"></circle><path d="M9 16.5 H15" stroke="#2A1A0E" stroke-width="1.2" stroke-linecap="round"></path><path d="{{d.hat}}" fill="{{d.hatFill}}" stroke="#2A1A0E" stroke-width="1.2" stroke-linejoin="round"></path></svg>
+      </sc-if>
+      <sc-if value="{{d.isTower}}" hint-placeholder-val="{{false}}">
+        <svg width="76" height="86" viewBox="0 0 56 64">
+          <path d="M8 58 V52 H48 V58 Z" fill="#8C8F96" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+          <path d="{{d.body}}" fill="{{d.bodyFill}}" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+          <path d="{{d.roof}}" fill="{{d.roofFill}}" stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round"></path>
+        </svg>
+      </sc-if>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; align-items: baseline; gap: 6px">
+        <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; line-height: 24px">{{d.name}}</span>
+        <span style="font-size: 11px; font-weight: 600; color: #6B4226">{{d.kind}}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px">
+        <sc-for list="{{d.stats}}" as="s" hint-placeholder-count="4">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; border-bottom: 1px dashed #C9A96A">
+            <span style="color: #6B4226">{{s.k}}</span><span style="font-weight: 900">{{s.v}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size: 12px; line-height: 17px; font-weight: 600; color: #4A2E18">{{d.note}}</span>
+    </div>
+  </div>
+
+  <!-- 列表 -->
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 10px 12px 14px 12px">
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{entries}}" as="e" hint-placeholder-count="16">
+        <button aria-label="{{e.aria}}" onClick="{{e.pick}}" style="{{e.card}}">
+          <sc-if value="{{e.known}}" hint-placeholder-val="{{true}}">
+            <sc-if value="{{e.isFoe}}" hint-placeholder-val="{{true}}">
+              <svg width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="13" r="9" fill="{{e.fill}}" stroke="#2A1A0E" stroke-width="1.8"></circle><circle cx="9" cy="12" r="1.4" fill="#2A1A0E"></circle><circle cx="15" cy="12" r="1.4" fill="#2A1A0E"></circle><path d="{{e.hat}}" fill="{{e.hatFill}}" stroke="#2A1A0E" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+            </sc-if>
+            <sc-if value="{{e.isTower}}" hint-placeholder-val="{{false}}">
+              <svg width="40" height="46" viewBox="0 0 56 64">
+                <path d="M8 58 V52 H48 V58 Z" fill="#8C8F96" stroke="#2A1A0E" stroke-width="3"></path>
+                <path d="{{e.body}}" fill="{{e.bodyFill}}" stroke="#2A1A0E" stroke-width="3" stroke-linejoin="round"></path>
+                <path d="{{e.roof}}" fill="{{e.roofFill}}" stroke="#2A1A0E" stroke-width="3" stroke-linejoin="round"></path>
+              </svg>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{e.unknown}}" hint-placeholder-val="{{false}}">
+            <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 28px; color: #8A7A62">?</span>
+          </sc-if>
+          <span style="font-size: 10px; font-weight: 900; white-space: nowrap; color: {{e.ink}}">{{e.label}}</span>
+          <sc-if value="{{e.isNew}}" hint-placeholder-val="{{false}}">
+            <span style="position: absolute; right: -4px; top: -4px; width: 11px; height: 11px; border-radius: 50%; background: #D8402F; border: 2px solid #2A1A0E"></span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; height: 80px"><dc-import name="KNav" active="codex" hint-size="390px,80px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'foes', sel: { foes: 1, towers: 0 } };
+  }
+  renderVals() {
+    var self = this;
+    var HAT = { none: '', helm: 'M4 10 Q12 0 20 10 Z', horn: 'M5 8 L3 2 L8 6 M19 8 L21 2 L16 6', hood: 'M3 13 Q12 -4 21 13 L18 9 Q12 2 6 9 Z', crown: 'M6 7 L7 2 L10 5 L12 1 L14 5 L17 2 L18 7 Z', ear: 'M4 8 L2 2 L8 5 M20 8 L22 2 L16 5' };
+    var FOES = [
+      ['哥布林', '#7BBF4A', 'none', '#6B5A45', '小型 · 地面', '80', '无', '无', '快', '1-3', '数量众多，行动迅速。', '第 1 关'],
+      ['兽人战士', '#4E7A3A', 'helm', '#8C8F96', '中型 · 地面', '300', '中', '无', '中', '6-10', '厚重的铁盔提供额外护甲，魔法对其更有效。', '第 2 关'],
+      ['野狼', '#8C8F96', 'ear', '#6B5A45', '小型 · 地面', '120', '无', '低', '很快', '2-4', '会闪避 30% 的物理攻击。', '第 3 关'],
+      ['哥布林萨满', '#6B9A4A', 'hood', '#6B4A7A', '小型 · 施法', '160', '无', '高', '中', '治疗', '周期性治疗周围的友军。', '第 4 关'],
+      ['巨魔', '#5E7A5A', 'none', '#6B5A45', '大型 · 地面', '900', '低', '低', '慢', '20-30', '生命值每秒快速再生。', '第 5 关'],
+      ['暗影弓手', '#6B4A7A', 'hood', '#2A1A2A', '中型 · 远程', '220', '低', '中', '中', '10-14', '在远处射击士兵与英雄。', '第 6 关'],
+      ['骷髅兵', '#DCD6C8', 'none', '#6B5A45', '中型 · 亡灵', '200', '中', '高', '中', '8-12', '被击倒后有几率重新站起。', '第 7 关'],
+      ['食人魔', '#A8744A', 'horn', '#E2CB98', '大型 · 地面', '1600', '中', '无', '慢', '40-60', '一次重击可击飞多名士兵。', '第 8 关', true],
+      ['沼泽怪', '#5A7A6A', 'none', '#3E6B2E', '中型 · 地面', '480', '无', '中', '慢', '12-18', '死亡时分裂成两只小沼泽怪。', '第 8 关', true],
+      ['狼骑兵', '#4E7A3A', 'ear', '#8C8F96', '中型 · 骑乘', '420', '中', '无', '很快', '14-20', '能冲过士兵的阻拦。', '第 9 关'],
+      ['吸血蝙蝠', '#4A3A48', 'ear', '#2A1A2A', '小型 · 飞行', '150', '无', '无', '快', '4-6', '飞行单位，兵营无法阻挡。', '第 9 关'],
+      ['兽人巫医', '#4E7A3A', 'hood', '#A8322A', '中型 · 施法', '360', '低', '高', '中', '诅咒', '为友军施加护盾。', '第 10 关'],
+      ['石像鬼', '#8C8F96', 'horn', '#6B5A45', '中型 · 飞行', '520', '高', '中', '中', '10-16', '石化状态下免疫物理伤害。', '第 11 关']
+    ];
+    var TOWERS = [
+      ['弓箭塔 I', '#8A5A32', '#A8322A', 'archer', '物理 · 单体', '4-6', '中', '快', '70', '基础远程防御塔，攻速较快。'],
+      ['弓箭塔 II', '#8A5A32', '#A8322A', 'archer', '物理 · 单体', '7-11', '中', '快', '110', '更坚固的木塔，射程提升。'],
+      ['弓箭塔 III', '#6B4226', '#A8322A', 'archer', '物理 · 单体', '10-16', '远', '快', '160', '精英弓手驻守。'],
+      ['游侠之塔', '#3E6B2E', '#2F5423', 'archer', '物理 · 毒素', '13-19', '远', '很快', '230', '双倍射击并附带持续毒素伤害。'],
+      ['兵营 I', '#B8B2A6', '#2F6FB0', 'barracks', '士兵 · 阻挡', '1-3', '集结', '—', '70', '派出 3 名民兵阻挡敌人。'],
+      ['兵营 II', '#B8B2A6', '#2F6FB0', 'barracks', '士兵 · 阻挡', '3-4', '集结', '—', '110', '步兵装备更好的盔甲。'],
+      ['兵营 III', '#B8B2A6', '#2F4F8F', 'barracks', '士兵 · 阻挡', '6-10', '集结', '—', '160', '骑士拥有高护甲。'],
+      ['圣骑士殿', '#F3E4C0', '#E9B949', 'barracks', '士兵 · 治疗', '12-20', '集结', '—', '230', '圣骑士可自我治疗并嘲讽敌人。'],
+      ['法师塔 I', '#7A4BB0', '#3A2A6A', 'mage', '魔法 · 单体', '9-17', '中', '慢', '100', '无视护甲的魔法攻击。'],
+      ['法师塔 II', '#7A4BB0', '#3A2A6A', 'mage', '魔法 · 单体', '23-43', '中', '慢', '160', '更强大的奥术能量。'],
+      ['法师塔 III', '#5A3A90', '#2A1A5A', 'mage', '魔法 · 单体', '40-74', '中', '慢', '240', '大法师坐镇。'],
+      ['奥术塔', '#3A6AB0', '#E9B949', 'mage', '魔法 · 瞬杀', '76-140', '远', '慢', '300', '有几率直接消灭目标。'],
+      ['炮台 I', '#6B5A45', '#2A1A0E', 'artillery', '物理 · 范围', '8-15', '中', '很慢', '125', '炮弹对一片区域造成伤害。'],
+      ['炮台 II', '#6B5A45', '#2A1A0E', 'artillery', '物理 · 范围', '15-23', '中', '很慢', '220', '更大口径的火炮。'],
+      ['炮台 III', '#4A3A30', '#2A1A0E', 'artillery', '物理 · 范围', '25-45', '中', '很慢', '320', '重型迫击炮。'],
+      ['雷霆塔', '#8C8F96', '#3E8FB8', 'artillery', '魔法 · 连锁', '30-60', '中', '慢', '375', '闪电在敌人之间连锁跳跃。']
+    ];
+    var SHAPE = {
+      archer: { body: 'M16 52 L20 24 H36 L40 52 Z', roof: 'M13 26 L28 6 L43 26 Z' },
+      barracks: { body: 'M8 52 V30 H48 V52 Z', roof: 'M4 32 L28 14 L52 32 Z' },
+      mage: { body: 'M18 52 L21 26 H35 L38 52 Z', roof: 'M15 28 L28 3 L41 28 Z' },
+      artillery: { body: 'M10 52 V36 H46 V52 Z', roof: 'M18 36 L40 20 L45 27 L25 40 Z' }
+    };
+    var st = this.state;
+    var tab = st.tab;
+    var entries = [];
+    var detail;
+    if (tab === 'foes') {
+      for (var i = 0; i < 16; i++) {
+        (function (i) {
+          var f = FOES[i];
+          var known = !!f;
+          var on = i === st.sel.foes;
+          entries.push({
+            known: known, unknown: !known, isFoe: true, isTower: false, isNew: known && !!f[12],
+            fill: known ? f[1] : '', hat: known ? HAT[f[2]] : '', hatFill: known ? f[3] : '',
+            label: known ? f[0] : '???', ink: known ? '#2A1A0E' : '#8A7A62',
+            aria: known ? f[0] : '未发现的敌人',
+            card: 'position: relative; height: 80px; border-radius: 10px; background: ' + (known ? '#F3E4C0' : '#4A3A2A') + '; border: 3px solid ' + (on ? '#E9B949' : '#1E120A') + '; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;' + (on ? ' box-shadow: 0 0 0 2px #1E120A, 0 0 10px #E9B949;' : ''),
+            pick: function () { if (known) { var s = Object.assign({}, self.state.sel); s.foes = i; self.setState({ sel: s }); } }
+          });
+        })(i);
+      }
+      var f = FOES[st.sel.foes];
+      detail = {
+        isFoe: true, isTower: false, name: f[0], kind: f[4], fill: f[1], hat: HAT[f[2]], hatFill: f[3],
+        stats: [{ k: '生命', v: f[5] }, { k: '护甲', v: f[6] }, { k: '魔抗', v: f[7] }, { k: '速度', v: f[8] }, { k: '伤害', v: f[9] }, { k: '首次出现', v: f[11] }],
+        note: f[10]
+      };
+    } else {
+      TOWERS.forEach(function (t, i) {
+        var known = i % 4 !== 3 || i === 3;
+        var on = i === st.sel.towers;
+        var sh = SHAPE[t[3]];
+        entries.push({
+          known: known, unknown: !known, isFoe: false, isTower: true, isNew: false,
+          body: sh.body, roof: sh.roof, bodyFill: t[1], roofFill: t[2],
+          label: known ? t[0] : '???', ink: known ? '#2A1A0E' : '#8A7A62', aria: known ? t[0] : '未解锁的防御塔',
+          card: 'position: relative; height: 80px; border-radius: 10px; background: ' + (known ? '#F3E4C0' : '#4A3A2A') + '; border: 3px solid ' + (on ? '#E9B949' : '#1E120A') + '; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;' + (on ? ' box-shadow: 0 0 0 2px #1E120A, 0 0 10px #E9B949;' : ''),
+          pick: function () { if (known) { var s = Object.assign({}, self.state.sel); s.towers = i; self.setState({ sel: s }); } }
+        });
+      });
+      var t = TOWERS[st.sel.towers];
+      var sh = SHAPE[t[3]];
+      detail = {
+        isFoe: false, isTower: true, name: t[0], kind: t[4], body: sh.body, roof: sh.roof, bodyFill: t[1], roofFill: t[2],
+        stats: [{ k: '伤害', v: t[5] }, { k: '射程', v: t[6] }, { k: '攻速', v: t[7] }, { k: '造价', v: t[8] }],
+        note: t[9]
+      };
+    }
+    detail.art = 'width: 96px; height: 110px; flex-shrink: 0; border-radius: 10px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;';
+    var tabs = [['foes', '敌人'], ['towers', '防御塔']].map(function (d) {
+      var on = d[0] === tab;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: d[0] }); },
+        style: 'height: 40px; border-radius: 10px 10px 4px 4px; border: 3px solid #1E120A; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (on ? 'background: #F3E4C0; color: #2A1A0E; box-shadow: inset 0 -3px 0 #E9B949;' : 'background: #5C3A21; color: #C9A96A;')
+      };
+    });
+    return {
+      tabs: tabs, entries: entries, d: detail,
+      found: tab === 'foes' ? FOES.length : entries.filter(function (e) { return e.known; }).length
+    };
+  }
+}
+</script>
+</body>
+</html>

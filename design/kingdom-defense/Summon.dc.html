@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>英雄招募</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #231634; font-family: 'Noto Serif SC', serif; color: #F3E4C0">
+  <!-- 法阵背景 -->
+  <svg width="390" height="844" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0">
+    <circle cx="195" cy="360" r="170" fill="none" stroke="#5A3A8A" stroke-width="3"></circle>
+    <circle cx="195" cy="360" r="140" fill="none" stroke="#5A3A8A" stroke-width="1.5" stroke-dasharray="6 8"></circle>
+    <path d="M195 190 L343 445 H47 Z M195 530 L47 275 H343 Z" fill="none" stroke="#4A2E78" stroke-width="2"></path>
+    <circle cx="195" cy="360" r="90" fill="#2E1E48"></circle>
+  </svg>
+
+  <div style="position: relative; flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 12px 14px 0 14px">
+    <a href="Main.dc.html" aria-label="返回地图" style="width: 44px; height: 44px; border-radius: 10px; background: #5C3A21; border: 2px solid #A8741A; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F3E4C0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+    </a>
+    <h1 style="margin: 0; flex-grow: 1; font-family: 'ZCOOL XiaoWei', serif; font-weight: 400; font-size: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #000000">英雄招募</h1>
+    <span style="height: 34px; padding: 0 10px 0 6px; border-radius: 17px; background: #1E120A; border: 2px solid #A8741A; display: flex; align-items: center; gap: 4px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 14px">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path></svg>{{gems}}
+    </span>
+  </div>
+
+  <div role="tablist" style="position: relative; flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 12px 14px 0 14px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <!-- UP 英雄 -->
+  <div style="position: relative; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+    <span style="padding: 2px 12px; border-radius: 10px; background: #A8322A; border: 2px solid #E9B949; font-size: 12px; font-weight: 900; color: #FFE7A3">{{pool.tag}}</span>
+    <svg width="180" height="200" viewBox="0 0 52 56">
+      <ellipse cx="26" cy="54" rx="18" ry="3" fill="#000000" opacity="0.4"></ellipse>
+      <g stroke="#2A1A0E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M6 54 Q8 34 26 34 Q44 34 46 54 Z" fill="{{pool.armor}}"></path>
+        <path d="M18 36 H34 V50 H18 Z" fill="{{pool.trim}}"></path>
+        <circle cx="26" cy="22" r="11" fill="#F0C9A0"></circle>
+        <path d="{{pool.head}}" fill="{{pool.headFill}}"></path>
+        <path d="M44 54 V16 M44 12 A3 3 0 1 0 44.01 12" fill="none" stroke="{{pool.trim}}" stroke-width="2.6"></path>
+      </g>
+      <circle cx="22" cy="23" r="1.3" fill="#2A1A0E"></circle>
+      <circle cx="30" cy="23" r="1.3" fill="#2A1A0E"></circle>
+    </svg>
+    <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 32px; line-height: 34px; color: #FFE7A3; text-shadow: 0 3px 0 #000000">{{pool.name}}</span>
+    <span style="font-size: 12px; font-weight: 600; color: #D9C8F0">{{pool.desc}}</span>
+    <div style="display: flex; gap: 6px; margin-top: 4px">
+      <sc-for list="{{pool.rates}}" as="r" hint-placeholder-count="3">
+        <span style="{{r.style}}">{{r.text}}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- 保底 + 按钮 -->
+  <div style="position: relative; flex-shrink: 0; margin: 0 14px; border-radius: 12px; background: rgba(30, 18, 10, 0.75); border: 2px solid #5A3A8A; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600">
+      <span>再招募 <span style="font-family: 'Cinzel', serif; font-weight: 900; color: #FFE7A3">{{pity}}</span> 次必得传说英雄</span>
+      <span style="color: #C9A96A">免费招募 21:14:06</span>
+    </div>
+    <div style="height: 8px; border-radius: 4px; background: #3A2A4A; overflow: hidden"><div style="width: {{pityPct}}%; height: 100%; background: #E9B949"></div></div>
+  </div>
+  <div style="position: relative; flex-shrink: 0; display: flex; gap: 10px; padding: 12px 14px 28px 14px">
+    <button onClick="{{one}}" style="flex-grow: 1; flex-basis: 0; height: 68px; border-radius: 12px; background: #2F6FB0; color: #FFF3D6; border: 3px solid #E9B949; box-shadow: 0 4px 0 #000000; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+      <span style="font-size: 17px; font-weight: 900">招募 1 次</span>
+      <span style="display: flex; align-items: center; gap: 3px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 13px"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="2"></path></svg>{{pool.p1}}</span>
+    </button>
+    <button onClick="{{ten}}" style="flex-grow: 1; flex-basis: 0; height: 68px; border-radius: 12px; background: #E9B949; color: #2A1A0E; border: 3px solid #FFE7A3; box-shadow: 0 4px 0 #000000; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+      <span style="font-size: 17px; font-weight: 900">招募 10 次</span>
+      <span style="display: flex; align-items: center; gap: 3px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 13px"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="2"></path></svg>{{pool.p10}}</span>
+    </button>
+  </div>
+
+  <!-- 招募结果 -->
+  <sc-if value="{{showing}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(20, 12, 30, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 16px; box-sizing: border-box; z-index: 5">
+      <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 34px; color: #FFE7A3; text-shadow: 0 3px 0 #000000">招募结果</span>
+      <div style="width: 100%; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; justify-items: center">
+        <sc-for list="{{results}}" as="r" hint-placeholder-count="10">
+          <div style="{{r.card}}">
+            <svg width="50" height="56" viewBox="0 0 52 56" style="display: block">
+              <g stroke="#2A1A0E" stroke-width="2.2" stroke-linejoin="round">
+                <path d="M6 56 Q8 36 26 36 Q44 36 46 56 Z" fill="{{r.armor}}"></path>
+                <circle cx="26" cy="24" r="11" fill="#F0C9A0"></circle>
+                <path d="{{r.head}}" fill="{{r.headFill}}"></path>
+              </g>
+            </svg>
+            <span style="width: 100%; background: rgba(30, 18, 10, 0.85); font-size: 10px; font-weight: 900; text-align: center; color: #FFF3D6; white-space: nowrap; overflow: hidden">{{r.name}}</span>
+            <span style="{{r.tag}}">{{r.rarity}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{close}}" style="margin-top: 8px; width: 200px; height: 52px; border-radius: 12px; background: #E9B949; color: #2A1A0E; border: 3px solid #FFE7A3; box-shadow: 0 4px 0 #000000; box-sizing: border-box; font-size: 17px; font-weight: 900">确定</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { pool: 'elite', gems: 3280, pity: 32, draws: 0, results: null };
+  }
+  renderVals() {
+    var self = this;
+    var HEAD = {
+      crown: 'M15 14 L17 6 L21 11 L26 4 L31 11 L35 6 L37 14 Z',
+      helm: 'M13 22 Q26 2 39 22 L39 15 Q26 1 13 15 Z',
+      hood: 'M11 28 Q26 -6 41 28 L37 20 Q26 6 15 20 Z',
+      hat: 'M10 16 H42 L26 -4 Z',
+      hair: 'M14 24 Q13 9 26 9 Q39 9 38 24 L34 16 Q26 12 18 16 Z',
+      horns: 'M14 14 L8 2 L18 11 M38 14 L44 2 L34 11 M15 16 Q26 6 37 16'
+    };
+    var POOLS = {
+      elite: { tag: '限时 UP · 剩余 5 天', name: '圣光女神 · 塞拉', desc: '全体治疗与复活，传说级辅助英雄', armor: '#F3E4C0', trim: '#E9B949', head: HEAD.crown, headFill: '#FFF3D6', p1: 280, p10: 2520, rates: [['传说 2%', '#E9B949', '#2A1A0E'], ['史诗 13%', '#7A4BB0', '#FFF3D6'], ['稀有 85%', '#2F6FB0', '#FFF3D6']] },
+      normal: { tag: '常驻卡池', name: '王国卫士招募', desc: '可获得稀有与史诗英雄，以及英雄碎片', armor: '#B8B2A6', trim: '#2F6FB0', head: HEAD.helm, headFill: '#8C8F96', p1: 120, p10: 1080, rates: [['史诗 8%', '#7A4BB0', '#FFF3D6'], ['稀有 40%', '#2F6FB0', '#FFF3D6'], ['碎片 52%', '#6B5A45', '#FFF3D6']] }
+    };
+    var LOOT = [
+      { name: '塞拉', rarity: '传说', c: '#E9B949', armor: '#F3E4C0', head: HEAD.crown, headFill: '#FFF3D6' },
+      { name: '墨林', rarity: '史诗', c: '#7A4BB0', armor: '#3A2A6A', head: HEAD.hat, headFill: '#3A2A6A' },
+      { name: '伊莎', rarity: '史诗', c: '#7A4BB0', armor: '#7A2A1A', head: HEAD.hair, headFill: '#A8322A' },
+      { name: '希尔薇', rarity: '稀有', c: '#2F6FB0', armor: '#3E6B2E', head: HEAD.hood, headFill: '#2F5423' },
+      { name: '格罗姆', rarity: '稀有', c: '#2F6FB0', armor: '#6B4226', head: HEAD.horns, headFill: '#8C8F96' },
+      { name: '碎片×5', rarity: '稀有', c: '#2F6FB0', armor: '#B8B2A6', head: HEAD.helm, headFill: '#8C8F96' }
+    ];
+    var SEQ = [3, 5, 4, 1, 5, 3, 4, 5, 2, 3, 0, 4, 5, 3, 1, 5, 4, 3, 5, 2];
+    var st = this.state;
+    var pool = POOLS[st.pool];
+    var draw = function (n) {
+      var cost = n === 1 ? pool.p1 : pool.p10;
+      if (self.state.gems < cost) return;
+      var res = [];
+      for (var i = 0; i < n; i++) res.push(SEQ[(self.state.draws + i) % SEQ.length]);
+      var hitLegend = res.indexOf(0) >= 0;
+      var pity = hitLegend ? 50 : Math.max(1, self.state.pity - n);
+      self.setState({ results: res, draws: self.state.draws + n, gems: self.state.gems - cost, pity: pity });
+    };
+    var results = (st.results || []).map(function (k) {
+      var L = LOOT[k];
+      var legend = L.rarity === '传说';
+      return {
+        name: L.name, rarity: L.rarity, armor: L.armor, head: L.head, headFill: L.headFill,
+        card: 'position: relative; width: 62px; height: 84px; border-radius: 8px; background: ' + L.c + '; border: 3px solid ' + (legend ? '#FFF3D6' : '#1E120A') + '; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;' + (legend ? ' box-shadow: 0 0 16px #E9B949;' : ''),
+        tag: 'position: absolute; left: 2px; top: 2px; padding: 0 3px; border-radius: 4px; background: rgba(30, 18, 10, 0.8); font-size: 9px; font-weight: 900; color: ' + (legend ? '#FFE7A3' : '#FFF3D6') + ';'
+      };
+    });
+    var tabs = [['elite', '精英招募'], ['normal', '普通招募']].map(function (d) {
+      var on = d[0] === st.pool;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ pool: d[0] }); },
+        style: 'height: 40px; border-radius: 10px; border: 2px solid ' + (on ? '#E9B949' : '#5A3A8A') + '; box-sizing: border-box; font-size: 14px; font-weight: 900; ' + (on ? 'background: #7A4BB0; color: #FFE7A3;' : 'background: #2E1E48; color: #B8A8D0;')
+      };
+    });
+    return {
+      tabs: tabs,
+      pool: Object.assign({}, pool, {
+        p1: pool.p1.toLocaleString('en-US'), p10: pool.p10.toLocaleString('en-US'),
+        rates: pool.rates.map(function (r) { return { text: r[0], style: 'padding: 2px 8px; border-radius: 8px; border: 2px solid #1E120A; font-size: 11px; font-weight: 900; background: ' + r[1] + '; color: ' + r[2] + ';' }; })
+      }),
+      gems: st.gems.toLocaleString('en-US'), pity: st.pity, pityPct: Math.round((50 - st.pity) / 50 * 100),
+      showing: !!st.results, results: results,
+      one: function () { draw(1); }, ten: function () { draw(10); },
+      close: function () { self.setState({ results: null }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

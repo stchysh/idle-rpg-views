@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>战斗结算</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E; box-sizing: border-box; padding: 60px 18px 28px 18px; display: flex; flex-direction: column; align-items: center; gap: 14px">
+  <div style="position: absolute; left: 20px; top: 40px; width: 350px; height: 350px; border-radius: 50%; background: {{v.glow}}"></div>
+
+  <!-- 星星 -->
+  <div style="position: relative; display: flex; align-items: flex-end; gap: 4px; height: 90px">
+    <sc-for list="{{v.stars}}" as="s" hint-placeholder-count="3">
+      <svg width="{{s.size}}" height="{{s.size}}" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="{{s.fill}}" stroke="#1E120A" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+    </sc-for>
+  </div>
+
+  <!-- 横幅 -->
+  <div style="{{v.banner}}">
+    <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 44px; line-height: 48px; letter-spacing: 8px; color: #FFE7A3; text-shadow: 0 3px 0 #1E120A">{{v.title}}</span>
+  </div>
+  <span style="position: relative; font-size: 13px; font-weight: 600; color: #E2CB98">第一章 · 第 8 关 迷雾沼泽 · 老兵</span>
+
+  <!-- 数据 -->
+  <div style="position: relative; width: 100%; box-sizing: border-box; border-radius: 14px; background: #F3E4C0; border: 4px solid #1E120A; box-shadow: inset 0 0 0 3px #E2CB98; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{v.stats}}" as="st" hint-placeholder-count="3">
+        <div style="height: 62px; border-radius: 10px; background: #E2CB98; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+          <span style="font-size: 11px; font-weight: 600; color: #6B4226">{{st.k}}</span>
+          <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 19px">{{st.v}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{v.win}}" hint-placeholder-val="{{true}}">
+      <span style="font-size: 13px; font-weight: 900">获得奖励</span>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{rewards}}" as="r" hint-placeholder-count="4">
+          <div style="{{r.tile}}">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="{{r.fill}}" stroke="#2A1A0E" stroke-width="1.6" stroke-linejoin="round"><path d="{{r.d}}"></path></svg>
+            <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 12px; color: #FFF3D6">{{r.qty}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{v.lose}}" hint-placeholder-val="{{false}}">
+      <span style="font-size: 13px; font-weight: 900">变强建议</span>
+      <a href="Tech.dc.html" style="height: 52px; border-radius: 10px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; padding: 0 12px; display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 13px; font-weight: 900">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 L20 10 L17 13 L11 7 Z M12.5 8.5 L4 17 L7 20 L15.5 11.5"></path></svg>
+        <span style="flex-grow: 1">升级法师塔科技，克制重甲兽人</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="3" stroke-linecap="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+      </a>
+      <a href="Heroes.dc.html" style="height: 52px; border-radius: 10px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; padding: 0 12px; display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 13px; font-weight: 900">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20 V11 A7 7 0 0 1 19 11 V20 H14 V14 H10 V20 Z"></path></svg>
+        <span style="flex-grow: 1">提升英雄等级，解锁群体技能</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="3" stroke-linecap="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+      </a>
+    </sc-if>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+
+  <div style="position: relative; width: 100%; display: flex; gap: 10px">
+    <a href="Battle.dc.html" style="flex-grow: 1; flex-basis: 0; height: 58px; border-radius: 12px; background: #2F6FB0; color: #FFF3D6; border: 4px solid #1E120A; box-shadow: 0 4px 0 #000000; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">{{v.retry}}</a>
+    <a href="Main.dc.html" style="flex-grow: 1; flex-basis: 0; height: 58px; border-radius: 12px; background: #8A5A32; color: #FFF3D6; border: 4px solid #1E120A; box-shadow: 0 4px 0 #000000; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">返回地图</a>
+  </div>
+  <sc-if value="{{v.win}}" hint-placeholder-val="{{true}}">
+    <a href="StageInfo.dc.html" style="position: relative; width: 100%; height: 60px; border-radius: 12px; background: #E9B949; color: #2A1A0E; border: 4px solid #1E120A; box-shadow: 0 4px 0 #000000; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'ZCOOL XiaoWei', serif; font-size: 24px; text-decoration: none">下一关
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+    </a>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"outcome":{"editor":"enum","options":["victory","defeat"],"default":"victory"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var win = (this.props.outcome ?? 'victory') === 'victory';
+    var sizes = [64, 84, 64];
+    var stars = sizes.map(function (sz, i) { return { size: sz, fill: win ? '#E9B949' : '#5A4A3A' }; });
+    var v = win ? {
+      win: true, lose: false, title: '胜 利', retry: '再玩一次', stars: stars,
+      glow: '#4A3514',
+      banner: 'position: relative; min-width: 260px; box-sizing: border-box; padding: 8px 24px; text-align: center; background: #A8322A; border: 4px solid #1E120A; border-radius: 8px; box-shadow: 0 5px 0 #000000;',
+      stats: [ { k: '剩余生命', v: '18/20' }, { k: '击败敌人', v: '186' }, { k: '用时', v: '12:34' } ]
+    } : {
+      win: false, lose: true, title: '失 败', retry: '重新挑战', stars: stars,
+      glow: '#2E2A30',
+      banner: 'position: relative; min-width: 260px; box-sizing: border-box; padding: 8px 24px; text-align: center; background: #5A5560; border: 4px solid #1E120A; border-radius: 8px; box-shadow: 0 5px 0 #000000;',
+      stats: [ { k: '坚持波次', v: '11/15' }, { k: '击败敌人', v: '132' }, { k: '用时', v: '09:05' } ]
+    };
+    var rewards = [
+      { d: 'M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z', fill: '#E9B949', qty: '×3', bg: '#8A5A32' },
+      { d: 'M6 3 H18 L22 9 L12 21 L2 9 Z', fill: '#5FC3E8', qty: '×20', bg: '#2F6FB0' },
+      { d: 'M5 20 V11 A7 7 0 0 1 19 11 V20 H14 V14 H10 V20 Z', fill: '#B8B2A6', qty: '+450', bg: '#4E8A3A' },
+      { d: 'M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 Z', fill: '#E9B949', qty: '×1', bg: '#7A4BB0' }
+    ].map(function (r) {
+      return Object.assign({}, r, { tile: 'height: 68px; border-radius: 10px; background: ' + r.bg + '; border: 3px solid #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;' });
+    });
+    return { v: v, rewards: rewards };
+  }
+}
+</script>
+</body>
+</html>

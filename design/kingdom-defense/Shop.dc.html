@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>商店</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #2A1A0E; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <div style="flex-shrink: 0; height: 60px"><dc-import name="KTop" hint-size="390px,60px"></dc-import></div>
+
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 0 14px">
+    <h1 style="margin: 0; font-family: 'ZCOOL XiaoWei', serif; font-weight: 400; font-size: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #000000">王国商会</h1>
+    <span style="font-size: 12px; font-weight: 600; color: #C9A96A">持有钻石 <span style="font-family: 'Cinzel', serif; font-weight: 900; color: #9BE0F5">{{gems}}</span></span>
+  </div>
+
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 10px 12px 0 12px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 12px 16px 12px; display: flex; flex-direction: column; gap: 10px">
+
+    <!-- 道具 -->
+    <sc-if value="{{is.items}}" hint-placeholder-val="{{true}}">
+      <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+          <div style="border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 10px; display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span style="{{it.tile}}">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{it.d}}"></path></svg>
+              </span>
+              <div style="display: flex; flex-direction: column; min-width: 0">
+                <span style="font-size: 14px; font-weight: 900">{{it.name}}</span>
+                <span style="font-size: 11px; font-weight: 600; color: #6B4226">持有 ×<span style="font-family: 'Cinzel', serif; font-weight: 900">{{it.have}}</span></span>
+              </div>
+            </div>
+            <span style="font-size: 11px; line-height: 16px; font-weight: 600; color: #4A2E18; min-height: 32px">{{it.desc}}</span>
+            <button onClick="{{it.buy}}" aria-label="{{it.aria}}" style="{{it.btn}}">
+              <svg width="14" height="14" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="2" stroke-linejoin="round"></path></svg>{{it.price}}
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 钻石 -->
+    <sc-if value="{{is.gems}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{packs}}" as="g" hint-placeholder-count="6">
+          <button aria-label="{{g.aria}}" style="position: relative; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 14px 6px 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 6px; overflow: hidden">
+            <sc-if value="{{g.bonus}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; left: 0; top: 0; padding: 0 6px; height: 18px; line-height: 18px; border-radius: 0 0 8px 0; background: #A8322A; font-size: 10px; font-weight: 900; color: #FFE7A3">{{g.bonusText}}</span>
+            </sc-if>
+            <svg width="{{g.size}}" height="{{g.size}}" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path><path d="M2 9 H22 M9 3 L12 9 L15 3" fill="none" stroke="#2A1A0E" stroke-width="1.2"></path></svg>
+            <span style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 17px; color: #2F6FB0">{{g.amount}}</span>
+            <span style="align-self: stretch; height: 28px; line-height: 28px; border-radius: 8px; background: #4E8A3A; border: 2px solid #2A1A0E; font-family: 'Cinzel', serif; font-weight: 900; font-size: 13px; color: #FFF3D6">{{g.price}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 英雄 -->
+    <sc-if value="{{is.heroes}}" hint-placeholder-val="{{false}}">
+      <sc-for list="{{heroOffers}}" as="h" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; overflow: hidden; display: flex">
+          <div style="{{h.art}}">
+            <svg width="92" height="104" viewBox="0 0 52 56">
+              <g stroke="#2A1A0E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M6 56 Q8 36 26 36 Q44 36 46 56 Z" fill="{{h.armor}}"></path>
+                <circle cx="26" cy="24" r="11" fill="#F0C9A0"></circle>
+                <path d="{{h.head}}" fill="{{h.headFill}}"></path>
+              </g>
+            </svg>
+          </div>
+          <div style="flex-grow: 1; padding: 10px; display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 11px; font-weight: 600; color: #6B4226">{{h.title}}</span>
+            <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; line-height: 24px">{{h.name}}</span>
+            <span style="font-size: 11px; line-height: 16px; font-weight: 600; color: #4A2E18">{{h.desc}}</span>
+            <div style="flex-grow: 1"></div>
+            <div style="display: flex; gap: 6px">
+              <a href="Heroes.dc.html" style="height: 40px; padding: 0 12px; border-radius: 8px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; font-size: 12px; font-weight: 900; text-decoration: none">查看</a>
+              <button style="flex-grow: 1; height: 40px; border-radius: 8px; background: #E9B949; border: 2px solid #2A1A0E; box-shadow: 0 2px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: 'Cinzel', serif; font-weight: 900; font-size: 14px">
+                <svg width="14" height="14" viewBox="0 0 24 24"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z" fill="#5FC3E8" stroke="#2A1A0E" stroke-width="2" stroke-linejoin="round"></path></svg>{{h.price}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </sc-if>
+
+    <!-- 礼包 -->
+    <sc-if value="{{is.packs}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink: 0; position: relative; border-radius: 12px; background: #A8322A; border: 3px solid #1E120A; box-shadow: 0 4px 0 #000000; padding: 14px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; color: #FFF3D6">
+        <svg width="140" height="120" viewBox="0 0 140 120" style="position: absolute; right: -10px; bottom: -14px; opacity: 0.9">
+          <g stroke="#2A1A0E" stroke-width="3.5" stroke-linejoin="round">
+            <rect x="20" y="50" width="100" height="60" rx="6" fill="#8A5A32"></rect>
+            <path d="M20 54 Q20 20 70 20 Q120 20 120 54 Z" fill="#A8741A"></path>
+            <rect x="60" y="44" width="20" height="22" rx="3" fill="#E9B949"></rect>
+          </g>
+        </svg>
+        <span style="align-self: flex-start; padding: 0 8px; border-radius: 8px; background: #1E120A; font-size: 11px; font-weight: 900; color: #FFE7A3">限购 1 次 · 超值 800%</span>
+        <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 28px; line-height: 30px; text-shadow: 0 2px 0 #1E120A">新手领主礼包</span>
+        <span style="font-size: 12px; font-weight: 600; max-width: 200px">钻石 ×600、英雄「萨卡」、冰冻 ×5、炸药 ×5</span>
+        <button style="align-self: flex-start; margin-top: 4px; height: 44px; padding: 0 22px; border-radius: 10px; background: #E9B949; color: #2A1A0E; border: 3px solid #1E120A; box-shadow: 0 3px 0 #1E120A; box-sizing: border-box; font-family: 'Cinzel', serif; font-weight: 900; font-size: 17px">¥30</button>
+      </div>
+      <sc-for list="{{bundles}}" as="b" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; border-radius: 12px; background: #F3E4C0; border: 3px solid #1E120A; box-shadow: inset 0 0 0 2px #E2CB98; padding: 10px 10px 10px 12px; display: flex; align-items: center; gap: 10px">
+          <span style="{{b.tile}}">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{b.d}}"></path></svg>
+          </span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 900">{{b.name}}</span>
+            <span style="font-size: 11px; font-weight: 600; color: #4A2E18">{{b.desc}}</span>
+          </div>
+          <button style="min-width: 72px; height: 44px; padding: 0 10px; border-radius: 10px; background: #4E8A3A; color: #FFF3D6; border: 2px solid #2A1A0E; box-shadow: 0 2px 0 #2A1A0E; box-sizing: border-box; font-family: 'Cinzel', 'Noto Serif SC', serif; font-weight: 900; font-size: 14px">{{b.price}}</button>
+        </div>
+      </sc-for>
+    </sc-if>
+  </div>
+
+  <div style="flex-shrink: 0; height: 80px"><dc-import name="KNav" active="shop" hint-size="390px,80px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'items', gems: 1280, have: { freeze: 3, bomb: 2, potion: 1, gold: 0, meteor: 0, hourglass: 1 } };
+  }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var ITEMS = [
+      { id: 'freeze', name: '冰霜之心', price: 50, color: '#3E8FB8', d: 'M12 2 V22 M3 7 L21 17 M21 7 L3 17', desc: '冻结范围内所有敌人 5 秒' },
+      { id: 'bomb', name: '炸药桶', price: 50, color: '#6B5A45', d: 'M11 21 A7 7 0 1 0 11.01 7 Z M14 8 L17 5 M17 5 L20 4', desc: '投掷后爆炸，造成 300 点范围伤害' },
+      { id: 'potion', name: '治愈药剂', price: 40, color: '#A8322A', d: 'M9 3 H15 M10 3 V8 L5 18 A2 2 0 0 0 7 21 H17 A2 2 0 0 0 19 18 L14 8 V3', desc: '恢复 5 点生命，并治疗所有士兵' },
+      { id: 'gold', name: '金币袋', price: 60, color: '#A8741A', d: 'M8 4 H16 L14 8 C19 10 20 14 20 16 C20 20 16 21 12 21 C8 21 4 20 4 16 C4 14 5 10 10 8 Z', desc: '战斗中立即获得 500 金币' },
+      { id: 'meteor', name: '天罚陨石', price: 120, color: '#C4552A', d: 'M14 10 A5 5 0 1 0 14.01 10 M10 6 L3 3 M9 11 L2 12 M12 14 L6 20', desc: '召唤巨型陨石，秒杀非首领敌人' },
+      { id: 'hourglass', name: '时之沙漏', price: 80, color: '#7A4BB0', d: 'M6 3 H18 M6 21 H18 M7 3 C7 9 17 9 17 12 C17 15 7 15 7 21 M17 3 C17 9 7 9 7 12', desc: '全体敌人减速 50%，持续 8 秒' }
+    ];
+    var items = ITEMS.map(function (it) {
+      var ok = st.gems >= it.price;
+      return {
+        name: it.name, desc: it.desc, d: it.d, price: it.price, have: st.have[it.id],
+        aria: '购买' + it.name + '，' + it.price + ' 钻石',
+        tile: 'width: 46px; height: 46px; flex-shrink: 0; border-radius: 10px; background: ' + it.color + '; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;',
+        btn: 'height: 40px; border-radius: 8px; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: Cinzel, serif; font-weight: 900; font-size: 14px; ' + (ok ? 'background: #E9B949; box-shadow: 0 2px 0 #2A1A0E;' : 'background: #C9B89A; color: #6B5A45;'),
+        buy: function () {
+          if (self.state.gems < it.price) return;
+          var h = Object.assign({}, self.state.have); h[it.id] = h[it.id] + 1;
+          self.setState({ have: h, gems: self.state.gems - it.price });
+        }
+      };
+    });
+    var packs = [
+      ['80', '¥6', 26, '首充双倍'], ['400', '¥30', 30, '首充双倍'], ['900', '¥68', 34, '+10%'],
+      ['1,800', '¥128', 38, '+15%'], ['5,000', '¥328', 42, '+20%'], ['11,000', '¥648', 46, '最超值']
+    ].map(function (p) { return { amount: p[0], price: p[1], size: p[2], bonus: !!p[3], bonusText: p[3], aria: p[0] + ' 钻石，' + p[1] }; });
+    var HEAD = {
+      hood: 'M11 28 Q26 -6 41 28 L37 20 Q26 6 15 20 Z',
+      horns: 'M14 14 L8 2 L18 11 M38 14 L44 2 L34 11 M15 16 Q26 6 37 16',
+      helm: 'M13 22 Q26 2 39 22 L39 15 Q26 1 13 15 Z'
+    };
+    var heroOffers = [
+      { name: '萨卡', title: '暗影刺客', desc: '隐身接近并背刺后排敌人，擅长秒杀精英。', bg: '#3A2A3A', armor: '#1E120A', head: HEAD.hood, headFill: '#1E120A', price: '480' },
+      { name: '奥瑞恩', title: '远古巨龙', desc: '飞越全场喷吐龙息，对地面敌群造成毁灭伤害。', bg: '#A8322A', armor: '#6E2A1A', head: HEAD.horns, headFill: '#E9B949', price: '980' },
+      { name: '索尔', title: '雷霆之子', desc: '雷锤连锁闪电，敌人越密集伤害越高。', bg: '#2F4F8F', armor: '#8C8F96', head: HEAD.helm, headFill: '#E9B949', price: '680' }
+    ].map(function (h) {
+      return Object.assign({}, h, { art: 'width: 104px; flex-shrink: 0; background: ' + h.bg + '; border-right: 3px solid #1E120A; display: flex; align-items: flex-end; justify-content: center;' });
+    });
+    var bundles = [
+      { name: '周卡', desc: '立得 300 钻石，7 天内每日再领 60 钻石', price: '¥30', color: '#2F6FB0', d: 'M3 5 H21 V20 H3 Z M3 10 H21 M8 3 V7 M16 3 V7' },
+      { name: '道具补给箱', desc: '冰冻、炸药、药剂各 ×3', price: '钻 360', color: '#6B5A45', d: 'M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 M10 10 H14 V14 H10 Z' },
+      { name: '王者通行证', desc: '解锁本赛季全部高级奖励与专属英雄皮肤', price: '¥68', color: '#A8741A', d: 'M5 16 L3 6 L8 10 L12 4 L16 10 L21 6 L19 16 Z M5 20 H19' }
+    ].map(function (b) {
+      return Object.assign({}, b, { tile: 'width: 48px; height: 48px; flex-shrink: 0; border-radius: 10px; background: ' + b.color + '; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;' });
+    });
+    var tab = st.tab;
+    var tabs = [['items', '道具'], ['gems', '钻石'], ['heroes', '英雄'], ['packs', '礼包']].map(function (d) {
+      var on = d[0] === tab;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: d[0] }); },
+        style: 'height: 40px; border-radius: 10px 10px 4px 4px; border: 3px solid #1E120A; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (on ? 'background: #F3E4C0; color: #2A1A0E; box-shadow: inset 0 -3px 0 #E9B949;' : 'background: #5C3A21; color: #C9A96A;')
+      };
+    });
+    return {
+      tabs: tabs, gems: st.gems.toLocaleString('en-US'),
+      is: { items: tab === 'items', gems: tab === 'gems', heroes: tab === 'heroes', packs: tab === 'packs' },
+      items: items, packs: packs, heroOffers: heroOffers, bundles: bundles
+    };
+  }
+}
+</script>
+</body>
+</html>

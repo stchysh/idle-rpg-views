@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>关卡详情</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=ZCOOL+XiaoWei&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1E120A;font-family:"Noto Serif SC",serif;color:#2A1A0E}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #4E6A38; font-family: 'Noto Serif SC', serif; color: #2A1A0E">
+  <!-- 背景地图（暗化） -->
+  <svg width="390" height="844" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0">
+    <rect width="390" height="844" fill="#5E7F42"></rect>
+    <path d="M40 844 C80 700 300 720 280 560 S60 420 120 300 S330 180 250 0" fill="none" stroke="#8A6A42" stroke-width="14" stroke-dasharray="2 12" stroke-linecap="round"></path>
+    <rect width="390" height="844" fill="#1E120A" opacity="0.55"></rect>
+  </svg>
+
+  <!-- 卷轴面板 -->
+  <div style="position: absolute; left: 14px; top: 40px; width: 362px; height: 780px; box-sizing: border-box; border-radius: 16px; background: #F3E4C0; border: 4px solid #2A1A0E; box-shadow: 0 6px 0 #2A1A0E, inset 0 0 0 4px #E2CB98; padding: 34px 16px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="position: absolute; left: 50%; top: -24px; transform: translateX(-50%); min-width: 240px; box-sizing: border-box; padding: 6px 24px; background: #A8322A; border: 3px solid #2A1A0E; border-radius: 6px; box-shadow: 0 3px 0 #2A1A0E; text-align: center">
+      <span style="display: block; font-size: 11px; font-weight: 600; color: #F3E4C0; letter-spacing: 2px">第一章 · 第 8 关</span>
+      <span style="display: block; font-family: 'ZCOOL XiaoWei', serif; font-size: 24px; line-height: 26px; color: #FFE7A3; text-shadow: 0 2px 0 #2A1A0E">迷雾沼泽</span>
+    </div>
+    <a href="Main.dc.html" aria-label="关闭，返回地图" style="position: absolute; right: -12px; top: -12px; width: 44px; height: 44px; border-radius: 50%; background: #A8322A; border: 3px solid #2A1A0E; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 2">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFF3D6" stroke-width="4" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"></path></svg>
+    </a>
+
+    <!-- 关卡缩略图 -->
+    <div style="position: relative; height: 150px; flex-shrink: 0; border-radius: 10px; border: 3px solid #2A1A0E; overflow: hidden">
+      <svg width="324" height="144" viewBox="0 0 324 144" style="display: block">
+        <rect width="324" height="144" fill="#6E8A52"></rect>
+        <ellipse cx="80" cy="100" rx="70" ry="30" fill="#5A7A6A" opacity="0.8"></ellipse>
+        <ellipse cx="250" cy="40" rx="70" ry="24" fill="#5A7A6A" opacity="0.8"></ellipse>
+        <path d="M-10 30 C80 30 60 110 160 110 S260 40 340 70" fill="none" stroke="#8A5A32" stroke-width="22" stroke-linecap="round"></path>
+        <path d="M-10 30 C80 30 60 110 160 110 S260 40 340 70" fill="none" stroke="#D9B98A" stroke-width="16" stroke-linecap="round"></path>
+        <g fill="#8A5A32" stroke="#2A1A0E" stroke-width="2">
+          <ellipse cx="120" cy="70" rx="12" ry="6"></ellipse>
+          <ellipse cx="210" cy="120" rx="12" ry="6"></ellipse>
+          <ellipse cx="240" cy="60" rx="12" ry="6"></ellipse>
+          <ellipse cx="60" cy="68" rx="12" ry="6"></ellipse>
+        </g>
+        <g stroke="#2A1A0E" stroke-width="2"><circle cx="30" cy="120" r="12" fill="#2F5423"></circle><circle cx="300" cy="120" r="12" fill="#3E6B2E"></circle><circle cx="290" cy="20" r="10" fill="#2F5423"></circle></g>
+        <rect width="324" height="144" fill="#DCE7EE" opacity="0.18"></rect>
+      </svg>
+      <span style="position: absolute; left: 8px; bottom: 8px; padding: 2px 8px; border-radius: 6px; background: rgba(42, 26, 14, 0.8); font-size: 11px; font-weight: 600; color: #FFE7A3">浓雾会遮挡远处的敌人</span>
+    </div>
+
+    <!-- 模式 -->
+    <div role="tablist" aria-label="挑战模式" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{modes}}" as="m" hint-placeholder-count="3">
+        <button role="tab" aria-selected="{{m.on}}" onClick="{{m.pick}}" style="{{m.style}}">
+          <span style="font-size: 13px; font-weight: 900">{{m.name}}</span>
+          <span style="display: flex; gap: 1px">
+            <sc-for list="{{m.stars}}" as="s" hint-placeholder-count="3">
+              <svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z" fill="{{s}}" stroke="#2A1A0E" stroke-width="2"></path></svg>
+            </sc-for>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="flex-shrink: 0; border-radius: 10px; background: #E2CB98; padding: 8px 10px; font-size: 12px; line-height: 18px; font-weight: 600; color: #4A2E18">{{mode.desc}}</div>
+
+    <!-- 难度 -->
+    <div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 13px; font-weight: 900">难度</span>
+      <div role="radiogroup" aria-label="难度" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+        <sc-for list="{{diffs}}" as="d" hint-placeholder-count="4">
+          <button role="radio" aria-checked="{{d.on}}" onClick="{{d.pick}}" style="{{d.style}}">{{d.name}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 敌人预览 -->
+    <div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 13px; font-weight: 900">出现敌人</span>
+      <div style="display: flex; gap: 6px">
+        <sc-for list="{{foes}}" as="f" hint-placeholder-count="6">
+          <span style="{{f.tile}}">
+            <svg width="30" height="30" viewBox="0 0 24 24"><circle cx="12" cy="13" r="9" fill="{{f.fill}}" stroke="#2A1A0E" stroke-width="2"></circle><circle cx="9" cy="12" r="1.5" fill="#2A1A0E"></circle><circle cx="15" cy="12" r="1.5" fill="#2A1A0E"></circle><path d="{{f.hat}}" fill="#6B5A45" stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+            <sc-if value="{{f.isNew}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; right: -4px; top: -6px; padding: 0 3px; border-radius: 4px; background: #D8402F; border: 1.5px solid #2A1A0E; font-size: 9px; font-weight: 900; color: #FFFFFF">新</span>
+            </sc-if>
+          </span>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 奖励 -->
+    <div style="flex-shrink: 0; display: flex; align-items: center; gap: 8px; border-radius: 10px; background: #E2CB98; padding: 8px 10px">
+      <span style="font-size: 13px; font-weight: 900">奖励</span>
+      <span style="padding: 2px 8px; border-radius: 10px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #FFE7A3">星星 ×3</span>
+      <span style="padding: 2px 8px; border-radius: 10px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #9BE0F5">钻石 ×20</span>
+      <span style="padding: 2px 8px; border-radius: 10px; background: #2A1A0E; font-size: 11px; font-weight: 900; color: #F3E4C0">首通 英雄经验</span>
+    </div>
+
+    <div style="flex-grow: 1"></div>
+
+    <!-- 出战英雄 + 开战 -->
+    <div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px">
+      <a href="Heroes.dc.html" aria-label="更换出战英雄" style="position: relative; width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; background: #2F6FB0; border: 3px solid #E9B949; box-shadow: 0 3px 0 #2A1A0E; box-sizing: border-box; overflow: hidden; text-decoration: none">
+        <svg width="58" height="58" viewBox="0 0 52 52" style="display: block">
+          <g stroke="#2A1A0E" stroke-width="2.5" stroke-linejoin="round">
+            <path d="M8 52 Q10 34 26 34 Q42 34 44 52 Z" fill="#A8322A"></path>
+            <circle cx="26" cy="22" r="12" fill="#F0C9A0"></circle>
+            <path d="M13 20 Q26 2 39 20 L39 14 Q26 0 13 14 Z" fill="#B8B2A6"></path>
+          </g>
+        </svg>
+        <span style="position: absolute; left: 0; right: 0; bottom: 0; height: 16px; background: rgba(42, 26, 14, 0.85); font-size: 10px; font-weight: 900; line-height: 16px; text-align: center; color: #FFE7A3">更换</span>
+      </a>
+      <a href="Battle.dc.html" style="flex-grow: 1; height: 64px; border-radius: 12px; background: #E9B949; border: 4px solid #2A1A0E; box-shadow: 0 5px 0 #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2A1A0E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L14 14 M4 4 H8 L16 12 M4 4 V8 L12 16 M20 4 L10 14 M20 4 H16 M20 4 V8"></path></svg>
+        <span style="font-family: 'ZCOOL XiaoWei', serif; font-size: 28px; color: #2A1A0E">开 战</span>
+      </a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { mode: 0, diff: 2 };
+  }
+  renderVals() {
+    var self = this;
+    var MODES = [
+      { name: '战役', got: 2, desc: '标准模式：守住城门，击退全部 15 波敌人。剩余生命决定获得的星数。' },
+      { name: '英雄挑战', got: 0, desc: '只能使用 2 座防御塔，依靠英雄技能扛住精英怪。通关奖励 1 颗星与英雄经验。' },
+      { name: '钢铁挑战', got: 0, desc: '只有 1 点生命，禁用法术与道具，单波敌人数量翻倍。通关奖励 1 颗星与 50 钻石。' }
+    ];
+    var DIFFS = ['休闲', '普通', '老兵', '不可能'];
+    var st = this.state;
+    var modes = MODES.map(function (m, i) {
+      var on = i === st.mode;
+      var total = i === 0 ? 3 : 1;
+      var stars = [];
+      for (var k = 0; k < total; k++) stars.push(k < m.got ? '#E9B949' : '#C9A96A');
+      return {
+        name: m.name, stars: stars, on: on ? 'true' : 'false',
+        pick: function () { self.setState({ mode: i }); },
+        style: 'height: 52px; border-radius: 10px; border: 3px solid #2A1A0E; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; ' + (on ? 'background: #A8322A; color: #FFE7A3; box-shadow: 0 3px 0 #2A1A0E;' : 'background: #E2CB98; color: #4A2E18;')
+      };
+    });
+    var diffs = DIFFS.map(function (n, i) {
+      var on = i === st.diff;
+      return {
+        name: n, on: on ? 'true' : 'false',
+        pick: function () { self.setState({ diff: i }); },
+        style: 'height: 44px; border-radius: 10px; border: 2px solid #2A1A0E; box-sizing: border-box; font-size: 13px; font-weight: 900; ' + (on ? 'background: #2A1A0E; color: #FFE7A3;' : 'background: #F3E4C0; color: #4A2E18;')
+      };
+    });
+    var HATS = { none: '', helm: 'M4 10 Q12 0 20 10 Z', horn: 'M5 8 L3 2 L8 6 M19 8 L21 2 L16 6', hood: 'M3 13 Q12 -4 21 13 L18 9 Q12 2 6 9 Z' };
+    var foes = [
+      ['#7BBF4A', 'none', false], ['#4E7A3A', 'helm', false], ['#8C8F96', 'none', false],
+      ['#6B4A7A', 'hood', true], ['#A8744A', 'horn', true], ['#4A3A48', 'helm', false]
+    ].map(function (f) {
+      return { fill: f[0], hat: HATS[f[1]], isNew: f[2], tile: 'position: relative; width: 46px; height: 46px; border-radius: 10px; background: #E2CB98; border: 2px solid #2A1A0E; box-sizing: border-box; display: flex; align-items: center; justify-content: center;' };
+    });
+    return { modes: modes, mode: MODES[st.mode], diffs: diffs, foes: foes };
+  }
+}
+</script>
+</body>
+</html>
