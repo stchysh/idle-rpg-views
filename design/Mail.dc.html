@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>邮件</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+  <div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 12px 16px 0 16px">
+    <a href="Main.dc.html" aria-label="返回主界面" style="width: 44px; height: 44px; border-radius: 12px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+    </a>
+    <h1 style="margin: 0; flex-grow: 1; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 34px; line-height: 36px; letter-spacing: 2px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">邮件</h1>
+    <span style="font-size: 12px; font-weight: 700; color: #C9CDF2">未读 {{unread}} 封</span>
+  </div>
+
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 12px 16px 0 16px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 16px 12px 16px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{list}}" as="m" hint-placeholder-count="8">
+      <button onClick="{{m.open}}" style="{{m.card}}">
+        <span style="{{m.tile}}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{m.d}}"></path></svg>
+          <sc-if value="{{m.unread}}" hint-placeholder-val="{{true}}">
+            <span style="position: absolute; right: -5px; top: -5px; width: 14px; height: 14px; border-radius: 50%; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box"></span>
+          </sc-if>
+        </span>
+        <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+          <span style="font-size: 14px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.title}}</span>
+          <span style="font-size: 11px; color: #8E94C8">{{m.from}} · {{m.date}}</span>
+        </span>
+        <sc-if value="{{m.hasGift}}" hint-placeholder-val="{{true}}">
+          <span style="{{m.giftStyle}}">{{m.giftText}}</span>
+        </sc-if>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="flex-shrink: 0; display: flex; gap: 10px; padding: 0 16px 28px 16px">
+    <button onClick="{{clearRead}}" style="flex-grow: 1; flex-basis: 0; height: 52px; border-radius: 14px; background: #E84A5F; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 16px; font-weight: 900">删除已读</button>
+    <button onClick="{{claimAll}}" style="flex-grow: 1; flex-basis: 0; height: 52px; border-radius: 14px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 3px 0 #7A4A00; box-sizing: border-box; font-size: 16px; font-weight: 900">一键领取</button>
+  </div>
+
+  <!-- 邮件详情 -->
+  <sc-if value="{{hasSel}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(14, 16, 36, 0.78); display: flex; align-items: center; justify-content: center">
+      <div role="dialog" aria-label="邮件详情" style="position: relative; width: 340px; box-sizing: border-box; border-radius: 22px; background: #2E3570; border: 4px solid #0E1024; box-shadow: 0 6px 0 #0E1024; padding: 18px 16px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+        <button aria-label="关闭" onClick="{{close}}" style="position: absolute; right: -10px; top: -10px; width: 44px; height: 44px; border-radius: 50%; background: #FF4D4F; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"></path></svg>
+        </button>
+        <span style="font-size: 18px; font-weight: 900; padding-right: 24px">{{sel.title}}</span>
+        <span style="font-size: 11px; color: #8E94C8">{{sel.from}} · {{sel.date}} · 30 天后过期</span>
+        <div style="border-radius: 14px; background: #0E1024; padding: 12px; font-size: 13px; line-height: 21px; color: #C9CDF2">{{sel.body}}</div>
+        <sc-if value="{{sel.hasGift}}" hint-placeholder-val="{{true}}">
+          <span style="font-size: 13px; font-weight: 900">附件</span>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{sel.gifts}}" as="g" hint-placeholder-count="3">
+              <div style="{{g.tile}}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{g.d}}"></path></svg>
+                <span style="position: absolute; right: 3px; bottom: 1px; font-family: 'Lilita One', sans-serif; font-size: 11px; text-shadow: 0 1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">{{g.qty}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <button onClick="{{sel.claim}}" style="{{sel.btnStyle}}">{{sel.btnLabel}}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'reward', read: { r5: true, r6: true, s3: true, s4: true }, got: { r6: true }, deleted: {}, sel: null };
+  }
+  renderVals() {
+    var self = this;
+    var ICON = {
+      gift: 'M3 9 H21 V13 H3 Z M5 13 V21 H19 V13 M12 9 V21 M12 9 C9 3 5 5 7.5 9 M12 9 C15 3 19 5 16.5 9',
+      mail: 'M3 5 H21 V19 H3 Z M3 7 L12 13 L21 7',
+      bell: 'M6 16 V11 A6 6 0 0 1 18 11 V16 L20 18 H4 Z M10 21 H14',
+      trophy: 'M7 4 H17 V9 A5 5 0 0 1 7 9 Z M12 14 V18 M8 21 H16',
+      wrench: 'M14 6 A4 4 0 0 0 19 11 L21 9 A6 6 0 0 1 13 3 Z M14 10 L4 20',
+      coin: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V17 M9 9 H14 M9 15 H14',
+      gem: 'M6 3 H18 L22 9 L12 21 L2 9 Z M2 9 H22',
+      chest: 'M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 M10 10 H14 V14 H10 Z',
+      scroll: 'M6 3 H18 V21 H6 Z M9 8 H15 M9 12 H15 M9 16 H13',
+      bolt: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z'
+    };
+    var G = { coin: '#E0A020', gem: '#3D6FE0', chest: '#8E4FE0', scroll: '#3D6FE0', bolt: '#2FB36B' };
+    var DATA = {
+      reward: [
+        { title: '维护补偿', from: '运营团队', date: '09-27', d: ICON.wrench, c: '#4F8BFF', body: '感谢您耐心等待服务器维护，特此送上补偿，祝您游戏愉快！', gifts: [['gem', '×300'], ['bolt', '×30']] },
+        { title: '竞技场赛季奖励 · 白银 II', from: '竞技场', date: '09-26', d: ICON.trophy, c: '#FF8A3D', body: '恭喜您在上赛季竞技场中获得白银 II 段位，以下是您的赛季奖励。', gifts: [['gem', '×200'], ['coin', '×50K'], ['chest', '×1']] },
+        { title: '公会捐献回馈', from: '公会', date: '09-25', d: ICON.gift, c: '#2FB36B', body: '感谢您本周对公会的贡献，会长发来了一份谢礼。', gifts: [['coin', '×30K']] },
+        { title: '新版本更新奖励', from: '运营团队', date: '09-24', d: ICON.gift, c: '#B06CFF', body: '新章节「冰封港口」已开放！送上更新礼包，助您一臂之力。', gifts: [['gem', '×100'], ['scroll', '×10'], ['chest', '×1']] },
+        { title: '首充礼包到账', from: '商城', date: '09-22', d: ICON.gem, c: '#E0A020', body: '您购买的首充礼包已到账，请查收。', gifts: [['gem', '×600'], ['chest', '×2']] },
+        { title: '每周活跃奖励', from: '任务', date: '09-21', d: ICON.gift, c: '#E84A5F', body: '您上周活跃度达标，送上本周奖励。', gifts: [['coin', '×80K'], ['scroll', '×6']] },
+        { title: '好友赠送体力', from: '好友：夜行者', date: '09-20', d: ICON.bolt, c: '#2FB36B', body: '你的好友「夜行者」赠送了你体力，快去战斗吧！', gifts: [['bolt', '×5']] }
+      ],
+      system: [
+        { title: '中秋活动开启公告', from: '系统', date: '09-27', d: ICON.bell, c: '#FF8A3D', body: '中秋限时活动已开启，登录即可领取月饼，兑换限定头像框。' },
+        { title: '防沉迷提醒', from: '系统', date: '09-26', d: ICON.bell, c: '#4F8BFF', body: '请合理安排游戏时间，注意休息。' },
+        { title: '账号安全提示', from: '系统', date: '09-24', d: ICON.mail, c: '#E84A5F', body: '建议您绑定手机号码，以保护账号安全。' },
+        { title: '服务器维护通知', from: '系统', date: '09-23', d: ICON.wrench, c: '#8E4FE0', body: '服务器将于 09-25 05:00—07:00 进行维护，届时将无法登录。' },
+        { title: '欢迎来到幸存者营地', from: '系统', date: '09-01', d: ICON.mail, c: '#2FB36B', body: '指挥官，欢迎加入！击败怪潮，活下去。' }
+      ]
+    };
+    var st = this.state;
+    var tab = st.tab;
+    var prefix = tab.charAt(0);
+    var mkGifts = function (m) {
+      return (m.gifts || []).map(function (g) {
+        return { d: ICON[g[0]], qty: g[1], tile: 'position: relative; aspect-ratio: 1 / 1; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + G[g[0]] + ';' };
+      });
+    };
+    var unread = 0;
+    ['reward', 'system'].forEach(function (t) {
+      DATA[t].forEach(function (m, i) { var k = t.charAt(0) + i; if (!st.read[k] && !st.deleted[k]) unread++; });
+    });
+    var list = [];
+    DATA[tab].forEach(function (m, i) {
+      var key = prefix + i;
+      if (st.deleted[key]) return;
+      var isRead = !!st.read[key];
+      var hasGift = !!m.gifts;
+      var got = !!st.got[key];
+      var sel = {
+        title: m.title, from: m.from, date: m.date, body: m.body, hasGift: hasGift, gifts: mkGifts(m),
+        btnLabel: hasGift ? (got ? '已领取' : '领取附件') : '确定',
+        btnStyle: 'height: 50px; border-radius: 14px; border: 3px solid #0E1024; box-sizing: border-box; font-size: 16px; font-weight: 900; ' + (hasGift && got ? 'background: #40467A; color: #C9CDF2;' : 'background: #FFC93C; color: #3A2400; box-shadow: 0 3px 0 #7A4A00;'),
+        claim: function () {
+          var g = Object.assign({}, self.state.got); if (hasGift) g[key] = true;
+          self.setState({ got: g, sel: null });
+        }
+      };
+      list.push({
+        title: m.title, from: m.from, date: m.date, d: m.d, unread: !isRead,
+        hasGift: hasGift, giftText: got ? '已领' : '附件',
+        giftStyle: 'flex-shrink: 0; padding: 0 8px; height: 24px; line-height: 24px; border-radius: 12px; font-size: 11px; font-weight: 900; ' + (got ? 'background: #0E1024; color: #8E94C8;' : 'background: #FFC93C; color: #3A2400;'),
+        card: 'flex-shrink: 0; width: 100%; border-radius: 16px; background: ' + (isRead ? '#262B58' : '#2E3570') + '; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; padding: 10px; display: flex; align-items: center; gap: 10px; text-align: left;',
+        tile: 'position: relative; width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + (isRead ? '#40467A' : m.c) + ';',
+        open: function () {
+          var r = Object.assign({}, self.state.read); r[key] = true;
+          self.setState({ read: r, sel: sel });
+        }
+      });
+    });
+    var tabs = [ ['reward', '奖励'], ['system', '系统'] ].map(function (d) {
+      var on = d[0] === tab;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: d[0] }); },
+        style: 'height: 40px; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (on ? 'background: #FFC93C; color: #3A2400; box-shadow: 0 3px 0 #7A4A00;' : 'background: #2E3570; color: #C9CDF2; box-shadow: 0 3px 0 #0E1024;')
+      };
+    });
+    return {
+      tabs: tabs, list: list, unread: unread,
+      hasSel: !!st.sel, sel: st.sel || {},
+      close: function () { self.setState({ sel: null }); },
+      claimAll: function () {
+        var g = Object.assign({}, self.state.got), r = Object.assign({}, self.state.read);
+        DATA.reward.forEach(function (m, i) { g['r' + i] = true; r['r' + i] = true; });
+        self.setState({ got: g, read: r });
+      },
+      clearRead: function () {
+        var del = Object.assign({}, self.state.deleted);
+        Object.keys(self.state.read).forEach(function (k) {
+          if (k.charAt(0) === 's' || self.state.got[k]) del[k] = true;
+        });
+        self.setState({ deleted: del });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>主界面 · 战斗</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+
+<!-- 背景装饰 -->
+<div style="position: absolute; left: -80px; top: 150px; width: 300px; height: 300px; border-radius: 50%; background: #232852"></div>
+<div style="position: absolute; right: -120px; top: 330px; width: 320px; height: 320px; border-radius: 50%; background: #20254C"></div>
+
+<!-- 顶部：玩家信息 -->
+<div style="position: relative; display: flex; align-items: center; gap: 10px; padding: 12px 16px 0 16px">
+  <button aria-label="玩家信息" style="position: relative; width: 52px; height: 52px; border-radius: 14px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; overflow: hidden">
+    <svg width="46" height="46" viewBox="0 0 46 46" style="display: block">
+      <circle cx="23" cy="19" r="10" fill="#FFD7A8" stroke="#0E1024" stroke-width="2.5"></circle>
+      <path d="M13 17 Q23 4 33 17 L33 13 Q23 2 13 13 Z" fill="#2B2F5C" stroke="#0E1024" stroke-width="2"></path>
+      <path d="M6 46 Q8 31 23 31 Q38 31 40 46 Z" fill="#E84A5F" stroke="#0E1024" stroke-width="2.5"></path>
+      <circle cx="19" cy="20" r="1.8" fill="#0E1024"></circle>
+      <circle cx="27" cy="20" r="1.8" fill="#0E1024"></circle>
+    </svg>
+    <span style="position: absolute; left: -1px; bottom: -1px; min-width: 22px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 0 8px 0 10px; background: #FFC93C; color: #3A2400; font-family: 'Lilita One', sans-serif; font-size: 13px; line-height: 18px; border: 2px solid #0E1024">42</span>
+  </button>
+  <div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1; min-width: 0">
+    <div style="display: flex; align-items: center; gap: 6px">
+      <span style="font-size: 15px; font-weight: 900; text-shadow: 0 2px 0 #0E1024; white-space: nowrap">指挥官_7421</span>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 11px; line-height: 16px; padding: 0 6px; border-radius: 6px; background: #B06CFF; color: #FFFFFF; border: 2px solid #0E1024">VIP 5</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; height: 20px; padding: 0 10px 0 4px; align-self: flex-start; border-radius: 10px; background: #0E1024">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFC93C" stroke="#FFC93C" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2 L4 14 H11 L10 22 L20 9 H13 Z"></path></svg>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 14px; color: #FFE08A">128,560</span>
+    </div>
+  </div>
+  <a href="Mail.dc.html" aria-label="邮件" style="text-decoration: none; color: #FFFFFF; position: relative; width: 44px; height: 44px; border-radius: 12px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7 L12 13 L21 7"></path></svg>
+    <span style="position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; background: #FF4D4F; border: 2px solid #0E1024; font-family: 'Lilita One', sans-serif; font-size: 11px; line-height: 15px; box-sizing: border-box; text-align: center">3</span>
+  </a>
+  <button aria-label="设置" style="width: 44px; height: 44px; border-radius: 12px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2 V5 M12 19 V22 M2 12 H5 M19 12 H22 M4.9 4.9 L7 7 M17 17 L19.1 19.1 M4.9 19.1 L7 17 M17 7 L19.1 4.9"></path></svg>
+  </button>
+</div>
+
+<!-- 资源栏 -->
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 10px 16px 0 16px">
+  <a href="Shop.dc.html" aria-label="体力，点击购买" style="text-decoration: none; color: #FFFFFF; height: 36px; border-radius: 18px; background: #0E1024; display: flex; align-items: center; gap: 4px; padding: 0 4px 0 2px; box-sizing: border-box">
+    <span style="width: 30px; height: 30px; border-radius: 50%; background: #3DDC84; border: 2px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0E1024"><path d="M13 2 L4 14 H11 L10 22 L20 9 H13 Z"></path></svg>
+    </span>
+    <span style="flex-grow: 1; text-align: left; font-family: 'Lilita One', sans-serif; font-size: 15px">25<span style="color: #8E94C8; font-size: 12px">/30</span></span>
+    <span style="width: 22px; height: 22px; border-radius: 7px; background: #3DDC84; color: #0E1024; display: flex; align-items: center; justify-content: center">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1024" stroke-width="4" stroke-linecap="round"><path d="M12 5 V19 M5 12 H19"></path></svg>
+    </span>
+  </a>
+  <a href="Shop.dc.html" aria-label="金币，点击购买" style="text-decoration: none; color: #FFFFFF; height: 36px; border-radius: 18px; background: #0E1024; display: flex; align-items: center; gap: 4px; padding: 0 4px 0 2px; box-sizing: border-box">
+    <span style="width: 30px; height: 30px; border-radius: 50%; background: #FFC93C; border: 2px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Lilita One', sans-serif; font-size: 15px; color: #7A4A00">$</span>
+    <span style="flex-grow: 1; text-align: left; font-family: 'Lilita One', sans-serif; font-size: 15px">128.4K</span>
+    <span style="width: 22px; height: 22px; border-radius: 7px; background: #FFC93C; display: flex; align-items: center; justify-content: center">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1024" stroke-width="4" stroke-linecap="round"><path d="M12 5 V19 M5 12 H19"></path></svg>
+    </span>
+  </a>
+  <a href="Shop.dc.html" aria-label="钻石，点击购买" style="text-decoration: none; color: #FFFFFF; height: 36px; border-radius: 18px; background: #0E1024; display: flex; align-items: center; gap: 4px; padding: 0 4px 0 2px; box-sizing: border-box">
+    <span style="width: 30px; height: 30px; border-radius: 50%; background: #4FC3F7; border: 2px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#0E1024" stroke-width="2" stroke-linejoin="round"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z"></path></svg>
+    </span>
+    <span style="flex-grow: 1; text-align: left; font-family: 'Lilita One', sans-serif; font-size: 15px">3,260</span>
+    <span style="width: 22px; height: 22px; border-radius: 7px; background: #4FC3F7; display: flex; align-items: center; justify-content: center">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1024" stroke-width="4" stroke-linecap="round"><path d="M12 5 V19 M5 12 H19"></path></svg>
+    </span>
+  </a>
+</div>
+
+<!-- 中部：章节主舞台 -->
+<div style="position: relative; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px 0 16px">
+
+  <!-- 左侧功能入口 -->
+  <div style="position: absolute; left: 10px; top: 12px; display: flex; flex-direction: column; gap: 10px; z-index: 2">
+    <a href="SignIn.dc.html" aria-label="签到" style="text-decoration: none; color: #FFFFFF; position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #FF8A3D; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3 V7 M16 3 V7 M3 10 H21 M9 15 L11 17 L15 13"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">签到</span>
+      <span style="position: absolute; top: -4px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box"></span>
+    </a>
+    <a href="Tasks.dc.html" aria-label="任务" style="text-decoration: none; color: #FFFFFF; position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #3DDC84; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0E1024" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3 H15 V6 H9 Z M8.5 12 L11 14.5 L15.5 10"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">任务</span>
+      <span style="position: absolute; top: -4px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box"></span>
+    </a>
+    <a href="SignIn.dc.html" aria-label="七日狂欢" style="text-decoration: none; color: #FFFFFF; position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #E84A5F; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="1.5"></rect><path d="M2 9 H22 M12 9 V21 M12 9 C9 3 5 5 7.5 9 M12 9 C15 3 19 5 16.5 9"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">七日狂欢</span>
+    </a>
+  </div>
+
+  <!-- 右侧功能入口 -->
+  <div style="position: absolute; right: 10px; top: 12px; display: flex; flex-direction: column; gap: 10px; z-index: 2">
+    <a href="Modes.dc.html" aria-label="限时活动" style="text-decoration: none; color: #FFFFFF; position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #B06CFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFE08A" stroke="#0E1024" stroke-width="2" stroke-linejoin="round"><path d="M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">限时活动</span>
+      <span style="position: absolute; top: -6px; right: -2px; padding: 0 4px; height: 16px; border-radius: 8px; background: #FF4D4F; border: 2px solid #0E1024; font-size: 10px; font-weight: 900; line-height: 13px; box-sizing: border-box">NEW</span>
+    </a>
+    <a href="Shop.dc.html" aria-label="首充礼包" style="text-decoration: none; color: #FFFFFF; position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #FFC93C; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#4FC3F7" stroke="#0E1024" stroke-width="2" stroke-linejoin="round"><path d="M6 3 H18 L22 9 L12 21 L2 9 Z"></path><path d="M2 9 H22 M9 3 L12 9 L15 3 M12 9 V21" fill="none"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">首充礼包</span>
+    </a>
+    <button aria-label="战令通行证" style="position: relative; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <span style="width: 48px; height: 48px; border-radius: 14px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7 H21 V10 A2 2 0 0 0 21 14 V17 H3 V14 A2 2 0 0 0 3 10 Z"></path><path d="M14 7 V9 M14 11 V13 M14 15 V17"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 900; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">战令</span>
+      <span style="position: absolute; top: -4px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box"></span>
+    </button>
+  </div>
+
+  <!-- 章节插画 -->
+  <div style="position: relative; width: 232px; height: 222px; border-radius: 24px; border: 4px solid #0E1024; box-shadow: 0 6px 0 #0E1024; overflow: hidden; box-sizing: border-box">
+    <svg width="224" height="214" viewBox="0 0 224 214" style="display: block">
+      <rect x="0" y="0" width="224" height="214" fill="{{cur.sky}}"></rect>
+      <circle cx="170" cy="46" r="24" fill="{{cur.moon}}"></circle>
+      <circle cx="30" cy="30" r="2" fill="#FFFFFF" opacity="0.8"></circle>
+      <circle cx="76" cy="18" r="1.6" fill="#FFFFFF" opacity="0.7"></circle>
+      <circle cx="120" cy="40" r="1.6" fill="#FFFFFF" opacity="0.6"></circle>
+      <circle cx="206" cy="92" r="1.6" fill="#FFFFFF" opacity="0.6"></circle>
+      <path d="M0 132 V92 H18 V78 H40 V104 H52 V64 H78 V112 H92 V86 H116 V72 H132 V100 H148 V58 H176 V106 H192 V84 H224 V132 Z" fill="{{cur.build}}"></path>
+      <rect x="58" y="74" width="5" height="6" fill="{{cur.moon}}" opacity="0.8"></rect>
+      <rect x="68" y="88" width="5" height="6" fill="{{cur.moon}}" opacity="0.6"></rect>
+      <rect x="154" y="68" width="5" height="6" fill="{{cur.moon}}" opacity="0.7"></rect>
+      <rect x="164" y="84" width="5" height="6" fill="{{cur.moon}}" opacity="0.5"></rect>
+      <rect x="0" y="130" width="224" height="84" fill="{{cur.ground}}"></rect>
+      <ellipse cx="112" cy="176" rx="46" ry="10" fill="#000000" opacity="0.25"></ellipse>
+      <!-- 敌人 -->
+      <g stroke="#0E1024" stroke-width="2.5">
+        <circle cx="38" cy="160" r="12" fill="#7BD66B"></circle>
+        <circle cx="186" cy="152" r="13" fill="#7BD66B"></circle>
+        <circle cx="176" cy="190" r="10" fill="#A36BE0"></circle>
+        <circle cx="52" cy="196" r="9" fill="#A36BE0"></circle>
+      </g>
+      <g fill="#0E1024">
+        <circle cx="34" cy="158" r="2"></circle><circle cx="42" cy="158" r="2"></circle>
+        <circle cx="182" cy="150" r="2"></circle><circle cx="190" cy="150" r="2"></circle>
+        <circle cx="173" cy="188" r="1.6"></circle><circle cx="179" cy="188" r="1.6"></circle>
+        <circle cx="49" cy="194" r="1.6"></circle><circle cx="55" cy="194" r="1.6"></circle>
+      </g>
+      <!-- 主角 -->
+      <g stroke="#0E1024" stroke-width="3" stroke-linejoin="round">
+        <path d="M96 176 Q98 146 112 146 Q126 146 128 176 Z" fill="#E84A5F"></path>
+        <circle cx="112" cy="134" r="15" fill="#FFD7A8"></circle>
+        <path d="M97 132 Q112 110 127 132 L127 126 Q112 108 97 126 Z" fill="#2B2F5C"></path>
+        <path d="M128 158 L150 150" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M128 158 L150 150" stroke="#FFC93C" stroke-width="2" stroke-linecap="round"></path>
+      </g>
+      <circle cx="107" cy="136" r="2" fill="#0E1024"></circle>
+      <circle cx="117" cy="136" r="2" fill="#0E1024"></circle>
+    </svg>
+    <span style="position: absolute; left: 10px; top: 10px; padding: 2px 10px; border-radius: 10px; background: #0E1024; font-family: 'Lilita One', sans-serif; font-size: 13px; color: #FFE08A">CHAPTER {{cur.no}}</span>
+    <sc-if value="{{cur.locked}}" hint-placeholder-val="{{false}}">
+      <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgba(14, 16, 36, 0.72); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11 V8 A4 4 0 0 1 16 8 V11"></path></svg>
+        <span style="font-size: 13px; font-weight: 700">通关第 4 章后解锁</span>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- 章节切换 -->
+  <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px">
+    <button aria-label="上一章" onClick="{{prev}}" style="width: 44px; height: 44px; border-radius: 50%; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: {{prevOpacity}}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+    </button>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px">
+      <span style="font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 30px; line-height: 32px; letter-spacing: 1px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">{{cur.title}}</span>
+      <div style="display: flex; gap: 6px">
+        <sc-for list="{{dots}}" as="dot" hint-placeholder-count="5">
+          <span style="{{dot.style}}"></span>
+        </sc-for>
+      </div>
+    </div>
+    <button aria-label="下一章" onClick="{{next}}" style="width: 44px; height: 44px; border-radius: 50%; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: {{nextOpacity}}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 L16 12 L9 19"></path></svg>
+    </button>
+  </div>
+
+  <!-- 章节宝箱进度 -->
+  <div style="width: 100%; box-sizing: border-box; padding: 10px 14px 12px 14px; border-radius: 16px; background: #0E1024; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <span style="font-size: 13px; font-weight: 700; color: #C9CDF2">最佳生存 <span style="font-family: 'Lilita One', sans-serif; font-size: 16px; color: #FFFFFF">{{cur.best}}</span> / 15:00</span>
+      <span style="font-size: 12px; font-weight: 700; color: #3DDC84">{{cur.chestHint}}</span>
+    </div>
+    <div style="position: relative; height: 56px">
+      <div style="position: absolute; left: 0; right: 22px; top: 12px; height: 10px; border-radius: 5px; background: #2E3570; overflow: hidden">
+        <div style="width: {{cur.pct}}%; height: 100%; border-radius: 5px; background: #FFC93C"></div>
+      </div>
+      <sc-for list="{{cur.chests}}" as="chest" hint-placeholder-count="3">
+        <button aria-label="{{chest.aria}}" style="{{chest.style}}">
+          <svg width="30" height="28" viewBox="0 0 30 28">
+            <rect x="3" y="11" width="24" height="15" rx="3" fill="{{chest.body}}" stroke="#0E1024" stroke-width="2.5"></rect>
+            <path d="M3 13 Q3 4 15 4 Q27 4 27 13 Z" fill="{{chest.lid}}" stroke="#0E1024" stroke-width="2.5" stroke-linejoin="round"></path>
+            <rect x="12" y="10" width="6" height="7" rx="1.5" fill="#FFE08A" stroke="#0E1024" stroke-width="2"></rect>
+          </svg>
+          <span style="{{chest.labelStyle}}">{{chest.label}}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- 巡逻收益（挂机） -->
+  <div style="width: 100%; box-sizing: border-box; padding: 10px 10px 10px 12px; border-radius: 16px; background: #2E3570; border: 3px solid #0E1024; display: flex; align-items: center; gap: 10px">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #1B1F3B; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><path d="M12 9 V13 L15 15 M9 2 H15"></path></svg>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0">
+      <div style="display: flex; align-items: baseline; gap: 6px">
+        <span style="font-size: 14px; font-weight: 900">巡逻收益</span>
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 13px; color: #C9CDF2">06:12:40</span>
+      </div>
+      <div style="display: flex; gap: 8px; font-size: 12px; font-weight: 700; color: #C9CDF2">
+        <span><span style="color: #FFC93C">金币</span> +18.6K</span>
+        <span><span style="color: #4FC3F7">经验</span> +2.4K</span>
+        <span><span style="color: #B06CFF">图纸</span> ×3</span>
+      </div>
+    </div>
+    <button style="height: 44px; padding: 0 16px; border-radius: 12px; background: #3DDC84; color: #0E1024; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 15px; font-weight: 900; flex-shrink: 0">领取</button>
+  </div>
+
+  <!-- 开始按钮 -->
+  <div style="width: 100%; display: flex; align-items: center; gap: 10px; padding-top: 2px">
+    <button aria-label="快速巡逻" style="width: 64px; height: 64px; border-radius: 18px; background: #4F8BFF; border: 4px solid #0E1024; box-shadow: 0 5px 0 #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; flex-shrink: 0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5 L12 12 L5 19 M12 5 L19 12 L12 19"></path></svg>
+      <span style="font-size: 11px; font-weight: 900">快速巡逻</span>
+    </button>
+    <a href="{{startHref}}" style="{{startStyle}}">
+      <span style="font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 30px; line-height: 32px; letter-spacing: 4px">{{startLabel}}</span>
+      <span style="display: flex; align-items: center; gap: 3px; padding: 0 8px; height: 22px; border-radius: 11px; background: #0E1024; color: #3DDC84; font-family: 'Lilita One', sans-serif; font-size: 14px">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#3DDC84"><path d="M13 2 L4 14 H11 L10 22 L20 9 H13 Z"></path></svg>5
+      </span>
+    </a>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div style="flex-shrink: 0; height: 84px; margin-top: 12px"><dc-import name="NavBar" active="battle" hint-size="390px,84px"></dc-import></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { ch: 2 };
+  }
+  renderVals() {
+    var self = this;
+    var chapters = [
+      { no: 1, title: '废弃都市', best: '15:00', pct: 100, claimed: 3, sky: '#3B4A8C', moon: '#FFE9A8', build: '#1A2045', ground: '#2B3266', locked: false },
+      { no: 2, title: '暗影森林', best: '15:00', pct: 100, claimed: 2, sky: '#2D5A4A', moon: '#E8FFB0', build: '#15302A', ground: '#1F4236', locked: false },
+      { no: 3, title: '熔岩荒漠', best: '09:42', pct: 65, claimed: 0, sky: '#8C3B2E', moon: '#FFB36B', build: '#3A1510', ground: '#5A2419', locked: false },
+      { no: 4, title: '冰封港口', best: '--:--', pct: 0, claimed: 0, sky: '#3A7CA5', moon: '#E6F7FF', build: '#1C3F5A', ground: '#2A5877', locked: false },
+      { no: 5, title: '虚空要塞', best: '--:--', pct: 0, claimed: 0, sky: '#4A2D6E', moon: '#D9B8FF', build: '#23133A', ground: '#331C52', locked: true }
+    ];
+    var idx = this.state.ch;
+    var cur = chapters[idx];
+    var marks = [ { at: 33.3, label: '05:00' }, { at: 66.6, label: '10:00' }, { at: 100, label: '15:00' } ];
+    var ready = 0;
+    cur.chests = marks.map(function (m, i) {
+      var reached = cur.pct >= m.at;
+      var claimed = i < cur.claimed;
+      var isReady = reached && !claimed;
+      if (isReady) ready++;
+      var bg = isReady ? '#FFC93C' : (claimed ? '#2E3570' : '#1B1F3B');
+      return {
+        aria: m.label + ' 宝箱' + (claimed ? '（已领取）' : isReady ? '（可领取）' : '（未达成）'),
+        body: claimed ? '#5A6090' : (isReady ? '#FF8A3D' : '#8E94C8'),
+        lid: claimed ? '#40467A' : (isReady ? '#E84A5F' : '#6A70A8'),
+        label: claimed ? '已领' : m.label,
+        style: 'position: absolute; top: -6px; left: calc(' + m.at + '% - 44px); width: 44px; height: 44px; border-radius: 12px; background: ' + bg + '; border: 3px solid #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;' + (isReady ? ' box-shadow: 0 0 0 3px #FFE08A;' : '') + (claimed ? ' opacity: 0.75;' : ''),
+        labelStyle: 'position: absolute; bottom: -18px; font-family: Lilita One, sans-serif; font-size: 11px; color: ' + (isReady ? '#FFE08A' : '#8E94C8') + ';'
+      };
+    });
+    cur.chestHint = ready > 0 ? ready + ' 个宝箱可领取' : (cur.pct >= 100 ? '已全部通关' : '坚持越久奖励越多');
+    var dots = chapters.map(function (c, i) {
+      var on = i === idx;
+      return { style: 'display: block; height: 8px; border-radius: 4px; width: ' + (on ? 20 : 8) + 'px; background: ' + (on ? '#FFC93C' : (c.locked ? '#40467A' : '#8E94C8')) + ';' };
+    });
+    var startStyle = 'text-decoration: none; flex-grow: 1; height: 64px; border-radius: 18px; border: 4px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 12px; ' +
+      (cur.locked ? 'background: #5A6090; color: #C9CDF2; box-shadow: 0 5px 0 #0E1024;' : 'background: #FFC93C; color: #3A2400; box-shadow: 0 5px 0 #7A4A00, 0 9px 0 #0E1024;');
+    return {
+      cur: cur,
+      dots: dots,
+      prevOpacity: idx === 0 ? 0.35 : 1,
+      nextOpacity: idx === chapters.length - 1 ? 0.35 : 1,
+      prev: function () { if (self.state.ch > 0) self.setState({ ch: self.state.ch - 1 }); },
+      next: function () { if (self.state.ch < chapters.length - 1) self.setState({ ch: self.state.ch + 1 }); },
+      startHref: cur.locked ? '#' : 'Battle.dc.html',
+      startLabel: cur.locked ? '未解锁' : '开始',
+      startStyle: startStyle
+    };
+  }
+}
+</script>
+</body>
+</html>

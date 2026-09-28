@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>商店</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+  <div style="flex-shrink: 0; height: 48px"><dc-import name="ResBar" hint-size="390px,48px"></dc-import></div>
+
+  <div style="flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 12px 16px 0 16px">
+    <h1 style="margin: 0; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 36px; line-height: 38px; letter-spacing: 2px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">商店</h1>
+    <span style="font-size: 12px; font-weight: 700; color: #C9CDF2">每日 05:00 刷新</span>
+  </div>
+
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 10px 16px 0 16px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 16px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+
+    <!-- 精选 -->
+    <sc-if value="{{is.featured}}" hint-placeholder-val="{{true}}">
+      <div style="position: relative; flex-shrink: 0; border-radius: 18px; background: #B06CFF; border: 3px solid #0E1024; box-shadow: 0 4px 0 #0E1024; padding: 14px; display: flex; align-items: center; gap: 10px; overflow: hidden">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+          <span style="align-self: flex-start; padding: 0 8px; height: 20px; line-height: 20px; border-radius: 10px; background: #0E1024; font-size: 11px; font-weight: 700; color: #FFE08A">限时 · 剩余 2天14时</span>
+          <span style="font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 26px; line-height: 28px; text-shadow: 0 2px 0 #0E1024">成长基金</span>
+          <span style="font-size: 12px; font-weight: 700">等级达标即可领取，总计 8,800 钻石</span>
+          <button style="align-self: flex-start; height: 44px; padding: 0 22px; border-radius: 12px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-family: 'Lilita One', sans-serif; font-size: 18px">¥30</button>
+        </div>
+        <svg width="104" height="104" viewBox="0 0 104 104" style="flex-shrink: 0">
+          <g stroke="#0E1024" stroke-width="3" stroke-linejoin="round">
+            <path d="M24 44 H56 L68 60 L40 94 L12 60 Z" fill="#4FC3F7"></path>
+            <path d="M52 20 H80 L90 34 L66 64 L42 34 Z" fill="#8FE0FF"></path>
+            <path d="M62 58 H86 L94 70 L74 94 L54 70 Z" fill="#4FC3F7"></path>
+          </g>
+          <path d="M12 60 H68 M42 34 H90 M54 70 H94" stroke="#0E1024" stroke-width="2"></path>
+        </svg>
+      </div>
+
+      <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 900">每日特惠</h2>
+        <button style="height: 32px; padding: 0 10px; border-radius: 10px; background: #2E3570; border: 2px solid #0E1024; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11 A8 8 0 1 0 17.7 16.7 M20 4 V11 H13"></path></svg>
+          刷新 · <span style="color: #4FC3F7">20 钻</span>
+        </button>
+      </div>
+      <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{daily}}" as="it" hint-placeholder-count="9">
+          <button aria-label="{{it.name}}" style="position: relative; border-radius: 14px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; overflow: hidden; display: flex; flex-direction: column; align-items: stretch">
+            <span style="{{it.tile}}">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{it.d}}"></path></svg>
+              <span style="position: absolute; right: 4px; bottom: 2px; font-family: 'Lilita One', sans-serif; font-size: 13px; text-shadow: 0 1px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">{{it.qty}}</span>
+            </span>
+            <span style="padding: 4px 4px 0 4px; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{it.name}}</span>
+            <span style="margin: 4px 6px 6px 6px; height: 24px; border-radius: 8px; background: #0E1024; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: 'Lilita One', sans-serif; font-size: 13px">
+              <span style="{{it.dot}}"></span>{{it.price}}
+            </span>
+            <sc-if value="{{it.sold}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgba(14, 16, 36, 0.7); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #C9CDF2">已售罄</span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 宝箱 -->
+    <sc-if value="{{is.chest}}" hint-placeholder-val="{{false}}">
+      <sc-for list="{{chests}}" as="c" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; border-radius: 18px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 4px 0 #0E1024; padding: 12px; display: flex; gap: 12px; align-items: center">
+          <div style="{{c.tile}}">
+            <svg width="84" height="76" viewBox="0 0 84 76">
+              <g stroke="#0E1024" stroke-width="3.5" stroke-linejoin="round">
+                <rect x="8" y="32" width="68" height="38" rx="6" fill="{{c.body}}"></rect>
+                <path d="M8 36 Q8 8 42 8 Q76 8 76 36 Z" fill="{{c.lid}}"></path>
+                <rect x="34" y="28" width="16" height="18" rx="3" fill="#FFE08A"></rect>
+              </g>
+              <path d="M8 50 H76" stroke="#0E1024" stroke-width="2.5"></path>
+            </svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 17px; font-weight: 900">{{c.name}}</span>
+            <span style="font-size: 12px; color: #C9CDF2; line-height: 17px">{{c.desc}}</span>
+            <span style="font-size: 11px; font-weight: 700; color: #FFE08A">{{c.pity}}</span>
+            <div style="display: flex; gap: 6px">
+              <button style="flex-grow: 1; height: 44px; border-radius: 12px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1">
+                <span style="font-size: 11px; font-weight: 700">开 1 次</span>
+                <span style="font-family: 'Lilita One', sans-serif; font-size: 14px">{{c.p1}}</span>
+              </button>
+              <button style="flex-grow: 1; height: 44px; border-radius: 12px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1">
+                <span style="font-size: 11px; font-weight: 700">开 10 次</span>
+                <span style="font-family: 'Lilita One', sans-serif; font-size: 14px">{{c.p10}}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+      <span style="flex-shrink: 0; text-align: center; font-size: 12px; color: #8E94C8">宝箱掉落概率详见公示 · 钻石均为游戏内货币</span>
+    </sc-if>
+
+    <!-- 钻石 -->
+    <sc-if value="{{is.gem}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <button style="border-radius: 16px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 4px 0 #0E1024; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left">
+          <span style="font-size: 16px; font-weight: 900">月卡</span>
+          <span style="font-size: 11px; font-weight: 700">每日领取 100 钻石 · 30 天</span>
+          <span style="margin-top: 4px; padding: 0 12px; height: 28px; line-height: 28px; border-radius: 9px; background: #FFC93C; color: #3A2400; font-family: 'Lilita One', sans-serif; font-size: 15px">¥30</span>
+        </button>
+        <button style="border-radius: 16px; background: #E84A5F; border: 3px solid #0E1024; box-shadow: 0 4px 0 #0E1024; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left">
+          <span style="font-size: 16px; font-weight: 900">终身卡</span>
+          <span style="font-size: 11px; font-weight: 700">巡逻收益 +20% · 永久</span>
+          <span style="margin-top: 4px; padding: 0 12px; height: 28px; line-height: 28px; border-radius: 9px; background: #FFC93C; color: #3A2400; font-family: 'Lilita One', sans-serif; font-size: 15px">¥98</span>
+        </button>
+      </div>
+      <h2 style="flex-shrink: 0; margin: 4px 0 0 0; font-size: 17px; font-weight: 900">钻石充值</h2>
+      <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{gems}}" as="g" hint-placeholder-count="6">
+          <button aria-label="{{g.amount}} 钻石" style="position: relative; border-radius: 14px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; padding: 16px 6px 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 6px; overflow: hidden">
+            <sc-if value="{{g.double}}" hint-placeholder-val="{{true}}">
+              <span style="position: absolute; left: 0; top: 0; padding: 0 6px; height: 18px; line-height: 18px; border-radius: 0 0 10px 0; background: #FF4D4F; font-size: 10px; font-weight: 900">首充双倍</span>
+            </sc-if>
+            <svg width="46" height="40" viewBox="0 0 46 40">
+              <g stroke="#0E1024" stroke-width="2.5" stroke-linejoin="round">
+                <path d="M10 4 H36 L44 16 L23 38 L2 16 Z" fill="{{g.fill}}"></path>
+              </g>
+              <path d="M2 16 H44 M16 4 L23 16 L30 4" fill="none" stroke="#0E1024" stroke-width="2"></path>
+            </svg>
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 17px; color: #8FE0FF">{{g.amount}}</span>
+            <span style="align-self: stretch; height: 28px; line-height: 28px; border-radius: 9px; background: #3DDC84; color: #0E1024; font-family: 'Lilita One', sans-serif; font-size: 15px">{{g.price}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 金币 -->
+    <sc-if value="{{is.gold}}" hint-placeholder-val="{{false}}">
+      <sc-for list="{{golds}}" as="g" hint-placeholder-count="4">
+        <div style="flex-shrink: 0; border-radius: 16px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; padding: 10px 10px 10px 12px; display: flex; align-items: center; gap: 12px">
+          <div style="width: 60px; height: 60px; flex-shrink: 0; border-radius: 14px; background: #1B1F3B; display: flex; align-items: center; justify-content: center">
+            <svg width="44" height="44" viewBox="0 0 44 44">
+              <g stroke="#0E1024" stroke-width="2.5" fill="#FFC93C">
+                <ellipse cx="22" cy="34" rx="16" ry="6"></ellipse>
+                <ellipse cx="22" cy="27" rx="16" ry="6"></ellipse>
+                <ellipse cx="22" cy="20" rx="16" ry="6"></ellipse>
+                <ellipse cx="22" cy="13" rx="16" ry="6"></ellipse>
+              </g>
+            </svg>
+          </div>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 900">{{g.name}}</span>
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 18px; color: #FFE08A">{{g.amount}}</span>
+            <span style="font-size: 11px; color: #8E94C8">{{g.note}}</span>
+          </div>
+          <button style="{{g.btn}}">{{g.price}}</button>
+        </div>
+      </sc-for>
+    </sc-if>
+  </div>
+
+  <div style="flex-shrink: 0; height: 84px"><dc-import name="NavBar" active="shop" hint-size="390px,84px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'featured' };
+  }
+  renderVals() {
+    var self = this;
+    var ICON = {
+      chest: 'M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 M10 10 H14 V14 H10 Z',
+      scroll: 'M6 3 H18 V21 H6 Z M9 8 H15 M9 12 H15 M9 16 H13',
+      sword: 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20',
+      bolt: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z',
+      coin: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V17 M9 9 H14 M9 15 H14',
+      armor: 'M7 3 L12 5 L17 3 L21 7 L18 10 V21 H6 V10 L3 7 Z',
+      gem: 'M6 3 H18 L22 9 L12 21 L2 9 Z M2 9 H22',
+      ring: 'M12 8 A7 7 0 1 0 12.01 8 Z M9 3 H15 L12 8 Z',
+      boots: 'M7 3 H13 V13 L20 16 V21 H5 V16 Z'
+    };
+    var RAR = { green: '#2FB36B', blue: '#3D6FE0', purple: '#8E4FE0', yellow: '#E0A020', red: '#D93C4A' };
+    var CUR = { gold: '#FFC93C', gem: '#4FC3F7', free: '#3DDC84' };
+    var daily = [
+      { name: '免费宝箱', qty: '×1', d: ICON.chest, r: 'purple', price: '免费', cur: 'free' },
+      { name: '精良图纸', qty: '×5', d: ICON.scroll, r: 'blue', price: '2,000', cur: 'gold' },
+      { name: '史诗武器碎片', qty: '×1', d: ICON.sword, r: 'purple', price: '180', cur: 'gem' },
+      { name: '体力饮料', qty: '×10', d: ICON.bolt, r: 'green', price: '60', cur: 'gem', sold: true },
+      { name: '金币袋', qty: '20K', d: ICON.coin, r: 'yellow', price: '看广告', cur: 'free' },
+      { name: '防具图纸', qty: '×5', d: ICON.armor, r: 'blue', price: '2,000', cur: 'gold' },
+      { name: '传说碎片', qty: '×1', d: ICON.gem, r: 'yellow', price: '460', cur: 'gem' },
+      { name: '饰品图纸', qty: '×5', d: ICON.ring, r: 'blue', price: '2,400', cur: 'gold', sold: true },
+      { name: '神话鞋子', qty: '×1', d: ICON.boots, r: 'red', price: '1,280', cur: 'gem' }
+    ].map(function (it) {
+      return Object.assign({}, it, {
+        sold: !!it.sold,
+        tile: 'position: relative; height: 70px; display: flex; align-items: center; justify-content: center; background: ' + RAR[it.r] + '; border-bottom: 3px solid #0E1024;',
+        dot: 'display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #0E1024; background: ' + CUR[it.cur] + ';'
+      });
+    });
+    var chests = [
+      { name: '精良宝箱', desc: '必出精良及以上装备，有概率获得史诗装备', pity: '再开 7 次必出史诗', p1: '钻 150', p10: '钻 1,350', body: '#4F8BFF', lid: '#3D6FE0', bg: '#1E2A5E' },
+      { name: '史诗宝箱', desc: '必出史诗及以上装备，有概率获得传说装备', pity: '再开 23 次必出传说', p1: '钻 300', p10: '钻 2,700', body: '#B06CFF', lid: '#8E4FE0', bg: '#2E1E5E' },
+      { name: '钥匙宝箱', desc: '使用宝箱钥匙开启，每日免费开启 1 次', pity: '免费次数 23:12:05 后刷新', p1: '免费', p10: '钥匙 ×10', body: '#FFC93C', lid: '#FF8A3D', bg: '#4A2E14' }
+    ].map(function (c) {
+      return Object.assign({}, c, { tile: 'width: 104px; height: 120px; flex-shrink: 0; border-radius: 14px; background: ' + c.bg + '; display: flex; align-items: center; justify-content: center;' });
+    });
+    var gems = [
+      { amount: '60', price: '¥6', fill: '#8FE0FF', double: true },
+      { amount: '300', price: '¥30', fill: '#8FE0FF', double: true },
+      { amount: '680', price: '¥68', fill: '#4FC3F7', double: true },
+      { amount: '1,280', price: '¥128', fill: '#4FC3F7', double: false },
+      { amount: '3,280', price: '¥328', fill: '#B06CFF', double: false },
+      { amount: '6,480', price: '¥648', fill: '#B06CFF', double: false }
+    ];
+    var btn = function (bg, ink) { return 'min-width: 84px; height: 44px; padding: 0 12px; border-radius: 12px; background: ' + bg + '; color: ' + ink + '; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-family: Lilita One, Noto Sans SC, sans-serif; font-size: 15px; flex-shrink: 0;'; };
+    var golds = [
+      { name: '每日补给', amount: '+8,000', note: '今日剩余 2/3 次', price: '免费', btn: btn('#3DDC84', '#0E1024') },
+      { name: '一小袋金币', amount: '+12,000', note: '随章节进度提升', price: '钻 50', btn: btn('#4FC3F7', '#0E1024') },
+      { name: '一大袋金币', amount: '+60,000', note: '随章节进度提升', price: '钻 230', btn: btn('#4FC3F7', '#0E1024') },
+      { name: '一车金币', amount: '+150,000', note: '随章节进度提升', price: '钻 520', btn: btn('#FFC93C', '#3A2400') }
+    ];
+    var tab = this.state.tab;
+    var defs = [ ['featured', '精选'], ['chest', '宝箱'], ['gem', '钻石'], ['gold', '金币'] ];
+    var tabs = defs.map(function (d) {
+      var on = d[0] === tab;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: d[0] }); },
+        style: 'height: 40px; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (on ? 'background: #FFC93C; color: #3A2400; box-shadow: 0 3px 0 #7A4A00;' : 'background: #2E3570; color: #C9CDF2; box-shadow: 0 3px 0 #0E1024;')
+      };
+    });
+    return {
+      tabs: tabs,
+      is: { featured: tab === 'featured', chest: tab === 'chest', gem: tab === 'gem', gold: tab === 'gold' },
+      daily: daily, chests: chests, gems: gems, golds: golds
+    };
+  }
+}
+</script>
+</body>
+</html>
