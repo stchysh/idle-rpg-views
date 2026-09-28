@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>进化</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+  <div style="flex-shrink: 0; height: 48px"><dc-import name="ResBar" hint-size="390px,48px"></dc-import></div>
+
+  <div style="flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 12px 16px 0 16px">
+    <h1 style="margin: 0; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 36px; line-height: 38px; letter-spacing: 2px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">进化</h1>
+    <span style="font-size: 12px; font-weight: 700; color: #C9CDF2">玩家等级 42 · 可升至 Lv.{{cap}}</span>
+  </div>
+
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 10px 16px 0 16px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <!-- 加成汇总 -->
+  <div style="flex-shrink: 0; margin: 10px 16px 0 16px; border-radius: 16px; background: #0E1024; padding: 10px 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; text-align: center">
+    <div style="display: flex; flex-direction: column"><span style="font-size: 11px; color: #C9CDF2">攻击加成</span><span style="font-family: 'Lilita One', sans-serif; font-size: 17px; color: #FF8A8C">+{{sum.atk}}</span></div>
+    <div style="display: flex; flex-direction: column"><span style="font-size: 11px; color: #C9CDF2">生命加成</span><span style="font-family: 'Lilita One', sans-serif; font-size: 17px; color: #7BE6A6">+{{sum.hp}}</span></div>
+    <div style="display: flex; flex-direction: column"><span style="font-size: 11px; color: #C9CDF2">防御加成</span><span style="font-family: 'Lilita One', sans-serif; font-size: 17px; color: #8FB3FF">+{{sum.def}}</span></div>
+  </div>
+
+  <!-- 天赋树 -->
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 16px 12px 16px">
+    <sc-if value="{{isBase}}" hint-placeholder-val="{{true}}">
+      <div style="position: relative; display: flex; flex-direction: column; gap: 14px">
+        <div style="position: absolute; left: 22px; top: 20px; bottom: 20px; width: 6px; border-radius: 3px; background: #2E3570"></div>
+        <sc-for list="{{rows}}" as="row" hint-placeholder-count="8">
+          <div style="position: relative; display: flex; align-items: center; gap: 10px">
+            <span style="{{row.badge}}">{{row.lv}}</span>
+            <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+              <sc-for list="{{row.nodes}}" as="n" hint-placeholder-count="3">
+                <div style="{{n.style}}">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{n.ink}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{n.d}}"></path></svg>
+                  <span style="font-size: 12px; font-weight: 900; color: {{n.ink}}">{{n.name}}</span>
+                  <span style="font-family: 'Lilita One', sans-serif; font-size: 12px; color: {{n.ink}}">{{n.val}}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{isSuper}}" hint-placeholder-val="{{false}}">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{supers}}" as="s" hint-placeholder-count="6">
+          <div style="{{s.card}}">
+            <span style="{{s.tile}}">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.d}}"></path></svg>
+            </span>
+            <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 900">{{s.name}}</span>
+              <span style="font-size: 12px; line-height: 17px; color: #C9CDF2">{{s.desc}}</span>
+            </div>
+            <span style="{{s.stateStyle}}">{{s.state}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- 升级操作栏 -->
+  <div style="flex-shrink: 0; margin: 0 16px 10px 16px; border-radius: 16px; background: #2E3570; border: 3px solid #0E1024; padding: 8px 8px 8px 12px; display: flex; align-items: center; gap: 10px">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+      <span style="font-size: 11px; color: #C9CDF2">下一项天赋</span>
+      <span style="font-size: 15px; font-weight: 900; white-space: nowrap">{{next.name}} <span style="font-family: 'Lilita One', sans-serif; color: #FFE08A">{{next.val}}</span></span>
+    </div>
+    <button onClick="{{upgrade}}" style="height: 52px; padding: 0 18px; border-radius: 14px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 4px 0 #7A4A00; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15; flex-shrink: 0">
+      <span style="font-size: 16px; font-weight: 900">升级</span>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 13px">$ {{next.cost}}</span>
+    </button>
+  </div>
+
+  <div style="flex-shrink: 0; height: 84px"><dc-import name="NavBar" active="evolve" hint-size="390px,84px"></dc-import></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'base', done: 22 };
+  }
+  renderVals() {
+    var self = this;
+    var ICON = {
+      atk: 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20',
+      hp: 'M12 20 L4 12 A4.5 4.5 0 0 1 12 6 A4.5 4.5 0 0 1 20 12 Z',
+      def: 'M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z',
+      magnet: 'M6 3 V12 A6 6 0 0 0 18 12 V3 H14 V12 A2 2 0 0 1 10 12 V3 Z',
+      revive: 'M20 11 A8 8 0 1 0 17.7 16.7 M20 4 V11 H13',
+      crit: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z',
+      clock: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V12 L15 14',
+      star: 'M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z',
+      coin: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V17 M9 9 H14 M9 15 H14'
+    };
+    var KIND = [
+      { k: 'atk', name: '攻击', c: '#D93C4A' },
+      { k: 'hp', name: '生命', c: '#2FB36B' },
+      { k: 'def', name: '防御', c: '#3D6FE0' }
+    ];
+    var done = this.state.done;
+    var startRow = 5;
+    var rows = [];
+    for (var r = startRow; r < startRow + 10; r++) {
+      var nodes = KIND.map(function (kd, j) {
+        var idx = r * 3 + j;
+        var st = idx < done ? 'done' : (idx === done ? 'cur' : 'lock');
+        var val = '+' + ((r + 1) * (kd.k === 'hp' ? 60 : 12));
+        var base = 'height: 78px; border-radius: 14px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;';
+        var style = st === 'done' ? base + ' background: ' + kd.c + '; box-shadow: 0 3px 0 #0E1024;'
+          : st === 'cur' ? base + ' background: #FFC93C; box-shadow: 0 0 0 3px #FFE08A, 0 3px 0 #0E1024;'
+          : base + ' background: #262B58; opacity: 0.7;';
+        return { d: ICON[kd.k], name: kd.name, val: val, style: style, ink: st === 'cur' ? '#3A2400' : (st === 'done' ? '#FFFFFF' : '#8E94C8') };
+      });
+      var rowDone = (r + 1) * 3 <= done;
+      rows.push({
+        lv: String(r + 1),
+        nodes: nodes,
+        badge: 'position: relative; z-index: 1; width: 50px; height: 50px; flex-shrink: 0; border-radius: 50%; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: Lilita One, sans-serif; font-size: 18px; ' + (rowDone ? 'background: #FFC93C; color: #3A2400;' : 'background: #2E3570; color: #C9CDF2;')
+      });
+    }
+    var nk = KIND[done % 3];
+    var nr = Math.floor(done / 3);
+    var next = { name: nk.name + '强化', val: '+' + ((nr + 1) * (nk.k === 'hp' ? 60 : 12)), cost: (4.2 + done * 0.35).toFixed(1) + 'K' };
+    var sum = { atk: 0, hp: 0, def: 0 };
+    for (var i = 0; i < done; i++) {
+      var kk = KIND[i % 3].k; var rr = Math.floor(i / 3) + 1;
+      sum[kk] += rr * (kk === 'hp' ? 60 : 12);
+    }
+    var superDefs = [
+      { name: '磁力拾取', desc: '经验与道具拾取范围 +30%', d: ICON.magnet, need: 10 },
+      { name: '暴击精通', desc: '暴击伤害 +25%', d: ICON.crit, need: 20 },
+      { name: '绝地重生', desc: '每局可原地复活 1 次', d: ICON.revive, need: 30 },
+      { name: '技能加速', desc: '全部技能冷却 -10%', d: ICON.clock, need: 40 },
+      { name: '天选之人', desc: '升级时额外刷新 1 次技能', d: ICON.star, need: 50 },
+      { name: '财富嗅觉', desc: '战斗金币掉落 +20%', d: ICON.coin, need: 60 },
+      { name: '钢铁意志', desc: '受到伤害 -8%', d: ICON.def, need: 70 },
+      { name: '狂暴之心', desc: '生命低于 30% 时攻击 +40%', d: ICON.atk, need: 80 }
+    ];
+    var level = Math.floor(done / 3);
+    var supers = superDefs.map(function (s) {
+      var ok = level >= s.need / 3;
+      return Object.assign({}, s, {
+        card: 'border-radius: 16px; background: ' + (ok ? '#2E3570' : '#232852') + '; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; padding: 10px; display: flex; align-items: center; gap: 10px;' + (ok ? '' : ' opacity: 0.8;'),
+        tile: 'width: 52px; height: 52px; flex-shrink: 0; border-radius: 14px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + (ok ? '#B06CFF' : '#40467A') + ';',
+        state: ok ? '已激活' : '天赋 ' + s.need + ' 项',
+        stateStyle: 'flex-shrink: 0; padding: 0 10px; height: 26px; line-height: 26px; border-radius: 13px; font-size: 12px; font-weight: 900; ' + (ok ? 'background: #3DDC84; color: #0E1024;' : 'background: #0E1024; color: #8E94C8;')
+      });
+    });
+    var tab = this.state.tab;
+    var tabs = [ ['base', '基础天赋'], ['super', '超级天赋'] ].map(function (d) {
+      var on = d[0] === tab;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: d[0] }); },
+        style: 'height: 40px; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; font-size: 15px; font-weight: 900; ' + (on ? 'background: #FFC93C; color: #3A2400; box-shadow: 0 3px 0 #7A4A00;' : 'background: #2E3570; color: #C9CDF2; box-shadow: 0 3px 0 #0E1024;')
+      };
+    });
+    return {
+      tabs: tabs, isBase: tab === 'base', isSuper: tab === 'super',
+      rows: rows, supers: supers, next: next, sum: sum, cap: 20,
+      upgrade: function () { self.setState({ done: Math.min(self.state.done + 1, 44) }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

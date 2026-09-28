@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>装备</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+  <div style="flex-shrink: 0; height: 48px"><dc-import name="ResBar" hint-size="390px,48px"></dc-import></div>
+
+  <!-- 角色与装备槽 -->
+  <div style="flex-shrink: 0; margin: 12px 16px 0 16px; border-radius: 20px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 4px 0 #0E1024; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{left}}" as="s" hint-placeholder-count="3">
+          <button aria-label="{{s.aria}}" onClick="{{s.pick}}" style="{{s.style}}">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.d}}"></path></svg>
+            <span style="position: absolute; left: 0; bottom: 0; right: 0; height: 16px; line-height: 16px; background: rgba(14, 16, 36, 0.7); font-family: 'Lilita One', sans-serif; font-size: 11px; text-align: center">{{s.lv}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="position: relative; width: 170px; height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+        <div style="position: absolute; left: 15px; top: 20px; width: 140px; height: 140px; border-radius: 50%; background: #3A4390"></div>
+        <svg width="150" height="190" viewBox="0 0 150 190" style="position: relative">
+          <ellipse cx="75" cy="178" rx="48" ry="9" fill="#0E1024" opacity="0.5"></ellipse>
+          <g stroke="#0E1024" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M52 176 V140 H68 V176 Z M82 176 V140 H98 V176 Z" fill="#2B2F5C"></path>
+            <path d="M40 146 Q42 92 75 92 Q108 92 110 146 Z" fill="#E84A5F"></path>
+            <path d="M60 104 H90 V146 H60 Z" fill="#FFC93C"></path>
+            <circle cx="75" cy="66" r="30" fill="#FFD7A8"></circle>
+            <path d="M44 62 Q75 16 106 62 L106 50 Q75 18 44 50 Z" fill="#2B2F5C"></path>
+            <path d="M112 118 L140 70" stroke-width="9"></path>
+          </g>
+          <path d="M112 118 L140 70" stroke="#B06CFF" stroke-width="4" stroke-linecap="round"></path>
+          <circle cx="65" cy="70" r="3.5" fill="#0E1024"></circle>
+          <circle cx="85" cy="70" r="3.5" fill="#0E1024"></circle>
+          <path d="M68 82 Q75 87 82 82" fill="none" stroke="#0E1024" stroke-width="3" stroke-linecap="round"></path>
+        </svg>
+        <span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 0 10px; height: 22px; line-height: 22px; border-radius: 11px; background: #0E1024; font-size: 12px; font-weight: 700; color: #FFE08A">幸存者 · 阿凯</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{right}}" as="s" hint-placeholder-count="3">
+          <button aria-label="{{s.aria}}" onClick="{{s.pick}}" style="{{s.style}}">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.d}}"></path></svg>
+            <span style="position: absolute; left: 0; bottom: 0; right: 0; height: 16px; line-height: 16px; background: rgba(14, 16, 36, 0.7); font-family: 'Lilita One', sans-serif; font-size: 11px; text-align: center">{{s.lv}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+      <div style="height: 44px; border-radius: 12px; background: #0E1024; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <span style="font-size: 11px; color: #C9CDF2">攻击</span>
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 16px; color: #FF8A8C">3,420</span>
+      </div>
+      <div style="height: 44px; border-radius: 12px; background: #0E1024; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <span style="font-size: 11px; color: #C9CDF2">生命</span>
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 16px; color: #7BE6A6">18,600</span>
+      </div>
+      <div style="height: 44px; border-radius: 12px; background: #0E1024; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <span style="font-size: 11px; color: #C9CDF2">战力</span>
+        <span style="font-family: 'Lilita One', sans-serif; font-size: 16px; color: #FFE08A">128,560</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 背包 -->
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 0 16px">
+    <h2 style="margin: 0; font-size: 17px; font-weight: 900">背包 <span style="font-family: 'Lilita One', sans-serif; font-size: 14px; color: #8E94C8">{{count}}/200</span></h2>
+    <button style="height: 36px; padding: 0 14px; border-radius: 10px; background: #B06CFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 13px; font-weight: 900">一键合成</button>
+  </div>
+  <div role="tablist" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; padding: 8px 16px 0 16px">
+    <sc-for list="{{filters}}" as="t" hint-placeholder-count="5">
+      <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 10px 16px 16px 16px">
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{bag}}" as="it" hint-placeholder-count="20">
+        <button aria-label="{{it.aria}}" onClick="{{it.pick}}" style="{{it.style}}">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{it.d}}"></path></svg>
+          <span style="position: absolute; left: 3px; top: 1px; font-family: 'Lilita One', sans-serif; font-size: 11px; text-shadow: 0 1px 0 #0E1024">{{it.tag}}</span>
+          <sc-if value="{{it.isNew}}" hint-placeholder-val="{{false}}">
+            <span style="position: absolute; right: -4px; top: -4px; width: 12px; height: 12px; border-radius: 50%; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box"></span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; height: 84px"><dc-import name="NavBar" active="gear" hint-size="390px,84px"></dc-import></div>
+
+  <!-- 装备详情弹窗 -->
+  <sc-if value="{{hasSel}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(14, 16, 36, 0.78); display: flex; align-items: center; justify-content: center; z-index: 10">
+      <div role="dialog" aria-label="装备详情" style="position: relative; width: 330px; box-sizing: border-box; border-radius: 22px; background: #2E3570; border: 4px solid #0E1024; box-shadow: 0 6px 0 #0E1024; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+        <button aria-label="关闭" onClick="{{close}}" style="position: absolute; right: -10px; top: -10px; width: 44px; height: 44px; border-radius: 50%; background: #FF4D4F; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"></path></svg>
+        </button>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <span style="{{sel.bigTile}}">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{sel.d}}"></path></svg>
+          </span>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 19px; font-weight: 900; color: {{sel.ink}}">{{sel.name}}</span>
+            <span style="align-self: flex-start; padding: 0 8px; height: 20px; line-height: 20px; border-radius: 6px; background: {{sel.color}}; font-size: 11px; font-weight: 900">{{sel.rarity}} · {{sel.slot}}</span>
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 14px; color: #C9CDF2">等级 {{sel.lvText}}</span>
+          </div>
+        </div>
+        <div style="border-radius: 14px; background: #0E1024; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px">
+          <sc-for list="{{sel.stats}}" as="st" hint-placeholder-count="3">
+            <div style="display: flex; justify-content: space-between; font-size: 13px">
+              <span style="color: {{st.ink}}">{{st.k}}</span>
+              <span style="font-family: 'Lilita One', sans-serif; font-size: 15px; color: {{st.ink}}">{{st.v}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <span style="font-size: 12px; line-height: 18px; color: #C9CDF2">三件同名同品质装备可合成更高品质，解锁更多词条。</span>
+        <div style="display: flex; gap: 8px">
+          <button style="flex-grow: 1; height: 48px; border-radius: 14px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15">
+            <span style="font-size: 15px; font-weight: 900">升级</span>
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 12px; color: #FFE08A">$ 4,200 · 图纸 ×6</span>
+          </button>
+          <button onClick="{{close}}" style="flex-grow: 1; height: 48px; border-radius: 14px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 16px; font-weight: 900">{{sel.action}}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'all', sel: null };
+  }
+  renderVals() {
+    var self = this;
+    var ICON = {
+      weapon: 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20',
+      armor: 'M7 3 L12 5 L17 3 L21 7 L18 10 V21 H6 V10 L3 7 Z',
+      necklace: 'M5 3 Q12 16 19 3 M12 13 L15 17 L12 21 L9 17 Z',
+      belt: 'M2 9 H22 V15 H2 Z M10 8 H15 V16 H10 Z',
+      glove: 'M7 21 V11 L5 8 L7 6 L9 9 V4 A1.5 1.5 0 0 1 12 4 V9 V3 A1.5 1.5 0 0 1 15 3 V9 V5 A1.5 1.5 0 0 1 18 5 V14 Q18 21 12 21 Z',
+      boots: 'M7 3 H13 V13 L20 16 V21 H5 V16 Z',
+      scroll: 'M6 3 H18 V21 H6 Z M9 8 H15 M9 12 H15 M9 16 H13',
+      stone: 'M12 3 L20 9 L17 20 H7 L4 9 Z M4 9 H20 M12 3 L9 9 L12 20 L15 9 Z'
+    };
+    var RAR = [
+      { n: '普通', c: '#6A70A8', ink: '#C9CDF2' },
+      { n: '优秀', c: '#2FB36B', ink: '#7BE6A6' },
+      { n: '精良', c: '#3D6FE0', ink: '#8FB3FF' },
+      { n: '史诗', c: '#8E4FE0', ink: '#D2A8FF' },
+      { n: '传说', c: '#E0A020', ink: '#FFE08A' },
+      { n: '神话', c: '#D93C4A', ink: '#FF8A8C' }
+    ];
+    var SLOT = { weapon: '武器', armor: '护甲', necklace: '项链', belt: '腰带', glove: '手套', boots: '鞋子', scroll: '材料', stone: '材料' };
+    var GROUP = { weapon: 'weapon', armor: 'armor', boots: 'armor', belt: 'armor', necklace: 'acc', glove: 'acc', scroll: 'mat', stone: 'mat' };
+    var decorate = function (it, size, equipped) {
+      var r = RAR[it.r];
+      var shadow = it.r >= 4 ? ' box-shadow: 0 0 0 2px ' + r.ink + ', 0 3px 0 #0E1024;' : ' box-shadow: 0 3px 0 #0E1024;';
+      var stats = [
+        { k: it.type === 'weapon' || it.type === 'glove' || it.type === 'necklace' ? '攻击' : '生命', v: '+' + (it.lv * (it.r + 2) * 7), ink: '#FFFFFF' }
+      ];
+      var extra = ['暴击率 +5%', '技能冷却 -8%', '拾取范围 +20%', '对Boss伤害 +15%', '击杀回复 +2%'];
+      for (var i = 0; i < Math.min(it.r, 4); i++) {
+        var p = extra[i].split(' ');
+        stats.push({ k: p[0], v: p[1], ink: r.ink });
+      }
+      var mat = GROUP[it.type] === 'mat';
+      var sel = {
+        name: it.name, d: ICON[it.type], color: r.c, ink: r.ink, rarity: r.n, slot: SLOT[it.type],
+        lvText: mat ? '—' : it.lv + ' / ' + (it.r * 10 + 20), stats: mat ? [{ k: '用途', v: '升级消耗', ink: '#C9CDF2' }] : stats,
+        action: mat ? '确定' : (equipped ? '卸下' : '装备'),
+        bigTile: 'width: 76px; height: 76px; flex-shrink: 0; border-radius: 16px; background: ' + r.c + '; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center;'
+      };
+      return {
+        d: ICON[it.type], lv: 'Lv.' + it.lv, tag: mat ? '×' + it.lv : 'Lv' + it.lv, isNew: !!it.isNew,
+        aria: it.name + '，' + r.n + (mat ? '' : '，等级 ' + it.lv),
+        style: 'position: relative; width: ' + size + '; aspect-ratio: 1 / 1; height: ' + (size === '100%' ? 'auto' : size) + '; border-radius: 14px; background: ' + r.c + '; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: visible;' + shadow,
+        pick: function () { self.setState({ sel: sel }); }
+      };
+    };
+    var slotsL = [
+      { name: '末日裁决', type: 'weapon', r: 5, lv: 60 },
+      { name: '灵魂项链', type: 'necklace', r: 3, lv: 42 },
+      { name: '战术手套', type: 'glove', r: 2, lv: 38 }
+    ];
+    var slotsR = [
+      { name: '龙鳞战甲', type: 'armor', r: 4, lv: 55 },
+      { name: '猎手腰带', type: 'belt', r: 3, lv: 40 },
+      { name: '疾风战靴', type: 'boots', r: 2, lv: 36 }
+    ];
+    var items = [
+      { name: '激光剑', type: 'weapon', r: 4, lv: 30, isNew: true },
+      { name: '暗影护甲', type: 'armor', r: 3, lv: 22, isNew: true },
+      { name: '狂战手套', type: 'glove', r: 3, lv: 18 },
+      { name: '武器图纸', type: 'scroll', r: 2, lv: 36 },
+      { name: '强化石', type: 'stone', r: 3, lv: 12 },
+      { name: '武士刀', type: 'weapon', r: 3, lv: 25 },
+      { name: '守护项链', type: 'necklace', r: 2, lv: 20 },
+      { name: '皮革腰带', type: 'belt', r: 1, lv: 12 },
+      { name: '旅行靴', type: 'boots', r: 1, lv: 10 },
+      { name: '防具图纸', type: 'scroll', r: 2, lv: 48 },
+      { name: '左轮手枪', type: 'weapon', r: 2, lv: 15 },
+      { name: '战术背心', type: 'armor', r: 2, lv: 15 },
+      { name: '铁拳套', type: 'glove', r: 1, lv: 8 },
+      { name: '饰品图纸', type: 'scroll', r: 2, lv: 21 },
+      { name: '稀有强化石', type: 'stone', r: 4, lv: 3 },
+      { name: '棒球棍', type: 'weapon', r: 1, lv: 6 },
+      { name: '布衣', type: 'armor', r: 0, lv: 1 },
+      { name: '草绳腰带', type: 'belt', r: 0, lv: 1 },
+      { name: '铜项链', type: 'necklace', r: 0, lv: 3 },
+      { name: '草鞋', type: 'boots', r: 0, lv: 1 },
+      { name: '飞刀', type: 'weapon', r: 1, lv: 4 },
+      { name: '旧手套', type: 'glove', r: 0, lv: 2 },
+      { name: '普通强化石', type: 'stone', r: 1, lv: 64 },
+      { name: '碎布', type: 'scroll', r: 0, lv: 99 }
+    ];
+    var filter = this.state.filter;
+    var shown = items.filter(function (it) { return filter === 'all' || GROUP[it.type] === filter; });
+    var defs = [ ['all', '全部'], ['weapon', '武器'], ['armor', '防具'], ['acc', '饰品'], ['mat', '材料'] ];
+    var filters = defs.map(function (d) {
+      var on = d[0] === filter;
+      return {
+        label: d[1], on: on ? 'true' : 'false',
+        pick: function () { self.setState({ filter: d[0] }); },
+        style: 'height: 36px; border-radius: 10px; border: 2px solid #0E1024; box-sizing: border-box; font-size: 13px; font-weight: 900; ' + (on ? 'background: #FFC93C; color: #3A2400;' : 'background: #2E3570; color: #C9CDF2;')
+      };
+    });
+    return {
+      left: slotsL.map(function (s) { return decorate(s, '64px', true); }),
+      right: slotsR.map(function (s) { return decorate(s, '64px', true); }),
+      bag: shown.map(function (s) { return decorate(s, '100%', false); }),
+      count: items.length,
+      filters: filters,
+      hasSel: !!this.state.sel,
+      sel: this.state.sel || {},
+      close: function () { self.setState({ sel: null }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

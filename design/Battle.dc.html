@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>战斗中</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #5A2419; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+
+  <!-- 战场 -->
+  <svg width="390" height="844" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0">
+    <defs>
+      <pattern id="tile" width="60" height="60" patternUnits="userSpaceOnUse">
+        <rect width="60" height="60" fill="#5A2419"></rect>
+        <path d="M0 0 H60 M0 0 V60" stroke="#4A1E17" stroke-width="3"></path>
+        <circle cx="20" cy="38" r="2" fill="#6E2E20"></circle>
+        <circle cx="44" cy="16" r="1.6" fill="#6E2E20"></circle>
+      </pattern>
+    </defs>
+    <rect width="390" height="844" fill="url(#tile)"></rect>
+    <path d="M-10 610 Q80 580 140 640 T300 660 T400 620 V700 Q300 720 200 690 T-10 700 Z" fill="#FF8A3D" opacity="0.35"></path>
+    <!-- 经验宝石 -->
+    <g fill="#4FC3F7" stroke="#0E1024" stroke-width="1.5">
+      <path d="M100 400 L106 408 L100 416 L94 408 Z"></path>
+      <path d="M280 540 L286 548 L280 556 L274 548 Z"></path>
+      <path d="M150 580 L156 588 L150 596 L144 588 Z"></path>
+      <path d="M320 360 L326 368 L320 376 L314 368 Z"></path>
+      <path d="M60 520 L66 528 L60 536 L54 528 Z" fill="#3DDC84"></path>
+    </g>
+    <!-- 敌人 -->
+    <g stroke="#0E1024" stroke-width="3">
+      <circle cx="70" cy="330" r="16" fill="#7BD66B"></circle>
+      <circle cx="110" cy="290" r="14" fill="#7BD66B"></circle>
+      <circle cx="310" cy="300" r="15" fill="#7BD66B"></circle>
+      <circle cx="340" cy="450" r="16" fill="#A36BE0"></circle>
+      <circle cx="50" cy="470" r="14" fill="#A36BE0"></circle>
+      <circle cx="260" cy="620" r="15" fill="#7BD66B"></circle>
+      <circle cx="120" cy="650" r="14" fill="#7BD66B"></circle>
+      <circle cx="330" cy="560" r="13" fill="#7BD66B"></circle>
+      <circle cx="210" cy="300" r="13" fill="#A36BE0"></circle>
+      <circle cx="30" cy="600" r="15" fill="#7BD66B"></circle>
+      <circle cx="360" cy="690" r="30" fill="#E84A5F"></circle>
+    </g>
+    <g fill="#0E1024">
+      <circle cx="65" cy="327" r="2.5"></circle><circle cx="75" cy="327" r="2.5"></circle>
+      <circle cx="106" cy="287" r="2.2"></circle><circle cx="114" cy="287" r="2.2"></circle>
+      <circle cx="305" cy="297" r="2.2"></circle><circle cx="315" cy="297" r="2.2"></circle>
+      <circle cx="335" cy="447" r="2.5"></circle><circle cx="345" cy="447" r="2.5"></circle>
+      <circle cx="46" cy="467" r="2.2"></circle><circle cx="54" cy="467" r="2.2"></circle>
+      <circle cx="255" cy="617" r="2.2"></circle><circle cx="265" cy="617" r="2.2"></circle>
+      <circle cx="116" cy="647" r="2.2"></circle><circle cx="124" cy="647" r="2.2"></circle>
+      <circle cx="326" cy="557" r="2"></circle><circle cx="334" cy="557" r="2"></circle>
+      <circle cx="206" cy="297" r="2"></circle><circle cx="214" cy="297" r="2"></circle>
+      <circle cx="25" cy="597" r="2.2"></circle><circle cx="35" cy="597" r="2.2"></circle>
+      <path d="M346 682 L356 688 M374 682 L364 688" stroke="#0E1024" stroke-width="4" stroke-linecap="round"></path>
+      <circle cx="352" cy="692" r="3.5"></circle><circle cx="368" cy="692" r="3.5"></circle>
+    </g>
+    <!-- 子弹与技能 -->
+    <g stroke="#FFE08A" stroke-width="4" stroke-linecap="round">
+      <path d="M215 455 L250 420"></path>
+      <path d="M180 450 L140 400"></path>
+      <path d="M225 480 L290 470"></path>
+    </g>
+    <circle cx="195" cy="470" r="70" fill="none" stroke="#4FC3F7" stroke-width="2" stroke-dasharray="6 8" opacity="0.6"></circle>
+    <g stroke="#0E1024" stroke-width="2.5" fill="#4FC3F7">
+      <circle cx="265" cy="470" r="9"></circle>
+      <circle cx="160" cy="409" r="9"></circle>
+      <circle cx="160" cy="531" r="9"></circle>
+    </g>
+    <path d="M190 330 L200 350 L186 360 L202 380" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+    <!-- 主角 -->
+    <ellipse cx="195" cy="498" rx="22" ry="6" fill="#0E1024" opacity="0.4"></ellipse>
+    <g stroke="#0E1024" stroke-width="3" stroke-linejoin="round">
+      <path d="M180 496 Q181 470 195 470 Q209 470 210 496 Z" fill="#E84A5F"></path>
+      <circle cx="195" cy="458" r="14" fill="#FFD7A8"></circle>
+      <path d="M181 456 Q195 436 209 456 L209 450 Q195 434 181 450 Z" fill="#2B2F5C"></path>
+    </g>
+    <circle cx="190" cy="460" r="2" fill="#0E1024"></circle>
+    <circle cx="200" cy="460" r="2" fill="#0E1024"></circle>
+    <rect x="172" y="428" width="46" height="8" rx="4" fill="#0E1024"></rect>
+    <rect x="174" y="430" width="32" height="4" rx="2" fill="#3DDC84"></rect>
+    <!-- 伤害数字 -->
+    <g font-family="Lilita One, sans-serif" font-size="16" fill="#FFFFFF" stroke="#0E1024" stroke-width="3" paint-order="stroke">
+      <text x="240" y="400">268</text>
+      <text x="96" y="380">154</text>
+      <text x="300" y="430" fill="#FFC93C" font-size="20">1,024!</text>
+    </g>
+  </svg>
+
+  <!-- 顶部 HUD -->
+  <div style="position: absolute; left: 0; top: 0; width: 390px; box-sizing: border-box; padding: 12px 16px 0 16px; display: flex; flex-direction: column; gap: 8px">
+    <div style="position: relative; height: 20px; border-radius: 10px; background: #0E1024; border: 2px solid #0E1024; overflow: hidden">
+      <div style="width: {{exp}}%; height: 100%; background: #4FC3F7"></div>
+      <span style="position: absolute; left: 0; top: 0; width: 100%; text-align: center; font-family: 'Lilita One', sans-serif; font-size: 13px; line-height: 18px; text-shadow: 0 1px 0 #0E1024">Lv.{{level}}</span>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="display: flex; align-items: center; gap: 4px; padding: 0 8px 0 4px; height: 24px; border-radius: 12px; background: rgba(14, 16, 36, 0.7); font-family: 'Lilita One', sans-serif; font-size: 14px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#0E1024" stroke-width="1.5"><path d="M5 11 A7 7 0 0 1 19 11 V15 H16 V19 H8 V15 H5 Z"></path><circle cx="9" cy="11" r="1.6" fill="#0E1024"></circle><circle cx="15" cy="11" r="1.6" fill="#0E1024"></circle></svg>1,284
+        </span>
+        <span style="display: flex; align-items: center; gap: 4px; padding: 0 8px 0 4px; height: 24px; border-radius: 12px; background: rgba(14, 16, 36, 0.7); font-family: 'Lilita One', sans-serif; font-size: 14px; color: #FFE08A">
+          <span style="width: 16px; height: 16px; border-radius: 50%; background: #FFC93C; border: 2px solid #0E1024; box-sizing: border-box"></span>3,560
+        </span>
+      </div>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 38px; line-height: 40px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">08:42</span>
+      <button aria-label="暂停" onClick="{{pause}}" style="width: 48px; height: 48px; border-radius: 14px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><rect x="5" y="4" width="5" height="16" rx="1.5"></rect><rect x="14" y="4" width="5" height="16" rx="1.5"></rect></svg>
+      </button>
+    </div>
+    <div style="display: flex; gap: 6px">
+      <sc-for list="{{owned}}" as="s" hint-placeholder-count="4">
+        <span style="{{s.tile}}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.d}}"></path></svg>
+          <span style="position: absolute; right: -2px; bottom: -4px; font-family: 'Lilita One', sans-serif; font-size: 10px; text-shadow: 0 1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">{{s.lvText}}</span>
+        </span>
+      </sc-for>
+    </div>
+    <div style="align-self: center; margin-top: 4px; padding: 0 14px; height: 28px; line-height: 28px; border-radius: 14px; background: rgba(217, 60, 74, 0.9); border: 2px solid #0E1024; font-size: 13px; font-weight: 900">精英怪来袭 · 00:18</div>
+  </div>
+
+  <!-- 摇杆 -->
+  <div aria-hidden="true" style="position: absolute; left: 135px; top: 690px; width: 120px; height: 120px; border-radius: 50%; background: rgba(14, 16, 36, 0.35); border: 3px solid rgba(255, 255, 255, 0.35); box-sizing: border-box">
+    <div style="position: absolute; left: 48px; top: 20px; width: 52px; height: 52px; border-radius: 50%; background: rgba(255, 255, 255, 0.85); border: 3px solid #0E1024; box-sizing: border-box"></div>
+  </div>
+
+  <!-- 升级选技能 -->
+  <sc-if value="{{picking}}" hint-placeholder-val="{{true}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(14, 16, 36, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 0 20px; box-sizing: border-box">
+      <span style="font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 48px; line-height: 50px; color: #FFC93C; text-shadow: 0 4px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">升级！</span>
+      <span style="font-size: 14px; font-weight: 700; color: #C9CDF2">选择一个技能强化</span>
+      <div role="list" style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 6px">
+        <sc-for list="{{choices}}" as="c" hint-placeholder-count="3">
+          <button role="listitem" onClick="{{c.pick}}" style="position: relative; width: 100%; min-height: 96px; border-radius: 18px; background: #2E3570; border: 4px solid #0E1024; box-shadow: 0 5px 0 #0E1024; box-sizing: border-box; padding: 10px 12px; display: flex; align-items: center; gap: 12px; text-align: left">
+            <span style="{{c.tile}}">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{c.d}}"></path></svg>
+            </span>
+            <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+              <span style="display: flex; align-items: center; gap: 8px">
+                <span style="font-size: 17px; font-weight: 900">{{c.name}}</span>
+                <span style="display: flex; gap: 3px">
+                  <sc-for list="{{c.stars}}" as="st" hint-placeholder-count="5">
+                    <span style="{{st}}"></span>
+                  </sc-for>
+                </span>
+              </span>
+              <span style="font-size: 12px; line-height: 17px; color: #C9CDF2">{{c.desc}}</span>
+            </span>
+            <sc-if value="{{c.isNew}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; right: -6px; top: -8px; padding: 0 6px; height: 18px; line-height: 15px; border-radius: 9px; background: #FF4D4F; border: 2px solid #0E1024; box-sizing: border-box; font-size: 10px; font-weight: 900">NEW</span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 4px">
+        <button onClick="{{reroll}}" style="height: 44px; padding: 0 18px; border-radius: 12px; background: #4F8BFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 14px; font-weight: 900">刷新（剩 {{rerolls}} 次）</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- 暂停 -->
+  <sc-if value="{{paused}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(14, 16, 36, 0.8); display: flex; align-items: center; justify-content: center">
+      <div role="dialog" aria-label="暂停" style="width: 300px; box-sizing: border-box; border-radius: 22px; background: #2E3570; border: 4px solid #0E1024; box-shadow: 0 6px 0 #0E1024; padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: stretch">
+        <span style="text-align: center; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 34px; line-height: 36px; text-shadow: 0 3px 0 #0E1024">暂停</span>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; font-size: 12px; color: #C9CDF2">
+          <span>第 3 章 · 熔岩荒漠</span><span style="text-align: right">生存 08:42</span>
+          <span>击杀 1,284</span><span style="text-align: right">金币 3,560</span>
+        </div>
+        <button onClick="{{resume}}" style="height: 52px; border-radius: 14px; background: #3DDC84; color: #0E1024; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; font-size: 17px; font-weight: 900">继续战斗</button>
+        <a href="Result.dc.html" style="height: 52px; border-radius: 14px; background: #FFC93C; color: #3A2400; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">结束并结算</a>
+        <a href="Main.dc.html" style="height: 52px; border-radius: 14px; background: #E84A5F; color: #FFFFFF; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; text-decoration: none">放弃战斗</a>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { picking: true, paused: false, level: 12, roll: 0, rerolls: 1, owned: { gun: 4, guard: 3, drone: 2, boot: 1 } };
+  }
+  renderVals() {
+    var self = this;
+    var SK = {
+      gun: { name: '冲锋枪', desc: '子弹数量 +1，射速提升 15%', d: 'M3 10 H17 L20 8 V13 H14 L12 17 H9 L10 13 H3 Z', c: '#D93C4A' },
+      guard: { name: '守卫者', desc: '环绕护球 +1，击退触碰的敌人', d: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 8 A4 4 0 1 0 12.01 8 Z', c: '#3D6FE0' },
+      drone: { name: '无人机', desc: '自动锁定最近敌人发射导弹', d: 'M4 8 H10 M14 8 H20 M7 8 V11 M17 8 V11 M8 11 H16 V15 H8 Z', c: '#8E4FE0' },
+      boot: { name: '疾跑鞋', desc: '移动速度 +10%', d: 'M7 3 H13 V13 L20 16 V21 H5 V16 Z', c: '#2FB36B' },
+      bolt: { name: '闪电发射器', desc: '随机召唤落雷，对范围敌人造成伤害', d: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z', c: '#E0A020' },
+      fire: { name: '燃油弹', desc: '投掷燃烧瓶，地面持续灼烧', d: 'M12 21 C6 21 5 15 8 11 C9 14 11 14 11 12 C11 8 13 5 15 3 C15 8 19 10 19 15 C19 19 16 21 12 21 Z', c: '#FF8A3D' },
+      magnet: { name: '磁铁', desc: '经验拾取范围 +30%', d: 'M6 3 V12 A6 6 0 0 0 18 12 V3 H14 V12 A2 2 0 0 1 10 12 V3 Z', c: '#D93C4A' },
+      heart: { name: '能量饮料', desc: '每秒回复 1% 最大生命', d: 'M12 20 L4 12 A4.5 4.5 0 0 1 12 6 A4.5 4.5 0 0 1 20 12 Z', c: '#2FB36B' }
+    };
+    var pools = [['gun', 'bolt', 'guard'], ['fire', 'drone', 'magnet'], ['heart', 'boot', 'bolt']];
+    var owned = this.state.owned;
+    var choices = pools[this.state.roll % pools.length].map(function (k) {
+      var s = SK[k];
+      var cur = owned[k] || 0;
+      var next = Math.min(cur + 1, 5);
+      var stars = [];
+      for (var i = 1; i <= 5; i++) {
+        stars.push('display: block; width: 10px; height: 10px; transform: rotate(45deg); border: 2px solid #0E1024; background: ' + (i < next ? '#FFC93C' : (i === next ? '#FFFFFF' : '#40467A')) + ';');
+      }
+      return {
+        name: s.name, desc: cur ? s.desc : '新技能：' + s.desc, d: s.d, isNew: !cur, stars: stars,
+        tile: 'width: 60px; height: 60px; flex-shrink: 0; border-radius: 16px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + s.c + ';',
+        pick: function () {
+          var o = Object.assign({}, self.state.owned);
+          o[k] = next;
+          self.setState({ owned: o, picking: false, level: self.state.level + 1 });
+        }
+      };
+    });
+    var ownedList = Object.keys(owned).map(function (k) {
+      return {
+        d: SK[k].d, lvText: owned[k] >= 5 ? 'MAX' : String(owned[k]),
+        tile: 'position: relative; width: 34px; height: 34px; border-radius: 10px; border: 2px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + SK[k].c + ';'
+      };
+    });
+    return {
+      picking: this.state.picking, paused: this.state.paused,
+      level: this.state.level, exp: this.state.picking ? 100 : 18,
+      choices: choices, owned: ownedList, rerolls: this.state.rerolls,
+      reroll: function () { if (self.state.rerolls > 0) self.setState({ roll: self.state.roll + 1, rerolls: self.state.rerolls - 1 }); },
+      pause: function () { self.setState({ paused: true }); },
+      resume: function () { self.setState({ paused: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

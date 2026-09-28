@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>七日签到</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Noto+Sans+SC:wght@500;700;900&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1024;font-family:"Noto Sans SC",system-ui,sans-serif;color:#FFFFFF}
+button{font-family:inherit;cursor:pointer;margin:0;padding:0;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #1B1F3B; font-family: 'Noto Sans SC', system-ui, sans-serif; color: #FFFFFF">
+  <div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 12px 16px 0 16px">
+    <a href="Main.dc.html" aria-label="返回主界面" style="width: 44px; height: 44px; border-radius: 12px; background: #2E3570; border: 3px solid #0E1024; box-shadow: 0 3px 0 #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"></path></svg>
+    </a>
+    <h1 style="margin: 0; flex-grow: 1; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-weight: 400; font-size: 34px; line-height: 36px; letter-spacing: 2px; text-shadow: 0 3px 0 #0E1024, 0 -2px 0 #0E1024, 2px 0 0 #0E1024, -2px 0 0 #0E1024">签到</h1>
+  </div>
+
+  <!-- 顶部横幅 -->
+  <div style="flex-shrink: 0; margin: 14px 16px 0 16px; position: relative; height: 120px; border-radius: 20px; background: #FF8A3D; border: 4px solid #0E1024; box-shadow: 0 5px 0 #0E1024; overflow: hidden; box-sizing: border-box; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px">
+    <svg width="150" height="130" viewBox="0 0 150 130" style="position: absolute; right: -10px; bottom: -14px">
+      <g stroke="#0E1024" stroke-width="4" stroke-linejoin="round">
+        <rect x="20" y="56" width="110" height="64" rx="8" fill="#E84A5F"></rect>
+        <rect x="12" y="42" width="126" height="22" rx="6" fill="#FF4D4F"></rect>
+        <rect x="64" y="42" width="22" height="78" fill="#FFC93C"></rect>
+        <path d="M75 42 C58 10 30 18 50 42 M75 42 C92 10 120 18 100 42" fill="none"></path>
+      </g>
+    </svg>
+    <span style="position: relative; font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif; font-size: 30px; line-height: 32px; text-shadow: 0 3px 0 #0E1024, 0 -1px 0 #0E1024, 1px 0 0 #0E1024, -1px 0 0 #0E1024">七日好礼</span>
+    <span style="position: relative; font-size: 13px; font-weight: 700; text-shadow: 0 1px 0 #0E1024">第 7 天领取传说武器「雷霆之刃」</span>
+    <span style="position: relative; align-self: flex-start; margin-top: 4px; padding: 0 10px; height: 22px; line-height: 22px; border-radius: 11px; background: #0E1024; font-size: 11px; font-weight: 700; color: #FFE08A">已签到 {{signed}} / 7 天</span>
+  </div>
+
+  <!-- 七日格子 -->
+  <div style="flex-shrink: 0; margin: 16px 16px 0 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+      <button aria-label="{{d.aria}}" onClick="{{d.pick}}" style="{{d.card}}">
+        <span style="font-size: 12px; font-weight: 900; color: {{d.labelInk}}">{{d.label}}</span>
+        <span style="{{d.tile}}">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{d.d}}"></path></svg>
+        </span>
+        <span style="font-family: 'Lilita One', 'Noto Sans SC', sans-serif; font-size: 12px; color: {{d.labelInk}}">{{d.qty}}</span>
+        <sc-if value="{{d.got}}" hint-placeholder-val="{{false}}">
+          <span style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 12px; background: rgba(14, 16, 36, 0.6); display: flex; align-items: center; justify-content: center">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3DDC84" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 L10 17 L19 7"></path></svg>
+          </span>
+        </sc-if>
+      </button>
+    </sc-for>
+  </div>
+
+  <!-- 累计签到 -->
+  <div style="flex-shrink: 0; margin: 16px 16px 0 16px; border-radius: 18px; background: #0E1024; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <span style="font-size: 14px; font-weight: 900">本月累计签到</span>
+      <span style="font-family: 'Lilita One', sans-serif; font-size: 18px; color: #FFE08A">{{month}}<span style="font-size: 12px; color: #8E94C8"> / 28 天</span></span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{monthly}}" as="m" hint-placeholder-count="4">
+        <div style="{{m.card}}">
+          <span style="font-family: 'Lilita One', sans-serif; font-size: 13px">{{m.at}} 天</span>
+          <span style="font-size: 11px; font-weight: 700; color: #C9CDF2">{{m.reward}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+
+  <div style="flex-shrink: 0; padding: 0 16px 28px 16px">
+    <button onClick="{{claim}}" style="{{btn.style}}">{{btn.label}}</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { signed: 3 };
+  }
+  renderVals() {
+    var self = this;
+    var ICON = {
+      coin: 'M12 3 A9 9 0 1 0 12.01 3 Z M12 7 V17 M9 9 H14 M9 15 H14',
+      gem: 'M6 3 H18 L22 9 L12 21 L2 9 Z M2 9 H22',
+      scroll: 'M6 3 H18 V21 H6 Z M9 8 H15 M9 12 H15 M9 16 H13',
+      bolt: 'M13 2 L4 14 H11 L10 22 L20 9 H13 Z',
+      chest: 'M3 10 H21 V20 H3 Z M3 10 Q3 4 12 4 Q21 4 21 10 M10 10 H14 V14 H10 Z',
+      sword: 'M20 4 L10 14 M20 4 H15 M20 4 V9 M7 13 L11 17 M9 15 L4 20'
+    };
+    var R = { yellow: '#E0A020', blue: '#3D6FE0', purple: '#8E4FE0', green: '#2FB36B', red: '#D93C4A' };
+    var defs = [
+      { d: ICON.coin, qty: '×20K', c: 'yellow' },
+      { d: ICON.gem, qty: '×50', c: 'blue' },
+      { d: ICON.scroll, qty: '×10', c: 'blue' },
+      { d: ICON.bolt, qty: '×15', c: 'green' },
+      { d: ICON.gem, qty: '×100', c: 'blue' },
+      { d: ICON.chest, qty: '史诗箱', c: 'purple' },
+      { d: ICON.sword, qty: '雷霆之刃', c: 'yellow' }
+    ];
+    var signed = this.state.signed;
+    var days = defs.map(function (it, i) {
+      var got = i < signed;
+      var today = i === signed;
+      var big = i === 6;
+      var bg = today ? '#FFC93C' : '#2E3570';
+      return {
+        d: it.d, qty: it.qty, got: got, label: '第 ' + (i + 1) + ' 天',
+        aria: '第 ' + (i + 1) + ' 天奖励' + (got ? '，已领取' : today ? '，今日可领' : ''),
+        labelInk: today ? '#3A2400' : '#FFFFFF',
+        pick: function () { if (today) self.setState({ signed: signed + 1 }); },
+        card: 'position: relative; ' + (big ? 'grid-column: span 2; ' : '') + 'height: 118px; border-radius: 14px; background: ' + bg + '; border: 3px solid #0E1024; box-shadow: ' + (today ? '0 0 0 3px #FFE08A, 0 3px 0 #0E1024' : '0 3px 0 #0E1024') + '; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;',
+        tile: 'width: ' + (big ? 64 : 48) + 'px; height: ' + (big ? 56 : 48) + 'px; border-radius: 12px; border: 3px solid #0E1024; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: ' + R[it.c] + ';' + (big ? ' box-shadow: 0 0 0 2px #FFE08A;' : '')
+      };
+    });
+    var month = 12 + signed;
+    var monthly = [ [7, '金币 ×50K'], [14, '钻石 ×200'], [21, '传说碎片'], [28, '神话宝箱'] ].map(function (m) {
+      var ok = month >= m[0];
+      return { at: m[0], reward: m[1], card: 'height: 56px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; ' + (ok ? 'background: #2FB36B;' : 'background: #2E3570;') };
+    });
+    var done = signed >= 7;
+    return {
+      days: days, signed: Math.min(signed, 7), month: month, monthly: monthly,
+      claim: function () { if (self.state.signed < 7) self.setState({ signed: self.state.signed + 1 }); },
+      btn: {
+        label: done ? '已全部领取' : '签到领取第 ' + (signed + 1) + ' 天奖励',
+        style: 'width: 100%; height: 60px; border-radius: 18px; border: 4px solid #0E1024; box-sizing: border-box; font-size: 18px; font-weight: 900; ' + (done ? 'background: #40467A; color: #C9CDF2;' : 'background: #FFC93C; color: #3A2400; box-shadow: 0 5px 0 #7A4A00;')
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
